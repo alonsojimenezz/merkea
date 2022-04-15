@@ -1,59 +1,81 @@
-<x-guest-layout>
-    <x-auth-card>
-        <x-slot name="logo">
-            <a href="/">
-                <x-application-logo class="w-20 h-20 fill-current text-gray-500" />
-            </a>
-        </x-slot>
+@extends('layouts.app')
 
-        <!-- Validation Errors -->
-        <x-auth-validation-errors class="mb-4" :errors="$errors" />
+@section('content')
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card">
 
-        <form method="POST" action="{{ route('register') }}">
-            @csrf
+                    <div class="card-body">
+                        <form method="POST" action="{{ route('register') }}"
+                            class="form w-100 fv-plugins-bootstrap5 fv-plugins-framework">
+                            @csrf
 
-            <!-- Name -->
-            <div>
-                <x-label for="name" :value="__('Nombre')" />
+                            <div class="text-center mb-10">
+                                <h1 class="text-dark mb-3">{{ __('Create An Account') }}</h1>
+                                <div class="text-gray-400 fw-bold fs-4">{{ __('Already have an account?') }}
+                                    <a href="{{ route('login') }}"
+                                        class="link-primary fw-bolder">{{ __('Sign in here') }}</a>
+                                </div>
+                            </div>
 
-                <x-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus />
+                            <div class="fv-row mb-10 fv-plugins-icon-container">
+                                <label class="form-label fs-6 fw-bolder text-dark">{{ __('Nombre') }}</label>
+                                <input id="name" type="text"
+                                    class="form-control form-control-lg form-control-solid @error('name') is-invalid @enderror"
+                                    name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
+
+                                @error('name')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+
+                            <div class="fv-row mb-10 fv-plugins-icon-container">
+                                <label class="form-label fs-6 fw-bolder text-dark">{{ __('Email') }}</label>
+                                <input id="email" type="email"
+                                    class="form-control form-control-lg form-control-solid @error('email') is-invalid @enderror"
+                                    name="email" value="{{ old('email') }}" required autocomplete="email">
+
+                                @error('email')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+
+                            <div class="fv-row mb-10 fv-plugins-icon-container">
+                                <label class="form-label fs-6 fw-bolder text-dark">{{ __('Password') }}</label>
+                                <input id="password" type="password"
+                                    class="form-control form-control-lg form-control-solid @error('password') is-invalid @enderror"
+                                    name="password" required autocomplete="new-password">
+
+                                @error('password')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+
+                            <div class="fv-row mb-10 fv-plugins-icon-container">
+                                <label class="form-label fs-6 fw-bolder text-dark">{{ __('Confirm Password') }}</label>
+                                <input id="password-confirm" type="password"
+                                    class="form-control form-control-lg form-control-solid" name="password_confirmation"
+                                    required autocomplete="new-password">
+                            </div>
+
+                            <div class="text-center mt-5">
+                                <button type="submit" class="btn btn-lg btn-primary w-100 mb-5">
+                                    <span class="indicator-label">{{ __('Sign up') }}</span>
+                                    <span class="indicator-progress">{{ __('Wait') }} ...
+                                        <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
             </div>
-
-            <!-- Email Address -->
-            <div class="mt-4">
-                <x-label for="email" :value="__('Email')" />
-
-                <x-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required />
-            </div>
-
-            <!-- Password -->
-            <div class="mt-4">
-                <x-label for="password" :value="__('Contraseña')" />
-
-                <x-input id="password" class="block mt-1 w-full"
-                                type="password"
-                                name="password"
-                                required autocomplete="new-password" />
-            </div>
-
-            <!-- Confirm Password -->
-            <div class="mt-4">
-                <x-label for="password_confirmation" :value="__('Confirmar Contraseña')" />
-
-                <x-input id="password_confirmation" class="block mt-1 w-full"
-                                type="password"
-                                name="password_confirmation" required />
-            </div>
-
-            <div class="flex items-center justify-end mt-4">
-                <a class="underline text-sm text-gray-600 hover:text-gray-900" href="{{ route('login') }}">
-                    {{ __('¿Ya estás registrado?') }}
-                </a>
-
-                <x-button class="ml-4">
-                    {{ __('Registrarme') }}
-                </x-button>
-            </div>
-        </form>
-    </x-auth-card>
-</x-guest-layout>
+        </div>
+    </div>
+@endsection

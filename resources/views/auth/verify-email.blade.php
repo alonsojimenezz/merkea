@@ -1,39 +1,36 @@
-<x-guest-layout>
-    <x-auth-card>
-        <x-slot name="logo">
-            <a href="/">
-                <x-application-logo class="w-20 h-20 fill-current text-gray-500" />
-            </a>
-        </x-slot>
+@extends('layouts.app')
 
-        <div class="mb-4 text-sm text-gray-600">
-            {{ __('¡Gracias por su registro! Antes de comenzar, ¿podría verificar su dirección de correo electrónico haciendo clic en el enlace que le acabamos de enviar? Si no recibiste el correo electrónico, con gusto te enviaremos otro.') }}
-        </div>
+@section('content')
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card">
 
-        @if (session('status') == 'verification-link-sent')
-            <div class="mb-4 font-medium text-sm text-green-600">
-                {{ __('Se ha enviado un nuevo enlace de verificación a la dirección de correo electrónico que proporcionó durante el registro.') }}
-            </div>
-        @endif
-
-        <div class="mt-4 flex items-center justify-between">
-            <form method="POST" action="{{ route('verification.send') }}">
-                @csrf
-
-                <div>
-                    <x-button>
-                        {{ __('Reenviar Correo de Verificación') }}
-                    </x-button>
+                    <div class="card-body">
+                        <div class="d-flex flex-row-fluid flex-column flex-column-fluid text-center p-10 py-lg-20">
+                            <h1 class="fw-bolder fs-2qx text-gray-800 mb-7">{{ __('Verify Your Email') }}</h1>
+                            <div class="fs-3 fw-bold text-muted mb-10">
+                                {{ __('We have sent you an email. Please follow the link to verify your account') }}</div>
+                            <div class="text-center mb-10">
+                                <a href="/"
+                                    class="btn btn-lg btn-primary fw-bolder">{{ __('Go back to Merkea Mini Market') }}</a>
+                            </div>
+                            <div class="fs-5 mb-5">
+                                <span class="fw-bold text-gray-700">{{ __("Didn't receive an email?") }}</span>
+                                <form method="POST" action="{{ route('verification.send') }}">
+                                    @csrf
+                                    <button type="submit" class="btn btn-link fw-bold">{{ __('Resend') }}</button>
+                                </form>
+                            </div>
+                            @if (session('status') == 'verification-link-sent')
+                                <div class="fw-bolder fs-4 text-gray-700">
+                                    {{ __('A new verification link has been sent to the email address you provided during registration') }}
+                                </div>
+                            @endif
+                        </div>
+                    </div>
                 </div>
-            </form>
-
-            <form method="POST" action="{{ route('logout') }}">
-                @csrf
-
-                <button type="submit" class="underline text-sm text-gray-600 hover:text-gray-900">
-                    {{ __('Salir') }}
-                </button>
-            </form>
+            </div>
         </div>
-    </x-auth-card>
-</x-guest-layout>
+    </div>
+@endsection

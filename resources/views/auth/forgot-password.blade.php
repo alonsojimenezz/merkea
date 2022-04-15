@@ -1,40 +1,57 @@
-<x-guest-layout>
-    <x-auth-card>
-        <x-slot name="logo">
-            <a href="/">
-                <x-application-logo class="w-20 h-20 fill-current text-gray-500" />
-            </a>
-        </x-slot>
+@extends('layouts.app')
 
-        <div class="mb-4 text-sm text-gray-600">
-            {{ __('¿Olvidaste la contraseña? No te preocupes, solo necesitamos conocer el correo electrónico con el que te registraste y enviaremos un enlace que te permitirá elegir una nueva.') }}
+@section('content')
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <form class="form w-100 fv-plugins-bootstrap5 fv-plugins-framework" method="POST"
+                            action="{{ route('password.email') }}">
+                            @csrf
+
+                            <div class="text-center mb-10">
+                                <h1 class="text-dark mb-3">{{ __('Forgot password?') }}</h1>
+                                <div class="text-gray-400 fw-bold fs-4">{{ __('Enter your email to reset your password') }}
+                                </div>
+                            </div>
+                            <div class="fv-row mb-6 fv-plugins-icon-container">
+                                <label class="form-label fs-6 fw-bolder text-dark">{{ __('Email') }}</label>
+                                <input id="email" type="email"
+                                    class="form-control form-control-lg form-control-solid @error('email') is-invalid @enderror"
+                                    name="email" value="{{ old('email') }}" required autocomplete="off" autofocus>
+
+                                @error('email')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                            <div class="text-center mb-2">
+                                <button type="submit" class="btn btn-lg btn-primary w-100 mb-5">
+                                    <span class="indicator-label">{{ __('Send Reset Link') }}</span>
+                                    <span class="indicator-progress">{{ __('Wait') }} ...
+                                        <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
+                                </button>
+                            </div>
+
+                            <div class="d-flex justify-content-center">
+                                <a class="underline text-sm text-gray-800 text-hover-primary" href="{{ route('login') }}">
+                                    {{ __('Go Back') }}
+                                </a>
+                            </div>
+
+                            @if (session('status'))
+                                <div class="d-flex fw-bolder fs-4 text-gray-700 justify-content-center mt-4">
+                                    <span class="text-center">
+                                    {{ session('status') }}
+                                    </span>
+                                </div>
+                            @endif
+                        </form>
+                    </div>
+                </div>
+            </div>
         </div>
-
-        <!-- Session Status -->
-        <x-auth-session-status class="mb-4" :status="session('status')" />
-
-        <!-- Validation Errors -->
-        <x-auth-validation-errors class="mb-4" :errors="$errors" />
-
-        <form method="POST" action="{{ route('password.email') }}">
-            @csrf
-
-            <!-- Email Address -->
-            <div>
-                <x-label for="email" :value="__('Email')" />
-
-                <x-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required
-                    autofocus />
-            </div>
-
-            <div class="flex items-center justify-end mt-4">
-                <a class="underline text-sm text-gray-600 hover:text-gray-900 mr-4" href="{{ route('login') }}">
-                    {{ __('Regresar') }}
-                </a>
-                <x-button>
-                    {{ __('Enviar enlace') }}
-                </x-button>
-            </div>
-        </form>
-    </x-auth-card>
-</x-guest-layout>
+    </div>
+@endsection

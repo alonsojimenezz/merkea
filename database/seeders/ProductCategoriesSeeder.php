@@ -24,7 +24,7 @@ class ProductCategoriesSeeder extends Seeder
     {
         $faker = Faker::create();
 
-        for ($i = 0; $i < 350; $i++) {
+        for ($i = 0; $i < 15; $i++) {
 
             $name = $faker->unique()->word(1);
             while ($this->isTaken($name)) {
