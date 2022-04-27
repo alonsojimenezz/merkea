@@ -16,7 +16,7 @@
                     </span>
                 </div>
             </div>
-            <a href="index.html" class="d-lg-none">
+            <a href="{{ Route::has('store.index') ? route('store.index') : '/' }}" class="d-lg-none">
                 <img alt="Logo" src="{{ asset('img/logo.png') }}" class="mh-40px" />
             </a>
             <div class="btn btn-icon w-auto ps-0 btn-active-color-primary d-none d-lg-inline-flex me-2 me-lg-5"

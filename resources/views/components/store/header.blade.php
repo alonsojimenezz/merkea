@@ -152,16 +152,16 @@
                 </div>
             </div>
         @endif
-        @if (isset($show_menu) && $show_menu == true)
-            <div class="header__bottom">
-                <div class="container">
-                    <div class="row align-items-center">
-                        <div class="col-xl-9 col-lg-9 col-md-12 col-sm-6 col-6">
-                            <div class="header__bottom-left d-flex d-xl-block align-items-center">
-                                <div class="side-menu d-xl-none mr-20">
-                                    <button type="button" class="side-menu-btn offcanvas-toggle-btn"><i
-                                            class="fas fa-bars"></i></button>
-                                </div>
+        <div class="header__bottom">
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-xl-9 col-lg-9 col-md-12 col-sm-6 col-6">
+                        <div class="header__bottom-left d-flex d-xl-block align-items-center">
+                            <div class="side-menu d-xl-none mr-20">
+                                <button type="button" class="side-menu-btn offcanvas-toggle-btn"><i
+                                        class="fas fa-bars"></i></button>
+                            </div>
+                            @if (isset($show_menu) && $show_menu == true)
                                 <div class="main-menu d-none d-md-block">
                                     <nav>
                                         <ul>
@@ -190,12 +190,12 @@
                                         </ul>
                                     </nav>
                                 </div>
-                            </div>
+                            @endif
                         </div>
-
                     </div>
+
                 </div>
             </div>
-        @endif
+        </div>
     </div>
 </header>
