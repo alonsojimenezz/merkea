@@ -38,6 +38,11 @@
             </div>
         </div>
     </div>
+
+    @component('components.admin.toast')
+
+    @endcomponent
+
     @include('layouts.admin.scroll_top')
 
     @include('layouts.admin.scripts')

@@ -17,10 +17,15 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('email')->unique();
+            $table->boolean('is_active')->default(true);
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();
             $table->timestamps();
+            $table->timestamp('last_login_time')->nullable();
+            $table->string('last_login_ip')->nullable();
+            $table->string('agent')->nullable();
+            $table->string('session_id')->nullable();
         });
     }
 

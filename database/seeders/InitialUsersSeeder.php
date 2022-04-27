@@ -20,6 +20,7 @@ class InitialUsersSeeder extends Seeder
             'email' => 'admin@email.com',
             'password' => bcrypt('Merkea2022#'),
             'email_verified_at' => now(),
+            'is_active' => true,
         ])->assignRole('Administrator');
 
         User::create([
@@ -27,6 +28,7 @@ class InitialUsersSeeder extends Seeder
             'email' => 'staff@email.com',
             'password' => bcrypt('Staff2022#'),
             'email_verified_at' => now(),
+            'is_active' => false,
         ])->assignRole('Staff');
 
         User::create([
@@ -34,6 +36,7 @@ class InitialUsersSeeder extends Seeder
             'email' => 'customer@email.com',
             'password' => bcrypt('Customer2022#'),
             'email_verified_at' => now(),
+            'is_active' => true,
         ])->assignRole('Customer');
     }
 }

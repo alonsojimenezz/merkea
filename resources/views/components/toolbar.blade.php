@@ -8,7 +8,16 @@
                         class="text-muted text-hover-primary">{{ __('Administrator Panel') }}</a>
                 </li>
                 <li class="breadcrumb-item text-muted">{{ __($module) }}</li>
-                <li class="breadcrumb-item text-dark">{{ __($section) }}</li>
+                @isset($route_section)
+                    <li class="breadcrumb-item text-muted">
+                        <a href="{{ $route_section }}" class="text-muted text-hover-primary">{{ __($section) }}</a>
+                    </li>
+                @else
+                    <li class="breadcrumb-item text-dark">{{ __($section) }}</li>
+                @endisset
+                @isset($subsection)
+                    <li class="breadcrumb-item text-dark">{{ __($subsection) }}</li>
+                @endisset
             </ul>
         </div>
     </div>

@@ -36,7 +36,7 @@ class Events {
             .fail(function(xhr, textStatus, errorThrown) {
                 _this.hideLoading();
                 if (failCallback !== null) {
-                    failCallback();
+                    failCallback(textStatus);
                 } else {
                     alerts.fire("Ocurrió un error al procesar su solicitud. Recargue e intente de nuevo", "warning", "Continuar", "primary");
                 }

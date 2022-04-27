@@ -2,13 +2,14 @@ import Buttons from "./Buttons.js";
 
 class ValidateForm {
 
-    validate(obj, button, fields, callback = () => {}) {
+    validate(obj, button, fields = null, callback = () => {}) {
         const _this = this;
         const form = document.getElementById(obj);
         var validator = FormValidation.formValidation(
             form, {
-                fields: fields,
+                fields: fields || {},
                 plugins: {
+                    declarative: new FormValidation.plugins.Declarative(),
                     trigger: new FormValidation.plugins.Trigger(),
                     bootstrap: new FormValidation.plugins.Bootstrap5({
                         rowSelector: '.fv-row',

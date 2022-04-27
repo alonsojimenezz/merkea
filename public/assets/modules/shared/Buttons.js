@@ -12,11 +12,13 @@ class Buttons {
     }
 
     init(obj, callback = () => {}) {
-        const button = document.getElementById(obj);
-        button.addEventListener('click', function(e) {
-            e.preventDefault();
-            callback(button, e);
-        });
+        if (document.getElementById(obj)) {
+            const button = document.getElementById(obj);
+            button.addEventListener('click', function(e) {
+                e.preventDefault();
+                callback(button, e);
+            });
+        }
     }
 
 

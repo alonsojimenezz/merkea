@@ -1,4 +1,15 @@
-@extends('layouts.app')
+@extends('layouts.store.main')
+
+@section('app_css')
+    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+@endsection
+
+@section('header')
+    @component('components.store.header')
+        @slot('show_search', false)
+        @slot('show_menu', false)
+    @endcomponent
+@endsection
 
 @section('content')
     <div class="container">

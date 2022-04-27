@@ -2,10 +2,8 @@ import Events from '../shared/Events.js';
 import DTables from '../shared/Tables.js';
 import ValidateForm from '../shared/ValidateForm.js';
 import Alerts from '../shared/Alerts.js';
-import Upload from '../shared/Upload.js';
 import Utils from '../shared/Utils.js';
 import Selects from '../shared/Selects.js';
-import Dates from '../shared/Dates.js';
 import Buttons from '../shared/Buttons.js';
 
 $(function() {
@@ -13,10 +11,8 @@ $(function() {
     const table = new DTables();
     const fv = new ValidateForm();
     const alerts = new Alerts();
-    const upload = new Upload();
     const utils = new Utils();
     const selects = new Selects();
-    const dates = new Dates();
     const buttons = new Buttons();
 
     initNewCategoryForm();
@@ -51,22 +47,24 @@ $(function() {
             reloadParentCategories();
         });
 
-        initNewCategoryFormValidate(function() {
-            let data = {
-                name: utils.trim("#category_name"),
-                description: utils.trim("#category_description"),
-                parent: $("#parent_category option:selected").val(),
-                id: utils.trim("#category_id"),
-                active: $("#category_status").is(":checked") ? 1 : 0,
-                _method: utils.trim("#category_id") > 0 ? 'PUT' : 'POST'
-            };
+        if ($('#new_category_form').length) {
+            initNewCategoryFormValidate(function() {
+                let data = {
+                    name: utils.trim("#category_name"),
+                    description: utils.trim("#category_description"),
+                    parent: $("#parent_category option:selected").val(),
+                    id: utils.trim("#category_id"),
+                    active: $("#category_status").is(":checked") ? 1 : 0,
+                    _method: utils.trim("#category_id") > 0 ? 'PUT' : 'POST'
+                };
 
-            const uri = (data.id == 0 && data._method == 'POST') ? '/api_v1/categories' : '/api_v1/categories/' + data.id;
-            event.post(uri, data, function(r) {
-                proccessNewCategoryResponse(r);
+                const uri = (data.id == 0 && data._method == 'POST') ? '/api_v1/categories' : '/api_v1/categories/' + data.id;
+                event.post(uri, data, function(r) {
+                    proccessNewCategoryResponse(r);
+                });
+
             });
-
-        });
+        }
 
     }
 

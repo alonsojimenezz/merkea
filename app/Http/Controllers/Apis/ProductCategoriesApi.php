@@ -8,6 +8,14 @@ use Illuminate\Http\Request;
 
 class ProductCategoriesApi extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('permission:View Product Categories')->only('index', 'show');
+        $this->middleware('permission:Edit Product Categories')->only('update');
+        $this->middleware('permission:Add Product Categories')->only('store');
+    }
+
     /**
      * Display a listing of the resource.
      *

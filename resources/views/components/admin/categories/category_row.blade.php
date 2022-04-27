@@ -1,7 +1,11 @@
 <tr>
     <td>{{ $category->Id }}</td>
-    <td>
-        <a role="button" class="mb-1 text-gray-600 text-hover-primary category-name-edit-link" data-id="{{ $category->Id }}">
+    @can('Edit Product Categories')
+        <td role="button" class="category-name-edit-link" data-id="{{ $category->Id }}">
+        @else
+        <td>
+        @endcan
+        <a class="mb-1 text-gray-600 text-hover-primary">
             {{ $category->Name }}
         </a>
     </td>

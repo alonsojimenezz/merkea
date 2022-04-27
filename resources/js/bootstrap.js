@@ -1,9 +1,10 @@
 window._ = require('lodash');
 
+require('bootstrap');
+
 try {
     window.$ = window.jQuery = require('jquery');
 
-    require('bootstrap');    
 } catch (e) {}
 
 /**
@@ -33,3 +34,11 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 //     cluster: process.env.MIX_PUSHER_APP_CLUSTER,
 //     forceTLS: true
 // });
+
+import WOW from 'wowjs';
+new WOW.WOW({
+    boxClass: 'wow',
+    animateClass: 'animated',
+    offset: 0,
+    live: true
+}).init();

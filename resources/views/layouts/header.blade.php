@@ -16,11 +16,12 @@
                             href="{{ route('register') }}">{{ __('Sign up') }}</a>
                     @endif
                 @else
-                    @role('Administrator')
+                    @hasanyrole('Administrator|Staff')
                         @if (Route::has('admin.index'))
-                            <a class="nav-link text-mkea-primary fw-bolder" href="{{ route('admin.index') }}">{{ __('Merkea Administrator') }}</a>
+                            <a class="nav-link text-mkea-primary fw-bolder"
+                                href="{{ route('admin.index') }}">{{ __('Merkea Administrator') }}</a>
                         @endif
-                    @endrole
+                    @endhasanyrole
 
                     <div class="dropdown">
                         <a id="navbarDropdown" class="nav-link dropdown-toggle text-mkea-primary fw-bolder" href="#"
@@ -31,7 +32,7 @@
                             <li>
                                 <a class="dropdown-item" href="{{ route('logout') }}"
                                     onclick="event.preventDefault();
-                                                                                                                 document.getElementById('logout-form').submit();">
+                                                                                                                     document.getElementById('logout-form').submit();">
                                     {{ __('Logout') }}
                                 </a>
 

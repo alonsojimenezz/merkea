@@ -18,6 +18,8 @@ class DatabaseSeeder extends Seeder
             InitialRoleSeeder::class,
             InitialUsersSeeder::class,
             ProductCategoriesSeeder::class,
+            InitialProductsSeeder::class,
+            InitialUnitsSeeder::class
         ]);
     }
 }
