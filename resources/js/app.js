@@ -11,3 +11,4 @@ import Swal from 'sweetalert2';
 require('select2');
 require('flatpickr');
 require('dropzone');
+require('quill');

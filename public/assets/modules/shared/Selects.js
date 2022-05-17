@@ -26,6 +26,12 @@ class Selects {
         });
         $(obj).select2();
     }
+
+    change(obj, callback = () => {}) {
+        $(obj).on('change', function() {
+            callback($(this));
+        });
+    }
 }
 
 export default Selects;

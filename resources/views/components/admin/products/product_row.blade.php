@@ -1,8 +1,8 @@
 <tr>
     <td>{{ $product->Id }}</td>
-    <td role="button" class="product-name-edit-link" data-id="{{ $product->Id }}">
-        <a class="mb-1 text-gray-600 text-hover-primary">
-            {{ $product->Key }}
+    <td role="button" class="product-name-edit-link" >
+        <a href="{{ Route::has('admin.show_product') ? route('admin.show_product',['id' => $product->Id]) : '#' }}" class="mb-1 text-gray-600 text-hover-primary">
+            {{ $product->Slug }}
         </a>
     </td>
     <td>

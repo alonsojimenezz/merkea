@@ -21,6 +21,7 @@ $(function() {
 
     initNewProductForm();
     initProductsTable();
+    initSlugCreator();
 
     function initNewProductForm() {
         buttons.init("show_new_product_form", function() {
@@ -31,7 +32,7 @@ $(function() {
         if ($('#new_product_form').length) {
             initNewProductFormValidate(function() {
                 let data = {
-                    key: utils.trim("#product_key"),
+                    slug: utils.trim("#product_slug"),
                     name: utils.trim("#product_name"),
                     active: 1,
                     _method: 'POST'
@@ -46,25 +47,35 @@ $(function() {
 
     }
 
+    function initSlugCreator() {
+        $('#product_name').on('keyup change', function() {
+            $('#product_slug').val(utils.trim("#product_name").toLowerCase().replace(/\s/g, '-'));
+        });
+
+        $('#product_slug').on('keyup change', function() {
+            $('#product_slug').val(utils.trim("#product_slug").toLowerCase().replace(/\s/g, '-'));
+        });
+    }
+
     function resetNewProductForm() {
-        utils.reset("#product_key");
+        utils.reset("#product_slug");
         utils.reset("#product_name");
         buttons.removeLoadingButton(null, "new_product_button");
     }
 
     function initNewProductFormValidate(callback = () => {}) {
         fv.validate("new_product_form", "new_product_button", {
-            'product_key': {
-                validators: {
-                    notEmpty: {
-                        message: 'La clave del producto es requerida'
-                    }
-                }
-            },
             'product_name': {
                 validators: {
                     notEmpty: {
                         message: 'El nombre del producto es requerido'
+                    }
+                }
+            },
+            'product_slug': {
+                validators: {
+                    notEmpty: {
+                        message: 'El slug del producto es requerido'
                     }
                 }
             }
@@ -92,32 +103,6 @@ $(function() {
         }, () => {
 
         }, true, "Products", "#export-buttons-hiden");
-
-        // initEditCategoryLinks();
-    }
-
-    function initEditCategoryLinks() {
-        buttons.initClick(".category-name-edit-link", function(btn) {
-            $("#modal_titles").addClass("d-none");
-            $("#modal_alt_titles").removeClass("d-none");
-            $("#category_id").val(btn.data("id"));
-            $("#category_status_section").removeClass("d-none");
-            reloadParentCategories(function() {
-                event.post("/api_v1/categories/" + btn.attr("data-id"), {
-                    _method: 'GET'
-                }, function(r) {
-                    if (r.code == 200) {
-                        $("#category_name").val(r.body.category.Name);
-                        $("#category_description").val(r.body.category.Description);
-                        selects.reset("#parent_category", r.body.category.ParentId);
-                        $("#category_status").prop("checked", r.body.category.Active == 1);
-                        $("#modal_new_category").modal('show');
-                    } else {
-                        alerts.fire(r.message || "Ocurrió un error al procesar la solicitud", "warning", "Continuar", "primary");
-                    }
-                });
-            });
-        });
     }
 
 });

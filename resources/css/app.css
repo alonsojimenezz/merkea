@@ -27,7 +27,7 @@
     --bs-secondary: #E4E6EF;
     --bs-success: #50CD89;
     --bs-info: #7239EA;
-    --bs-warning: #FFC700;
+    --bs-warning: #ffb916;
     --bs-danger: #F1416C;
     --bs-dark: #181C32;
     --bs-white-rgb: 255, 255, 255;
@@ -3457,8 +3457,8 @@ fieldset:disabled .btn {
 
 .btn-warning {
     color: #000;
-    background-color: #ffc700;
-    border-color: #ffc700;
+    background-color: #ffb916;
+    border-color: #ffb916;
     box-shadow: inset 0 1px 0 rgba(255, 255, 255, .15), 0 1px 1px rgba(0, 0, 0, .075)
 }
 
@@ -3497,8 +3497,8 @@ fieldset:disabled .btn {
 .btn-warning.disabled,
 .btn-warning:disabled {
     color: #000;
-    background-color: #ffc700;
-    border-color: #ffc700
+    background-color: #ffb916;
+    border-color: #ffb916
 }
 
 .btn-danger {
@@ -3834,14 +3834,14 @@ fieldset:disabled .btn {
 }
 
 .btn-outline-warning {
-    color: #ffc700;
-    border-color: #ffc700
+    color: #ffb916;
+    border-color: #ffb916
 }
 
 .btn-outline-warning:hover {
     color: #000;
-    background-color: #ffc700;
-    border-color: #ffc700
+    background-color: #ffb916;
+    border-color: #ffb916
 }
 
 .btn-check:focus+.btn-outline-warning,
@@ -3855,8 +3855,8 @@ fieldset:disabled .btn {
 .btn-outline-warning.dropdown-toggle.show,
 .btn-outline-warning:active {
     color: #000;
-    background-color: #ffc700;
-    border-color: #ffc700
+    background-color: #ffb916;
+    border-color: #ffb916
 }
 
 .btn-check:active+.btn-outline-warning:focus,
@@ -3869,7 +3869,7 @@ fieldset:disabled .btn {
 
 .btn-outline-warning.disabled,
 .btn-outline-warning:disabled {
-    color: #ffc700;
+    color: #ffb916;
     background-color: transparent
 }
 
@@ -7126,7 +7126,7 @@ fieldset:disabled .btn {
 }
 
 .link-warning {
-    color: #ffc700
+    color: #ffb916
 }
 
 .link-warning:focus,
@@ -7622,7 +7622,7 @@ fieldset:disabled .btn {
 }
 
 .border-warning {
-    border-color: #ffc700!important
+    border-color: #ffb916!important
 }
 
 .border-danger {
@@ -26958,12 +26958,12 @@ fieldset:disabled .btn {
 
 .bg-hover-warning:hover {
     --bg-color: 255, 199, 0;
-    background-color: #ffc700!important
+    background-color: #ffb916!important
 }
 
 .bg-active-warning.active {
     --bg-color: 255, 199, 0;
-    background-color: #ffc700!important
+    background-color: #ffb916!important
 }
 
 .bg-state-warning {
@@ -26973,7 +26973,7 @@ fieldset:disabled .btn {
 .bg-state-warning.active,
 .bg-state-warning:hover {
     --bg-color: 255, 199, 0;
-    background-color: #ffc700!important
+    background-color: #ffb916!important
 }
 
 .bg-light-danger {
@@ -27566,11 +27566,11 @@ fieldset:disabled .btn {
 }
 
 .border-hover-warning:hover {
-    border-color: #ffc700!important
+    border-color: #ffb916!important
 }
 
 .border-active-warning.active {
-    border-color: #ffc700!important
+    border-color: #ffb916!important
 }
 
 .border-hover-danger:hover {
@@ -28547,7 +28547,7 @@ fieldset:disabled .btn {
 }
 
 .text-warning {
-    color: #ffc700!important
+    color: #ffb916!important
 }
 
 .text-inverse-warning {
@@ -28568,17 +28568,17 @@ fieldset:disabled .btn {
 
 .text-hover-warning:hover {
     transition: color .2s ease, background-color .2s ease;
-    color: #ffc700!important
+    color: #ffb916!important
 }
 
 .text-hover-warning:hover i {
     transition: color .2s ease, background-color .2s ease;
-    color: #ffc700!important
+    color: #ffb916!important
 }
 
 .text-hover-warning:hover .svg-icon svg [fill]:not(.permanent):not(g) {
     transition: fill .3s ease;
-    fill: #ffc700
+    fill: #ffb916
 }
 
 .text-hover-warning:hover .svg-icon svg:hover [fill]:not(.permanent):not(g) {
@@ -28622,17 +28622,17 @@ fieldset:disabled .btn {
 
 .text-active-warning.active {
     transition: color .2s ease, background-color .2s ease;
-    color: #ffc700!important
+    color: #ffb916!important
 }
 
 .text-active-warning.active i {
     transition: color .2s ease, background-color .2s ease;
-    color: #ffc700!important
+    color: #ffb916!important
 }
 
 .text-active-warning.active .svg-icon svg [fill]:not(.permanent):not(g) {
     transition: fill .3s ease;
-    fill: #ffc700
+    fill: #ffb916
 }
 
 .text-active-warning.active .svg-icon svg:hover [fill]:not(.permanent):not(g) {
@@ -31564,20 +31564,20 @@ a:hover {
 }
 
 .menu-warning .menu-item .menu-link {
-    color: #ffc700
+    color: #ffb916
 }
 
 .menu-warning .menu-item .menu-link .menu-title {
-    color: #ffc700
+    color: #ffb916
 }
 
 .menu-warning .menu-item .menu-link .menu-icon i {
-    color: #ffc700
+    color: #ffb916
 }
 
 .menu-warning .menu-item .menu-link .menu-icon .svg-icon svg [fill]:not(.permanent):not(g) {
     transition: fill .3s ease;
-    fill: #ffc700
+    fill: #ffb916
 }
 
 .menu-warning .menu-item .menu-link .menu-icon .svg-icon svg:hover [fill]:not(.permanent):not(g) {
@@ -31585,35 +31585,35 @@ a:hover {
 }
 
 .menu-warning .menu-item .menu-link .menu-bullet .bullet {
-    background-color: #ffc700
+    background-color: #ffb916
 }
 
 .menu-warning .menu-item .menu-link .menu-arrow:after {
     background-repeat: no-repeat;
     background-position: center;
     background-color: transparent;
-    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 9' fill='%23FFC700'%3e%3cpath fill-rule='evenodd' clip-rule='evenodd' d='M2.06463 4.42111C1.96161 4.22088 1.9809 3.9637 2.12863 3.78597L5.12847 0.177181C5.31402 -0.046034 5.63049 -0.060261 5.83532 0.145404C6.04015 0.351069 6.05578 0.698744 5.87023 0.921959L3.19406 4.14137L5.84414 7.06417C6.03896 7.27904 6.03835 7.62686 5.84278 7.84105C5.64721 8.05524 5.33073 8.05469 5.13591 7.83982L2.14806 4.54449C2.1141 4.50704 2.08629 4.46541 2.06463 4.42111Z'/%3e%3c/svg%3e");
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 9' fill='%23ffb916'%3e%3cpath fill-rule='evenodd' clip-rule='evenodd' d='M2.06463 4.42111C1.96161 4.22088 1.9809 3.9637 2.12863 3.78597L5.12847 0.177181C5.31402 -0.046034 5.63049 -0.060261 5.83532 0.145404C6.04015 0.351069 6.05578 0.698744 5.87023 0.921959L3.19406 4.14137L5.84414 7.06417C6.03896 7.27904 6.03835 7.62686 5.84278 7.84105C5.64721 8.05524 5.33073 8.05469 5.13591 7.83982L2.14806 4.54449C2.1141 4.50704 2.08629 4.46541 2.06463 4.42111Z'/%3e%3c/svg%3e");
     background-repeat: no-repeat;
     background-position: center;
     background-color: transparent;
-    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 9' fill='%23FFC700'%3e%3cpath fill-rule='evenodd' clip-rule='evenodd' d='M5.93537 4.57889C6.03839 4.77912 6.0191 5.0363 5.87137 5.21403L2.87153 8.82282C2.68598 9.04603 2.36951 9.06026 2.16468 8.8546C1.95985 8.64893 1.94422 8.30126 2.12977 8.07804L4.80594 4.85863L2.15586 1.93583C1.96104 1.72096 1.96165 1.37314 2.15722 1.15895C2.35279 0.944757 2.66927 0.945311 2.86409 1.16018L5.85194 4.45551C5.8859 4.49296 5.91371 4.53459 5.93537 4.57889Z'/%3e%3c/svg%3e")
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 9' fill='%23ffb916'%3e%3cpath fill-rule='evenodd' clip-rule='evenodd' d='M5.93537 4.57889C6.03839 4.77912 6.0191 5.0363 5.87137 5.21403L2.87153 8.82282C2.68598 9.04603 2.36951 9.06026 2.16468 8.8546C1.95985 8.64893 1.94422 8.30126 2.12977 8.07804L4.80594 4.85863L2.15586 1.93583C1.96104 1.72096 1.96165 1.37314 2.15722 1.15895C2.35279 0.944757 2.66927 0.945311 2.86409 1.16018L5.85194 4.45551C5.8859 4.49296 5.91371 4.53459 5.93537 4.57889Z'/%3e%3c/svg%3e")
 }
 
 .menu-title-warning .menu-item .menu-link {
-    color: #ffc700
+    color: #ffb916
 }
 
 .menu-title-warning .menu-item .menu-link .menu-title {
-    color: #ffc700
+    color: #ffb916
 }
 
 .menu-icon-warning .menu-item .menu-link .menu-icon i {
-    color: #ffc700
+    color: #ffb916
 }
 
 .menu-icon-warning .menu-item .menu-link .menu-icon .svg-icon svg [fill]:not(.permanent):not(g) {
     transition: fill .3s ease;
-    fill: #ffc700
+    fill: #ffb916
 }
 
 .menu-icon-warning .menu-item .menu-link .menu-icon .svg-icon svg:hover [fill]:not(.permanent):not(g) {
@@ -31621,18 +31621,18 @@ a:hover {
 }
 
 .menu-bullet-warning .menu-item .menu-link .menu-bullet .bullet {
-    background-color: #ffc700
+    background-color: #ffb916
 }
 
 .menu-arrow-warning .menu-item .menu-link .menu-arrow:after {
     background-repeat: no-repeat;
     background-position: center;
     background-color: transparent;
-    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 9' fill='%23FFC700'%3e%3cpath fill-rule='evenodd' clip-rule='evenodd' d='M2.06463 4.42111C1.96161 4.22088 1.9809 3.9637 2.12863 3.78597L5.12847 0.177181C5.31402 -0.046034 5.63049 -0.060261 5.83532 0.145404C6.04015 0.351069 6.05578 0.698744 5.87023 0.921959L3.19406 4.14137L5.84414 7.06417C6.03896 7.27904 6.03835 7.62686 5.84278 7.84105C5.64721 8.05524 5.33073 8.05469 5.13591 7.83982L2.14806 4.54449C2.1141 4.50704 2.08629 4.46541 2.06463 4.42111Z'/%3e%3c/svg%3e");
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 9' fill='%23ffb916'%3e%3cpath fill-rule='evenodd' clip-rule='evenodd' d='M2.06463 4.42111C1.96161 4.22088 1.9809 3.9637 2.12863 3.78597L5.12847 0.177181C5.31402 -0.046034 5.63049 -0.060261 5.83532 0.145404C6.04015 0.351069 6.05578 0.698744 5.87023 0.921959L3.19406 4.14137L5.84414 7.06417C6.03896 7.27904 6.03835 7.62686 5.84278 7.84105C5.64721 8.05524 5.33073 8.05469 5.13591 7.83982L2.14806 4.54449C2.1141 4.50704 2.08629 4.46541 2.06463 4.42111Z'/%3e%3c/svg%3e");
     background-repeat: no-repeat;
     background-position: center;
     background-color: transparent;
-    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 9' fill='%23FFC700'%3e%3cpath fill-rule='evenodd' clip-rule='evenodd' d='M5.93537 4.57889C6.03839 4.77912 6.0191 5.0363 5.87137 5.21403L2.87153 8.82282C2.68598 9.04603 2.36951 9.06026 2.16468 8.8546C1.95985 8.64893 1.94422 8.30126 2.12977 8.07804L4.80594 4.85863L2.15586 1.93583C1.96104 1.72096 1.96165 1.37314 2.15722 1.15895C2.35279 0.944757 2.66927 0.945311 2.86409 1.16018L5.85194 4.45551C5.8859 4.49296 5.91371 4.53459 5.93537 4.57889Z'/%3e%3c/svg%3e")
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 9' fill='%23ffb916'%3e%3cpath fill-rule='evenodd' clip-rule='evenodd' d='M5.93537 4.57889C6.03839 4.77912 6.0191 5.0363 5.87137 5.21403L2.87153 8.82282C2.68598 9.04603 2.36951 9.06026 2.16468 8.8546C1.95985 8.64893 1.94422 8.30126 2.12977 8.07804L4.80594 4.85863L2.15586 1.93583C1.96104 1.72096 1.96165 1.37314 2.15722 1.15895C2.35279 0.944757 2.66927 0.945311 2.86409 1.16018L5.85194 4.45551C5.8859 4.49296 5.91371 4.53459 5.93537 4.57889Z'/%3e%3c/svg%3e")
 }
 
 .menu-danger .menu-item .menu-link {
@@ -35522,8 +35522,8 @@ a:hover {
 
 .btn.btn-warning {
     color: #fff;
-    border-color: #ffc700;
-    background-color: #ffc700
+    border-color: #ffb916;
+    background-color: #ffb916
 }
 
 .btn.btn-warning i {
@@ -35602,18 +35602,18 @@ a:hover {
 }
 
 .btn.btn-light-warning {
-    color: #ffc700;
+    color: #ffb916;
     border-color: #fff8dd;
     background-color: #fff8dd
 }
 
 .btn.btn-light-warning i {
-    color: #ffc700
+    color: #ffb916
 }
 
 .btn.btn-light-warning .svg-icon svg [fill]:not(.permanent):not(g) {
     transition: fill .3s ease;
-    fill: #ffc700
+    fill: #ffb916
 }
 
 .btn.btn-light-warning .svg-icon svg:hover [fill]:not(.permanent):not(g) {
@@ -35621,7 +35621,7 @@ a:hover {
 }
 
 .btn.btn-light-warning.dropdown-toggle:after {
-    color: #ffc700
+    color: #ffb916
 }
 
 .btn-check:active+.btn.btn-light-warning,
@@ -35633,8 +35633,8 @@ a:hover {
 .btn.btn-light-warning:hover:not(.btn-active),
 .show>.btn.btn-light-warning {
     color: #fff;
-    border-color: #ffc700;
-    background-color: #ffc700!important
+    border-color: #ffb916;
+    background-color: #ffb916!important
 }
 
 .btn-check:active+.btn.btn-light-warning i,
@@ -35683,8 +35683,8 @@ a:hover {
 }
 
 .btn.btn-bg-warning {
-    border-color: #ffc700;
-    background-color: #ffc700
+    border-color: #ffb916;
+    background-color: #ffb916
 }
 
 .btn-check:active+.btn.btn-active-warning,
@@ -35696,8 +35696,8 @@ a:hover {
 .btn.btn-active-warning:hover:not(.btn-active),
 .show>.btn.btn-active-warning {
     color: #fff;
-    border-color: #ffc700;
-    background-color: #ffc700!important
+    border-color: #ffb916;
+    background-color: #ffb916!important
 }
 
 .btn-check:active+.btn.btn-active-warning i,
@@ -35753,7 +35753,7 @@ a:hover {
 .btn.btn-active-light-warning:focus:not(.btn-active),
 .btn.btn-active-light-warning:hover:not(.btn-active),
 .show>.btn.btn-active-light-warning {
-    color: #ffc700;
+    color: #ffb916;
     border-color: #fff8dd;
     background-color: #fff8dd!important
 }
@@ -35766,7 +35766,7 @@ a:hover {
 .btn.btn-active-light-warning:focus:not(.btn-active) i,
 .btn.btn-active-light-warning:hover:not(.btn-active) i,
 .show>.btn.btn-active-light-warning i {
-    color: #ffc700
+    color: #ffb916
 }
 
 .btn-check:active+.btn.btn-active-light-warning .svg-icon svg [fill]:not(.permanent):not(g),
@@ -35778,7 +35778,7 @@ a:hover {
 .btn.btn-active-light-warning:hover:not(.btn-active) .svg-icon svg [fill]:not(.permanent):not(g),
 .show>.btn.btn-active-light-warning .svg-icon svg [fill]:not(.permanent):not(g) {
     transition: fill .3s ease;
-    fill: #ffc700
+    fill: #ffb916
 }
 
 .btn-check:active+.btn.btn-active-light-warning .svg-icon svg:hover [fill]:not(.permanent):not(g),
@@ -35800,11 +35800,11 @@ a:hover {
 .btn.btn-active-light-warning:focus:not(.btn-active).dropdown-toggle:after,
 .btn.btn-active-light-warning:hover:not(.btn-active).dropdown-toggle:after,
 .show>.btn.btn-active-light-warning.dropdown-toggle:after {
-    color: #ffc700
+    color: #ffb916
 }
 
 .btn.btn-active-light-warning.btn-outline:not(.btn-outline-default) {
-    border-color: #ffc700!important
+    border-color: #ffb916!important
 }
 
 .btn.btn-danger {
@@ -37306,16 +37306,16 @@ a:hover {
 }
 
 .btn.btn-color-warning {
-    color: #ffc700
+    color: #ffb916
 }
 
 .btn.btn-color-warning i {
-    color: #ffc700
+    color: #ffb916
 }
 
 .btn.btn-color-warning .svg-icon svg [fill]:not(.permanent):not(g) {
     transition: fill .3s ease;
-    fill: #ffc700
+    fill: #ffb916
 }
 
 .btn.btn-color-warning .svg-icon svg:hover [fill]:not(.permanent):not(g) {
@@ -37323,7 +37323,7 @@ a:hover {
 }
 
 .btn.btn-color-warning.dropdown-toggle:after {
-    color: #ffc700
+    color: #ffb916
 }
 
 .btn-check:active+.btn.btn-active-color-warning,
@@ -37334,7 +37334,7 @@ a:hover {
 .btn.btn-active-color-warning:focus:not(.btn-active),
 .btn.btn-active-color-warning:hover:not(.btn-active),
 .show>.btn.btn-active-color-warning {
-    color: #ffc700
+    color: #ffb916
 }
 
 .btn-check:active+.btn.btn-active-color-warning i,
@@ -37345,7 +37345,7 @@ a:hover {
 .btn.btn-active-color-warning:focus:not(.btn-active) i,
 .btn.btn-active-color-warning:hover:not(.btn-active) i,
 .show>.btn.btn-active-color-warning i {
-    color: #ffc700
+    color: #ffb916
 }
 
 .btn-check:active+.btn.btn-active-color-warning .svg-icon svg [fill]:not(.permanent):not(g),
@@ -37357,7 +37357,7 @@ a:hover {
 .btn.btn-active-color-warning:hover:not(.btn-active) .svg-icon svg [fill]:not(.permanent):not(g),
 .show>.btn.btn-active-color-warning .svg-icon svg [fill]:not(.permanent):not(g) {
     transition: fill .3s ease;
-    fill: #ffc700
+    fill: #ffb916
 }
 
 .btn-check:active+.btn.btn-active-color-warning .svg-icon svg:hover [fill]:not(.permanent):not(g),
@@ -37379,16 +37379,16 @@ a:hover {
 .btn.btn-active-color-warning:focus:not(.btn-active).dropdown-toggle:after,
 .btn.btn-active-color-warning:hover:not(.btn-active).dropdown-toggle:after,
 .show>.btn.btn-active-color-warning.dropdown-toggle:after {
-    color: #ffc700
+    color: #ffb916
 }
 
 .btn.btn-icon-warning i {
-    color: #ffc700
+    color: #ffb916
 }
 
 .btn.btn-icon-warning .svg-icon svg [fill]:not(.permanent):not(g) {
     transition: fill .3s ease;
-    fill: #ffc700
+    fill: #ffb916
 }
 
 .btn.btn-icon-warning .svg-icon svg:hover [fill]:not(.permanent):not(g) {
@@ -37396,7 +37396,7 @@ a:hover {
 }
 
 .btn.btn-icon-warning.dropdown-toggle:after {
-    color: #ffc700
+    color: #ffb916
 }
 
 .btn-check:active+.btn.btn-active-icon-warning i,
@@ -37407,7 +37407,7 @@ a:hover {
 .btn.btn-active-icon-warning:focus:not(.btn-active) i,
 .btn.btn-active-icon-warning:hover:not(.btn-active) i,
 .show>.btn.btn-active-icon-warning i {
-    color: #ffc700
+    color: #ffb916
 }
 
 .btn-check:active+.btn.btn-active-icon-warning .svg-icon svg [fill]:not(.permanent):not(g),
@@ -37419,7 +37419,7 @@ a:hover {
 .btn.btn-active-icon-warning:hover:not(.btn-active) .svg-icon svg [fill]:not(.permanent):not(g),
 .show>.btn.btn-active-icon-warning .svg-icon svg [fill]:not(.permanent):not(g) {
     transition: fill .3s ease;
-    fill: #ffc700
+    fill: #ffb916
 }
 
 .btn-check:active+.btn.btn-active-icon-warning .svg-icon svg:hover [fill]:not(.permanent):not(g),
@@ -37441,11 +37441,11 @@ a:hover {
 .btn.btn-active-icon-warning:focus:not(.btn-active).dropdown-toggle:after,
 .btn.btn-active-icon-warning:hover:not(.btn-active).dropdown-toggle:after,
 .show>.btn.btn-active-icon-warning.dropdown-toggle:after {
-    color: #ffc700
+    color: #ffb916
 }
 
 .btn.btn-text-warning {
-    color: #ffc700
+    color: #ffb916
 }
 
 .btn-check:active+.btn.btn-active-text-warning,
@@ -37456,7 +37456,7 @@ a:hover {
 .btn.btn-active-text-warning:focus:not(.btn-active),
 .btn.btn-active-text-warning:hover:not(.btn-active),
 .show>.btn.btn-active-text-warning {
-    color: #ffc700
+    color: #ffb916
 }
 
 .btn.btn-color-danger {
@@ -40310,7 +40310,7 @@ code:not([class*=language-]) {
 }
 
 .form-check.form-check-warning .form-check-input:checked {
-    background-color: #ffc700
+    background-color: #ffb916
 }
 
 .form-check.form-check-custom.form-check-sm .form-check-input {
@@ -45479,7 +45479,7 @@ code:not([class*=language-]) {
 }
 
 .pulse.pulse-warning .pulse-ring {
-    border-color: #ffc700
+    border-color: #ffb916
 }
 
 .pulse.pulse-danger .pulse-ring {
@@ -45696,7 +45696,7 @@ code:not([class*=language-]) {
 
 .svg-icon.svg-icon-warning svg [fill]:not(.permanent):not(g) {
     transition: fill .3s ease;
-    fill: #ffc700
+    fill: #ffb916
 }
 
 .svg-icon.svg-icon-warning svg:hover [fill]:not(.permanent):not(g) {
@@ -46786,11 +46786,11 @@ code:not([class*=language-]) {
 
 .badge-warning {
     color: #fff;
-    background-color: #ffc700
+    background-color: #ffb916
 }
 
 .badge-light-warning {
-    color: #ffc700;
+    color: #ffb916;
     background-color: #fff8dd
 }
 
@@ -47771,7 +47771,7 @@ label.rating-label:hover~.rating-label>.svg-icon svg:hover [fill]:not(.permanent
 
 .explore-label-free {
     color: #fff;
-    background-color: #ffc700
+    background-color: #ffb916
 }
 
 .explore-label-pro {
@@ -48700,4 +48700,72 @@ body {
 
 .bg-mkea-primary {
     background-color: var(--mkea-primary-color) !important;
+}
+
+.tagify:not(.form-control-sm):not(.form-control-lg) {
+    padding: calc((1.5rem + 2px - .8rem)/ 2) !important;
+}
+
+#loading {
+    background-color: #fff;
+    height: 100%;
+    width: 100%;
+    position: fixed;
+    z-index: 99999999999999999;
+    margin-top: 0px;
+    top: 0px;
+}
+
+#loading-center {
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+#loading-center-absolute {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    height: 200px;
+    width: 200px;
+    margin-top: -100px;
+    margin-left: -100px;
+}
+
+#object {
+    width: 80px;
+    height: 80px;
+    background-color: #fcb700;
+    -webkit-animation: animate 1s infinite ease-in-out;
+    animation: animate 1s infinite ease-in-out;
+    margin-right: auto;
+    margin-left: auto;
+    margin-top: 60px;
+}
+
+@-webkit-keyframes animate {
+    0% {
+        -webkit-transform: perspective(160px);
+    }
+    50% {
+        -webkit-transform: perspective(160px) rotateY(-180deg);
+    }
+    100% {
+        -webkit-transform: perspective(160px) rotateY(-180deg) rotateX(-180deg);
+    }
+}
+
+@keyframes animate {
+    0% {
+        transform: perspective(160px) rotateX(0deg) rotateY(0deg);
+        -webkit-transform: perspective(160px) rotateX(0deg) rotateY(0deg);
+    }
+    50% {
+        transform: perspective(160px) rotateX(-180deg) rotateY(0deg);
+        -webkit-transform: perspective(160px) rotateX(-180deg) rotateY(0deg);
+    }
+    100% {
+        transform: perspective(160px) rotateX(-180deg) rotateY(-180deg);
+        -webkit-transform: perspective(160px) rotateX(-180deg) rotateY(-180deg);
+    }
 }

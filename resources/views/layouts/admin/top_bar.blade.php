@@ -36,7 +36,7 @@
         <div class="d-flex align-items-stretch justify-content-between flex-lg-grow-1">
             <div class="d-flex align-items-stretch"></div>
             <div class="d-flex align-items-stretch flex-shrink-0">
-                <div class="d-flex align-items-center ms-1 ms-lg-3" id="kt_header_user_menu_toggle">
+                <div class="d-flex align-items-center ms-1 ms-lg-3">
                     <div class="cursor-pointer symbol symbol-circle symbol-35px symbol-lg-35px"
                         data-kt-menu-trigger="click" data-kt-menu-attach="parent" data-kt-menu-placement="bottom-end">
                         <span class="symbol-label text-inverse-warning fw-bolder bg-mkea-primary">AJ</span>

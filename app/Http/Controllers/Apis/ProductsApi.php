@@ -3,8 +3,15 @@
 namespace App\Http\Controllers\Apis;
 
 use App\Http\Controllers\Controller;
+use App\Models\ProductImages;
 use Illuminate\Http\Request;
 use App\Models\Products as ModelsProducts;
+use App\Models\ProductTags as ModelsProductTags;
+use App\Models\ProductUnits as ModelsProductUnits;
+use App\Models\ProductPrices as ModelsProductPrices;
+use App\Models\ProductStock as ModelsProductStock;
+use App\Models\ProductStockMovements as ModelsProductStockMovements;
+use Throwable;
 
 class ProductsApi extends Controller
 {
@@ -27,11 +34,11 @@ class ProductsApi extends Controller
     {
         try {
             $exist = ModelsProducts::where('Name', $request->input('name'))
-                ->orWhere('Key', $request->input('key'))->first();
+                ->orWhere('Slug', $request->input('slug'))->first();
             if (!$exist) {
 
                 $product = ModelsProducts::create([
-                    'Key' => $request->input('key'),
+                    'Slug' => $request->input('slug'),
                     'Name' => $request->input('name'),
                     'Active' => 1
                 ]);
@@ -41,7 +48,7 @@ class ProductsApi extends Controller
                     'product' => $product
                 ]);
             } else {
-                return $this->jsonResponse(400, __('The product or product key already exists'));
+                return $this->jsonResponse(400, __('The product or product slug already exists'));
             }
         } catch (\Exception $e) {
             return $this->jsonResponse(500, __('Internal Server Error'), [
@@ -70,7 +77,28 @@ class ProductsApi extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        try {
+            $product = ModelsProducts::find($id);
+            if ($product) {
+
+                ModelsProducts::where('Id', $id)->update([
+                    'Name' => $request->input('name') ?? $product->Name,
+                    'Slug' => $request->input('slug') ?? $product->Slug,
+                    'Description' => $request->input('description') ?? $product->Description
+                ]);
+
+                return $this->jsonResponse(200, __('Updated'), [
+                    'alert' => __('Product updated successfully'),
+                    'product' => $product
+                ]);
+            } else {
+                return $this->jsonResponse(400, __('Product not found'));
+            }
+        } catch (\Exception $e) {
+            return $this->jsonResponse(500, __('Internal Server Error'), [
+                'exception' => $e->getMessage(),
+            ]);
+        }
     }
 
     /**
@@ -82,5 +110,215 @@ class ProductsApi extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function uploadMainImage(Request $request)
+    {
+        try {
+            $product = ModelsProducts::find($request->input('pid'));
+            if (is_file(public_path($product->Image)))
+                unlink(public_path($product->Image));
+
+            $imagePath = $request->file('image')->store('products/' . date('Y') . '/' . date('m') . '/' . date('d'), 'files');
+            ModelsProducts::where('Id', $request->input('pid'))->update([
+                'Image' => 'files/' . $imagePath
+            ]);
+            return $this->jsonResponse(200, __('Saved successfully'), [
+                'alert' => __('The main product image was updated successfully')
+            ]);
+        } catch (Throwable $th) {
+            return $this->jsonResponse(500, __('Internal Server Error'), [
+                'exception' => $th->getMessage(),
+            ]);
+        }
+    }
+
+    public function changeProductStatus(Request $request)
+    {
+        try {
+            ModelsProducts::where('Id', $request->input('pid'))->update([
+                'Active' => $request->input('active')
+            ]);
+            return $this->jsonResponse(200, __('Saved successfully'), [
+                'alert' => __('The product status was updated successfully')
+            ]);
+        } catch (Throwable $th) {
+            return $this->jsonResponse(500, __('Internal Server Error'), [
+                'exception' => $th->getMessage(),
+            ]);
+        }
+    }
+
+    public function changeProductTags(Request $request)
+    {
+        try {
+            ModelsProductTags::where('ProductId', $request->input('pid'))->delete();
+            $tags = array_column(json_decode($request->input('tags')), 'value');
+
+            foreach ($tags as $tag) {
+                ModelsProductTags::create([
+                    'Tag' => $tag,
+                    'ProductId' => $request->input('pid'),
+                    'UserId' => auth()->user()->id
+                ]);
+            }
+
+            return $this->jsonResponse(200, __('Saved successfully'), [
+                'alert' => __('The product tags were updated successfully'),
+                'tags' => $request->input('tags')
+            ]);
+        } catch (Throwable $th) {
+            return $this->jsonResponse(500, __('Internal Server Error'), [
+                'exception' => $th->getMessage(),
+            ]);
+        }
+    }
+
+    public function uploadGallery(Request $request)
+    {
+        try {
+            $files = $request->file('gallery');
+
+            foreach ($files as $file) {
+                $path = $file->store('products/' . date('Y') . '/' . date('m') . '/' . date('d'), 'files');
+
+                ProductImages::create([
+                    'ProductId' => $request->input('pid'),
+                    'Image' => 'files/' . $path,
+                    'UserId' => auth()->user()->id
+                ]);
+            }
+
+            return $this->jsonResponse(200, __('Saved successfully'), [
+                'alert' => __('The images was saved successfully')
+            ]);
+        } catch (Throwable $th) {
+            return $this->jsonResponse(500, __('Internal Server Error'), [
+                'exception' => $th->getMessage(),
+            ]);
+        }
+    }
+
+    public function deleteGalleryImage(Request $request)
+    {
+        try {
+            $image = ProductImages::find($request->input('gid'));
+            if (is_file(public_path($image->Image)))
+                unlink(public_path($image->Image));
+
+            ProductImages::where('Id', $request->input('gid'))->delete();
+
+            return $this->jsonResponse(200, __('Removed successfully'), [
+                'alert' => __('The image was deleted successfully')
+            ]);
+        } catch (Throwable $th) {
+            return $this->jsonResponse(500, __('Internal Server Error'), [
+                'exception' => $th->getMessage(),
+            ]);
+        }
+    }
+
+    public function changeProductUnits(Request $request)
+    {
+        try {
+            foreach (ModelsProductUnits::where('ProductId', $request->input('pid'))->get() as $assignedUnit) {
+                if ($request->input('units') !== null && !empty($request->input('units'))) {
+                    if (!in_array($assignedUnit->UnitId, $request->input('units'))) {
+                        ModelsProductUnits::where('Id', $assignedUnit->Id)->delete();
+                    }
+                } else {
+                    ModelsProductUnits::where('ProductId',  $request->input('pid'))->delete();
+                }
+            }
+
+            if ($request->input('units') !== null && !empty($request->input('units'))) {
+
+                foreach ($request->input('units') as $unitId) {
+                    $unit = ModelsProductUnits::where('ProductId', $request->input('pid'))->where('UnitId', $unitId)->first();
+                    if (!$unit) {
+                        ModelsProductUnits::create([
+                            'ProductId' => $request->input('pid'),
+                            'UnitId' => $unitId,
+                            'UserId' => auth()->user()->id
+                        ]);
+                    }
+                }
+            }
+
+            return $this->jsonResponse(200, __('Saved successfully'), [
+                'alert' => __('The product units of measure were updated successfully'),
+                'units' => $request->input('units')
+            ]);
+        } catch (Throwable $th) {
+            return $this->jsonResponse(500, __('Internal Server Error'), [
+                'exception' => $th->getMessage(),
+            ]);
+        }
+    }
+
+    public function setProductPrices(Request $request)
+    {
+        try {
+            foreach ($request->input('units') as $unitPrice) {
+                ModelsProductPrices::updateOrCreate([
+                    'ProductId' => $request->input('pid'),
+                    'UnitId' => $unitPrice['unit']
+                ], [
+                    'LastUpdater' => auth()->user()->id,
+                    'Key' => $unitPrice['key'],
+                    'Barcode' => $unitPrice['barcode'],
+                    'BasePrice' => $unitPrice['price'],
+                    'DiscountType' => $unitPrice['discount_type'],
+                    'DiscountPercent' => $unitPrice['discount_percent'],
+                    'DiscountFixed' => $unitPrice['discount_fixed'],
+                ]);
+            }
+
+            return $this->jsonResponse(200, __('Saved successfully'), [
+                'alert' => __('The product prices were updated successfully'),
+                'request' => $request->all()
+            ]);
+        } catch (Throwable $th) {
+            return $this->jsonResponse(500, __('Internal Server Error'), [
+                'exception' => $th->getMessage(),
+                'request' => $request->all()
+            ]);
+        }
+    }
+
+    public function setProductStock(Request $request)
+    {
+        try {
+            $stocks = $request->input('stocks');
+            foreach ($stocks as $stock) {
+                $previusStock = ModelsProductStock::where('ProductId', $stock['pid'])->where('UnitId', $stock['unit'])->first();
+                $newStock = ModelsProductStock::updateOrCreate([
+                    'ProductId' => $stock['pid'],
+                    'UnitId' => $stock['unit'],
+                ], [
+                    'LastUpdater' => auth()->user()->id,
+                    'Quantity' => $stock['stock']
+                ]);
+
+                ModelsProductStockMovements::create([
+                    'UserId' => auth()->user()->id,
+                    'ProductId' => $stock['pid'],
+                    'UnitId' => $stock['unit'],
+                    'Quantity' => $stock['stock'],
+                    'PreviousQuantity' => $previusStock ? $previusStock->Quantity : 0,
+                    'UserId' => auth()->user()->id,
+                    'ReasonId' => 1,
+                    'Description' => 'Inventory adjustment by user'
+                ]);
+            }
+
+            return $this->jsonResponse(200, __('Saved successfully'), [
+                'alert' => __('The product stock were updated successfully'),
+            ]);
+        } catch (Throwable $th) {
+            return $this->jsonResponse(500, __('Internal Server Error'), [
+                'exception' => $th->getMessage(),
+            ]);
+        }
     }
 }

@@ -65,6 +65,7 @@ class Utilities {
             callback();
         }, ms);
     }
+
 }
 
 export default Utilities;

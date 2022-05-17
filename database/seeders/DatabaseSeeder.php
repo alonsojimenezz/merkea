@@ -19,7 +19,11 @@ class DatabaseSeeder extends Seeder
             InitialUsersSeeder::class,
             ProductCategoriesSeeder::class,
             InitialProductsSeeder::class,
-            InitialUnitsSeeder::class
+            InitialUnitsSeeder::class,
+            InitialProductPrices::class,
+            InitialStates::class,
+            InitialPostalCoverage::class,
+            InitialBranchOffice::class
         ]);
     }
 }

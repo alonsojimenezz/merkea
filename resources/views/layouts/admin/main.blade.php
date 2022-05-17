@@ -21,6 +21,7 @@
 </head>
 
 <body class="header-fixed header-tablet-and-mobile-fixed toolbar-enabled aside-fixed aside-default-enabled">
+    @include('layouts.loading')
     <div class="d-flex flex-column flex-root">
         <div class="page d-flex flex-row flex-column-fluid">
 
@@ -40,7 +41,6 @@
     </div>
 
     @component('components.admin.toast')
-
     @endcomponent
 
     @include('layouts.admin.scroll_top')

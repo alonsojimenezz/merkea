@@ -13,4 +13,11 @@ class Products extends Controller
             'products' => ModelsProducts::orderBy('Name')->get()
         ]);
     }
+
+    public function show_product($id)
+    {
+        return view('admin.products.product', [
+            'product' => ModelsProducts::AllData($id)
+        ]);
+    }
 }
