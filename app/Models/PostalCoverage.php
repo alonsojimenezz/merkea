@@ -15,6 +15,7 @@ class PostalCoverage extends Model
     protected $fillable = [
         'UserId',
         'StateId',
+        'BranchId',
         'City',
         'Colony',
         'PostalCode',
@@ -27,7 +28,8 @@ class PostalCoverage extends Model
     {
         return DB::table('postal_coverages')
             ->join('states', 'states.Id', '=', 'postal_coverages.StateId')
-            ->select('postal_coverages.*', 'states.Name as State')
+            ->join('branch_offices', 'branch_offices.Id', '=', 'postal_coverages.BranchId')
+            ->select('postal_coverages.*', 'states.Name as State', 'branch_offices.Name as Branch')
             ->get();
     }
 }

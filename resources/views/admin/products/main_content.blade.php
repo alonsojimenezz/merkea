@@ -6,7 +6,7 @@
         </li>
         <li class="nav-item">
             <a class="nav-link text-active-primary pb-4" data-bs-toggle="tab"
-                href="#show_product_tab_prices">{{ __('Prices') }}</a>
+                href="#show_product_tab_prices">{{ __('Price') }}</a>
         </li>
         <li class="nav-item">
             <a class="nav-link text-active-primary pb-4" data-bs-toggle="tab"

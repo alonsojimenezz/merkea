@@ -102,6 +102,8 @@ $(function() {
             fv.validate("general_product_form", "general_product_button", {}, function() {
                 let data = {
                     name: utils.trim("#general_product_name"),
+                    key: utils.trim("#general_product_key"),
+                    barcode: utils.trim("#general_product_barcode"),
                     slug: utils.trim("#general_product_slug"),
                     description: descriptionEditor.root.innerHTML,
                     _method: 'PUT'
@@ -170,12 +172,11 @@ $(function() {
             btn.addClass('d-none');
             event.post('/api_v1/products/units', {
                 pid: utils.trim("#product_id"),
-                units: $("#general_product_units").val()
+                unit: $("#general_product_units").val()
             }, function(r) {
                 buttons.removeLoadingButton(null, "save_units_of_measure_button");
                 if (r.code == 200) {
                     alerts.fire_toast(r.message, '', r.body.alert);
-                    window.location.reload();
                 } else {
                     alerts.fire(r.message || "Ocurrió un error al procesar la solicitud", "warning", "Continuar", "primary");
                 }
@@ -191,22 +192,21 @@ $(function() {
 
         Inputmask("$ 9,999.99", {
             "numericInput": true
-        }).mask(".price_per_unit");
+        }).mask("#product_price");
 
         Inputmask("$ 9,999.99", {
             "numericInput": true
-        }).mask(".fixed_discount_per_unit");
+        }).mask("#fixed_discount");
 
         initDiscountOption();
         initPercentageDiscount();
+        initFixedDiscountMax();
         initSavePrices();
     }
 
     function initDiscountOption() {
         $(".discount_option").on("change", function() {
-            const unit = $(this).data("unit");
-            $(".discount_type_container_" + unit).addClass("d-none");
-            console.log($(this).data('container'));
+            $(".discount_type_container").addClass("d-none");
             $("#" + $(this).data('container')).removeClass("d-none");
         });
     }
@@ -215,7 +215,6 @@ $(function() {
         $(".percent_discount_slider").each(function(index, element) {
             let slider = document.querySelector("#" + $(this).attr("id"));
             let label = document.querySelector("#" + $(this).data('label'));
-            console.log(label.value);
             noUiSlider.create(slider, {
                 start: label.innerHTML,
                 step: 1,
@@ -229,31 +228,27 @@ $(function() {
                 label.innerHTML = values[handle];
             });
         });
+    }
 
-
+    function initFixedDiscountMax() {
+        $("#fixed_discount").on("keyup change", function() {
+            let fixedDiscountVal = removeCurrencyMask($("#fixed_discount").val());
+            let productPrice = removeCurrencyMask(utils.trim("#product_price"));
+            if (fixedDiscountVal >= productPrice) {
+                $(this).val(productPrice - 1);
+            }
+        });
     }
 
     function initSavePrices() {
         buttons.initClick("#save_product_prices", function(btn) {
             let data = {
                 pid: utils.trim("#product_id"),
-                units: []
+                price: removeCurrencyMask(utils.trim("#product_price")),
+                discount_type: $('input[name="discount_option"]:checked').val(),
+                discount_percent: $("#discount_label").html(),
+                discount_fixed: removeCurrencyMask($("#fixed_discount").val())
             };
-
-            $("#pricing-units-list").find("option").each(function(index, element) {
-                let unit = $(this).val();
-                if (unit != "") {
-                    data.units.push({
-                        unit: unit,
-                        key: utils.trim("#product_key_" + unit),
-                        barcode: utils.trim("#product_barcode_" + unit),
-                        price: removeCurrencyMask(utils.trim("#price_per_unit_" + unit)),
-                        discount_type: $('input[name="discount_option_' + unit + '"]:checked').val(),
-                        discount_percent: $("#discount_label_" + unit).html(),
-                        discount_fixed: removeCurrencyMask($("#fixed_discount_per_unit_" + unit).val())
-                    });
-                }
-            });
 
             event.post('/api_v1/products/prices', data, function(r) {
                 buttons.removeLoadingButton(null, "save_product_prices");

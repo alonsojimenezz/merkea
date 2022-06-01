@@ -40,6 +40,7 @@ class ProductsApi extends Controller
                 $product = ModelsProducts::create([
                     'Slug' => $request->input('slug'),
                     'Name' => $request->input('name'),
+                    'Key' => $request->input('key'),
                     'Active' => 1
                 ]);
 
@@ -84,6 +85,8 @@ class ProductsApi extends Controller
                 ModelsProducts::where('Id', $id)->update([
                     'Name' => $request->input('name') ?? $product->Name,
                     'Slug' => $request->input('slug') ?? $product->Slug,
+                    'Key' => $request->input('key') ?? $product->Key,
+                    'Barcode' => $request->input('barcode') ?? $product->Barcode,
                     'Description' => $request->input('description') ?? $product->Description
                 ]);
 
@@ -221,33 +224,11 @@ class ProductsApi extends Controller
     public function changeProductUnits(Request $request)
     {
         try {
-            foreach (ModelsProductUnits::where('ProductId', $request->input('pid'))->get() as $assignedUnit) {
-                if ($request->input('units') !== null && !empty($request->input('units'))) {
-                    if (!in_array($assignedUnit->UnitId, $request->input('units'))) {
-                        ModelsProductUnits::where('Id', $assignedUnit->Id)->delete();
-                    }
-                } else {
-                    ModelsProductUnits::where('ProductId',  $request->input('pid'))->delete();
-                }
-            }
-
-            if ($request->input('units') !== null && !empty($request->input('units'))) {
-
-                foreach ($request->input('units') as $unitId) {
-                    $unit = ModelsProductUnits::where('ProductId', $request->input('pid'))->where('UnitId', $unitId)->first();
-                    if (!$unit) {
-                        ModelsProductUnits::create([
-                            'ProductId' => $request->input('pid'),
-                            'UnitId' => $unitId,
-                            'UserId' => auth()->user()->id
-                        ]);
-                    }
-                }
-            }
-
+            ModelsProducts::where('Id', $request->input('pid'))->update([
+                'UnitId' => $request->input('unit')
+            ]);
             return $this->jsonResponse(200, __('Saved successfully'), [
-                'alert' => __('The product units of measure were updated successfully'),
-                'units' => $request->input('units')
+                'alert' => __('The product unit of measure was updated successfully')
             ]);
         } catch (Throwable $th) {
             return $this->jsonResponse(500, __('Internal Server Error'), [
@@ -259,23 +240,18 @@ class ProductsApi extends Controller
     public function setProductPrices(Request $request)
     {
         try {
-            foreach ($request->input('units') as $unitPrice) {
-                ModelsProductPrices::updateOrCreate([
-                    'ProductId' => $request->input('pid'),
-                    'UnitId' => $unitPrice['unit']
-                ], [
-                    'LastUpdater' => auth()->user()->id,
-                    'Key' => $unitPrice['key'],
-                    'Barcode' => $unitPrice['barcode'],
-                    'BasePrice' => $unitPrice['price'],
-                    'DiscountType' => $unitPrice['discount_type'],
-                    'DiscountPercent' => $unitPrice['discount_percent'],
-                    'DiscountFixed' => $unitPrice['discount_fixed'],
-                ]);
-            }
+            ModelsProductPrices::updateOrCreate([
+                'ProductId' => $request->input('pid')
+            ], [
+                'LastUpdater' => auth()->user()->id,
+                'BasePrice' => $request->input('price'),
+                'DiscountType' => $request->input('discount_type'),
+                'DiscountPercent' => $request->input('discount_percent'),
+                'DiscountFixed' => $request->input('discount_fixed'),
+            ]);
 
             return $this->jsonResponse(200, __('Saved successfully'), [
-                'alert' => __('The product prices were updated successfully'),
+                'alert' => __('The product price was updated successfully'),
                 'request' => $request->all()
             ]);
         } catch (Throwable $th) {

@@ -40,6 +40,7 @@ $(function() {
                     city: utils.trim('#postal_code_city'),
                     colony: utils.trim('#postal_code_colony'),
                     postal_code: utils.trim('#postal_code'),
+                    branch: $("#postal_code_branch").val(),
                     id: utils.trim("#postal_code_id"),
                     active: $("#postal_code_status").is(":checked") ? 1 : 0,
                     _method: utils.trim("#postal_code_id") > 0 ? 'PUT' : 'POST'
@@ -99,6 +100,7 @@ $(function() {
             }, function(r) {
                 if (r.code == 200) {
                     selects.reset("#postal_code_state", r.body.postal_code.StateId);
+                    selects.reset("#postal_code_branch", r.body.postal_code.BranchId);
                     $("#postal_code_city").val(r.body.postal_code.City);
                     $("#postal_code_colony").val(r.body.postal_code.Colony);
                     $("#postal_code").val(r.body.postal_code.PostalCode);

@@ -19,6 +19,22 @@
                         </div>
                     </div>
                     <div class="mb-10 fv-row">
+                        <label class="required form-label">{{ __('Product Key') }}</label>
+                        <input type="text" id="general_product_key" name="general_product_key" class="form-control mb-2"
+                            placeholder="{{ __('Product Key') }}" value="{{ $product->Key ?? '' }}">
+                        <div class="text-muted fs-7">
+                            {{ __('Enter the product key') }}
+                        </div>
+                    </div>
+                    <div class="mb-10 fv-row">
+                        <label class="form-label">{{ __('Barcode') }}</label>
+                        <input type="text" id="general_product_barcode" name="general_product_barcode" class="form-control mb-2"
+                            placeholder="{{ __('Barcode') }}" value="{{ $product->Barcode ?? '' }}">
+                        <div class="text-muted fs-7">
+                            {{ __('Enter the product barcode') }}
+                        </div>
+                    </div>
+                    <div class="mb-10 fv-row">
                         <label class="required form-label">{{ __('Product Slug') }}</label>
                         <input type="text" id="general_product_slug" name="product_slug" class="form-control mb-2"
                             placeholder="{{ __('Product Slug') }}" value="{{ $product->Slug }}" required
@@ -101,38 +117,6 @@
                         @endforeach
                     @endisset
                 </div>
-            </div>
-        </div>
-        <div class="card card-flush py-4">
-            <div class="card-header">
-                <div class="card-title">
-                    <h2>{{ __('Units of Measure') }}</h2>
-                </div>
-            </div>
-            <div class="card-body pt-0">
-                <select name="general_product_units" id="general_product_units" class="form-select form-select-solid"
-                    data-control="select2" data-placeholder="{{ __('Select Units of Measure') }}"
-                    data-allow-clear="true" multiple="multiple">
-
-                    @isset($product->units['available'])
-                        @foreach ($product->units['available'] as $unit)
-                            <option value="{{ $unit->Id }}"
-                                {{ in_array($unit->Id, $product->units['assigned']) ? 'selected' : '' }}>
-                                {{ $unit->Name . ' (' . $unit->Key . ')' }}</option>
-                        @endforeach
-                    @endisset
-                </select>
-                <div class="text-muted fs-7 mt-3">{{ __('Add units of measure to the product') }}</div>
-                @can('Change Product Units')
-                    <div class="mt-4">
-                        <button type="submit" id="save_units_of_measure_button"
-                            class="d-none float-end btn btn-outline btn-outline-dashed btn-outline-warning btn-active-warning fw-bolder">
-                            <span class="indicator-label">{{ __('Save') }}</span>
-                            <span class="indicator-progress">{{ __('Please wait') }}...
-                                <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
-                        </button>
-                    </div>
-                @endcan
             </div>
         </div>
     </div>

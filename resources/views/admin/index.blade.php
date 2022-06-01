@@ -8,7 +8,12 @@
     @endcomponent
 @endsection
 
-@section('content')
-    {{ __('Here goes the Admin Panel') }}
+@section('module')
+    @component('components.javascript_module')
+        @slot('module', 'admin/dashboard')
+    @endcomponent
 @endsection
 
+@section('content')
+    {{ __('Here goes the Admin Dashboard') }}
+@endsection

@@ -1,5 +1,6 @@
 <tr>
     <td>{{ $code->Id }}</td>
+    <td>{{ $code->Branch }}</td>
     @can('Edit Postal Code Coverage')
         <td role="button" class="postal_code-name-edit-link" data-id="{{ $code->Id }}">
         @else

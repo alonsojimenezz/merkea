@@ -1,7 +1,7 @@
 @extends('layouts.store.main')
 
 @section('header')
-    @component('components.store.header')
+    @component('components.store.header', ['categories' => $categories])
         @guest
             @slot('show_search', false)
         @else

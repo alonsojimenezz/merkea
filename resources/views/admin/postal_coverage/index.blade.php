@@ -150,6 +150,7 @@
                     <thead class="fs-7 text-gray-400 text-uppercase">
                         <tr>
                             <th class="min-w-100px">{{ __('ID') }}</th>
+                            <th class="min-w-100px">{{ __('Assigned branch') }}</th>
                             <th class="min-w-100px">{{ __('Postal Code') }}</th>
                             <th class="min-w-125px">{{ __('State') }}</th>
                             <th class="min-w-150px">{{ __('City') }}</th>

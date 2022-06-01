@@ -11,9 +11,12 @@ class Products extends Model
     use HasFactory;
 
     protected $fillable = [
+        'UnitId',
         'Name',
         'Active',
         'Slug',
+        'Key',
+        'BarCode',
         'Image',
         'Description'
     ];
@@ -27,7 +30,7 @@ class Products extends Model
         $product->tags = self::tags($productId);
         $product->gallery = self::gallery($productId);
         $product->units = self::units($productId);
-        $product->prices = self::prices($productId);
+        $product->price = self::price($productId);
         $product->stock = self::stock($productId);
         $product->movements = self::movements($productId);
         return $product;
@@ -63,14 +66,9 @@ class Products extends Model
         return $units;
     }
 
-    public static function prices($pid)
+    public static function price($pid)
     {
-        $prices = [];
-        foreach (ProductPrices::where('ProductId', $pid)->get() as $price) {
-            $prices[$price->UnitId] = $price;
-        }
-
-        return $prices;
+        return ProductPrices::where('ProductId', $pid)->get();
     }
 
     public static function stock($pid)

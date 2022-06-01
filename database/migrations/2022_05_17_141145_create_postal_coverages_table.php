@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id('Id');
             $table->bigInteger('UserId')->unsigned();
             $table->bigInteger('StateId')->unsigned();
+            $table->bigInteger('BranchId')->unsigned();
             $table->string('City');
             $table->string('Colony');
             $table->string('PostalCode');

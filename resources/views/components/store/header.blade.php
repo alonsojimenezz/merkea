@@ -76,16 +76,13 @@
                                         </div>
                                         <div class="header__search-cat">
                                             <select>
-                                                <option>All Categories</option>
-                                                <option>Despensa</option>
-                                                <option>Pan y tortillas</option>
-                                                <option>Cerveza, vinos y licores</option>
-                                                <option>Congelados</option>
-                                                <option>Salchichonería</option>
-                                                <option>Lácteos y huevo</option>
-                                                <option>Granel</option>
-                                                <option>Frutas y verduras</option>
-
+                                                <option>{{ __('All Categories') }}</option>
+                                                @isset($categories)
+                                                    @foreach ($categories as $category)
+                                                        <option value="{{ $category->Id }}">{{ $category->Name }}
+                                                        </option>
+                                                    @endforeach
+                                                @endisset
                                             </select>
                                         </div>
                                     </form>
@@ -166,26 +163,26 @@
                                     <nav>
                                         <ul>
                                             <li>
-                                                <a href="index.html">Inicio <i class="far fa-home"></i></a>
+                                                <a
+                                                    href="{{ Route::has('store.home') ? route('store.home') : '#' }}">{{ __('Home') }}
+                                                    <i class="far fa-home"></i></a>
 
                                             </li>
-                                            <li><a href="product.html">Productos <i class="far fa-store"></i></a>
+                                            <li><a href="#">{{ __('Products') }} <i class="far fa-store"></i></a>
                                                 <ul class="submenu">
-                                                    <li><a href="#">Despensa</a></li>
-                                                    <li><a href="#">Pan y tortillas</a></li>
-                                                    <li><a href="#">Cerveza, vinos y licores</a></li>
-                                                    <li><a href="#">Congelados</a></li>
-                                                    <li><a href="#">Salchichonería</a></li>
-                                                    <li><a href="#">Lácteos y huevo</a></li>
-                                                    <li><a href="#">Granel</a></li>
-                                                    <li><a href="#">Frutas y verduras</a></li>
+                                                    @isset($categories)
+                                                        @foreach ($categories as $category)
+                                                            <li><a href="#">{{ __($category->Name) }}</a></li>
+                                                        @endforeach
+                                                    @endisset
                                                 </ul>
                                             </li>
                                             <li>
-                                                <a href="index.html">Sucursales <i class="far fa-location"></i></a>
+                                                <a href="#">{{ __('Branch Offices') }} <i
+                                                        class="far fa-location"></i></a>
                                             </li>
                                             <li>
-                                                <a href="index.html">Contacto <i class="far fa-phone"></i></a>
+                                                <a href="#"> <i class="far fa-phone"></i></a>
                                             </li>
                                         </ul>
                                     </nav>

@@ -38,9 +38,24 @@
         <label class="d-flex align-items-center fs-6 fw-bold mb-2">
             <span class="required">{{ __('Postal Code') }}</span>
         </label>
-        <input id="postal_code" name="postal_code" class="form-control form-control-solid"
-            placeholder="53126" data-fv-not-empty="true"
-            data-fv-not-empty___message="{{ __('The postal code is a required field') }}">
+        <input id="postal_code" name="postal_code" class="form-control form-control-solid" placeholder="53126"
+            data-fv-not-empty="true" data-fv-not-empty___message="{{ __('The postal code is a required field') }}">
+    </div>
+
+    <div class="row mb-10">
+        <div class="col fv-row">
+            <label class="fs-6 fw-bold mb-2 required">{{ __('Assigned branch') }}</label>
+            <select id="postal_code_branch" name="postal_code_branch" class="form-select form-select-solid"
+                data-control="select2" data-dropdown-parent="#postal_code_branch_dropdown"
+                data-placeholder="{{ __('Chose one option') }}..." data-allow-clear="true" data-fv-not-empty="true"
+                data-fv-not-empty___message="{{ __('The assigned branch is a required field') }}">
+                <option></option>
+                @foreach ($branches as $branch)
+                    <option value="{{ $branch->Id }}">{{ $branch->Name }}</option>
+                @endforeach
+            </select>
+            <div id="postal_code_branch_dropdown"></div>
+        </div>
     </div>
 
     <div class="row mb-10" id="postal_code_status_section">

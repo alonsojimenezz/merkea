@@ -17,9 +17,6 @@ return new class extends Migration
             $table->id('Id');
             $table->unsignedBigInteger('LastUpdater');
             $table->unsignedBigInteger('ProductId');
-            $table->unsignedBigInteger('UnitId');
-            $table->string('Key')->nullable();
-            $table->string('Barcode')->nullable();
             $table->float('BasePrice', 10, 2)->default(0);
             $table->integer('DiscountType')->default(0);
             $table->float('DiscountPercent', 5, 2)->default(0);

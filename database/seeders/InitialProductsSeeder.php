@@ -15,8 +15,14 @@ class InitialProductsSeeder extends Seeder
      */
     public function run()
     {
-        Products::create(['Name' => 'ABLANDADOR DE CARNE 155 G', 'Slug' => Str::slug('ABLANDADOR DE CARNE 155 G', '-', 'es'), 'Image' => null, 'Active' => true,]);
-        Products::create(['Name' => 'ACEITE ALEICO EN AEROSOL 380 G', 'Slug' => Str::slug('ACEITE ALEICO EN AEROSOL 380 G', '-', 'es'), 'Image' => null, 'Active' => true,]);
-        Products::create(['Name' => 'ACEITE CAPULLO 840ML', 'Slug' => Str::slug('ACEITE CAPULLO 840ML', '-', 'es'), 'Image' => null, 'Active' => false,]);
+        Products::create([
+            'UnitId' => 1,
+            'Name' => 'ABLANDADOR DE CARNE 155 G',
+            'Slug' => Str::slug('ABLANDADOR DE CARNE 155 G', '-', 'es'),
+            'Key' => '7501003337887',
+            'Barcode' => null,
+            'Image' => null,
+            'Active' => true,
+        ]);
     }
 }

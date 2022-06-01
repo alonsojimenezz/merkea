@@ -33,6 +33,7 @@ class PostalCoverageApi extends Controller
                 $pc = ModelsPostalCoverage::create([
                     'UserId' => auth()->user()->id,
                     'StateId' => $request->input('state'),
+                    'BranchId' => $request->input('branch'),
                     'City' => $request->input('city'),
                     'Colony' => $request->input('colony'),
                     'PostalCode' => $request->input('postal_code'),
@@ -87,6 +88,7 @@ class PostalCoverageApi extends Controller
                 $arrayUpdate = [
                     'UserId' => auth()->user()->id,
                     'StateId' => $request->input('state'),
+                    'BranchId' => $request->input('branch'),
                     'City' => $request->input('city'),
                     'Colony' => $request->input('colony'),
                     'PostalCode' => $request->input('postal_code'),

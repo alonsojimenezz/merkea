@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Store;
 use Illuminate\Support\Facades\Route;
 // use App\Http\Controllers\ProductCategoriesController;
 
@@ -14,9 +15,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('store.index');
-});
+Route::get('/', [Store::class, 'index'])->name('store.home');
 
 Route::get('/dashboard', function () {
     return view('dashboard');

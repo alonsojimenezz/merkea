@@ -18,6 +18,7 @@ class InitialPostalCoverage extends Seeder
         ModelsPostalCoverage::create([
             'UserId' => 1,
             'StateId' => 15,
+            'BranchId' => 1,
             'City' => 'Naucalpan de Juárez',
             'Colony' => 'Lomas Verdes 1ra Sección',
             'PostalCode' => '53126',

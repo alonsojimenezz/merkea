@@ -18,9 +18,6 @@ class InitialProductPrices extends Seeder
         ProductPrices::create([
             'LastUpdater' => 1,
             'ProductId' => 1,
-            'UnitId' => 6,
-            'Key' => '7501003337887',
-            'Barcode' => null,
             'BasePrice' => 20.50,
             'DiscountType' => 1,
             'DiscountPercent' => 6.00,

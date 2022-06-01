@@ -4,16 +4,10 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Str;
-use Faker\Factory as Faker;
-
-use App\Models\ProductCategories;
+use App\Models\ProductCategories as ModelsProductCategories;
 
 class ProductCategoriesSeeder extends Seeder
 {
-    private $names = [];
 
     /**
      * Run the database seeds.
@@ -22,29 +16,23 @@ class ProductCategoriesSeeder extends Seeder
      */
     public function run()
     {
-        $faker = Faker::create();
-
-        for ($i = 0; $i < 15; $i++) {
-
-            $name = $faker->unique()->word(1);
-            while ($this->isTaken($name)) {
-                $name = $faker->unique()->word(1);
-            }
-
-            ProductCategories::create([
-                'Name' => $name,
-                'Description' => $faker->sentence(10),
-            ]);
-        }
-    }
-
-    private function isTaken($name)
-    {
-        if (in_array($name, $this->names)) {
-            return true;
-        } else {
-            $this->names[] = $name;
-            return false;
-        }
+        ModelsProductCategories::create(['Name' => 'Despensa']);
+        ModelsProductCategories::create(['Name' => 'Bebidas']);
+        ModelsProductCategories::create(['Name' => 'Cervezas, Vinos y Licores']);
+        ModelsProductCategories::create(['Name' => 'Carnes, Aves y Pescados']);
+        ModelsProductCategories::create(['Name' => 'Frutas y Verduras']);
+        ModelsProductCategories::create(['Name' => 'Quesos']);
+        ModelsProductCategories::create(['Name' => 'Salchichoneria']);
+        ModelsProductCategories::create(['Name' => 'Gourmet']);
+        ModelsProductCategories::create(['Name' => 'Botanas']);
+        ModelsProductCategories::create(['Name' => 'Desechables']);
+        ModelsProductCategories::create(['Name' => 'Limpieza']);
+        ModelsProductCategories::create(['Name' => 'Aseo Personal']);
+        ModelsProductCategories::create(['Name' => 'Farmacia']);
+        ModelsProductCategories::create(['Name' => 'Tabaco y Vapeadores']);
+        ModelsProductCategories::create(['Name' => 'Lacteos y Huevo']);
+        ModelsProductCategories::create(['Name' => 'Panaderia']);
+        ModelsProductCategories::create(['Name' => 'Dulces']);
+        ModelsProductCategories::create(['Name' => 'Jugos, Bebidas y Aguas']);
     }
 }
