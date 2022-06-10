@@ -287,5 +287,19 @@
     "Set the product price": "Establece el precio del producto",
     "Product price and discount": "Precio y Descuento del Producto",
     "Base Price": "Precio Base",
-    "The product price was updated successfully": "El precio del producto fue actualizado con éxito"
+    "The product price was updated successfully": "El precio del producto fue actualizado con éxito",
+    "Upload Inventory": "Subir Inventario",
+    "To upload new inventory, select the branch office and look for the inventory format on your device": "Para subir un nuevo inventario, selecciona la sucursal y busca el formato de inventario en tu dispositivo",
+    "Drop the file here or click to upload": "Arrastra el archivo aquí o haz clic para subirlo",
+    "Only a file with an xlsx extension is accepted": "Solo se acepta un archivo con extensión xlsx",
+    "Uncategorized": "Sin Categoría",
+    "Select Category": "Selecciona Categoría",
+    "The product category was updated successfully": "La categoría del producto fue actualizada con éxito",
+    "Highlight Product": "Destacar producto",
+    "Featured product": "Producto Destacado",
+    "Product not featured": "Producto no destacado",
+    "The product was highlighted successfully": "El producto fue destacado con éxito",
+    "The product highlight was removed successfully": "El destaque del producto fue removido con éxito",
+    "Service Key is not valid": "La clave del servicio no es válida",
+    "Products updated successfully": "Productos actualizados con éxito"
 }

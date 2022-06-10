@@ -9,14 +9,28 @@
                         <div class="cat__menu">
                             <nav id="mobile-menu">
                                 <ul>
-                                    <li><a href="#">Despensa</a></li>
-                                    <li><a href="#">Pan y tortillas</a></li>
-                                    <li><a href="#">Cerveza, vinos y licores</a></li>
-                                    <li><a href="#">Congelados</a></li>
-                                    <li><a href="#">Salchichonería</a></li>
-                                    <li><a href="#">Lácteos y huevo</a></li>
-                                    <li><a href="#">Granel</a></li>
-                                    <li><a href="#">Frutas y verduras</a></li>
+                                    @isset($categories)
+                                        @foreach ($categories as $category)
+                                            <li>
+                                                <a href="">{{ ucwords(strtolower($category['name'])) }}
+                                                    @if (isset($category['children']) && count($category['children']) > 0)
+                                                        <i class="far fa-angle-down"></i>
+                                                </a>
+
+                                                <ul class="submenu">
+                                                    @foreach ($category['children'] as $child)
+                                                        <li>
+                                                            <a href="#">{{ ucwords(strtolower($child['name'])) }}</a>
+                                                        </li>
+                                                    @endforeach
+                                                </ul>
+                                            @else
+                                                </a>
+                                        @endif
+                                        </li>
+                                        @endforeach
+
+                                    @endisset
                                 </ul>
                             </nav>
                         </div>

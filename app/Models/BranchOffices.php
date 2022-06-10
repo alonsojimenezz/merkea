@@ -16,6 +16,7 @@ class BranchOffices extends Model
         'Name',
         'Address',
         'IsActive',
+        'ServiceKey',
         'Frame'
     ];
 

@@ -16,12 +16,15 @@ Route::group(['middleware' => ['role:Administrator|Staff']], function () {
 
         Route::post('products/main_image_upload', [ProductsApi::class, 'uploadMainImage']);
         Route::post('products/status', [ProductsApi::class, 'changeProductStatus']);
+        Route::post('products/category', [ProductsApi::class, 'changeProductCategory']);
+        Route::post('products/highlight', [ProductsApi::class, 'highlightProduct']);
         Route::post('products/tags', [ProductsApi::class, 'changeProductTags']);
         Route::post('products/gallery', [ProductsApi::class, 'uploadGallery']);
         Route::post('products/gallery/delete', [ProductsApi::class, 'deleteGalleryImage']);
         Route::post('products/units', [ProductsApi::class, 'changeProductUnits']);
         Route::post('products/prices', [ProductsApi::class, 'setProductPrices']);
         Route::post('products/stock', [ProductsApi::class, 'setProductStock']);
+        Route::post('products/upload_inventory', [ProductsApi::class, 'uploadInventory']);
 
         Route::apiResource('units', UnitsApi::class);
 
@@ -33,3 +36,5 @@ Route::group(['middleware' => ['role:Administrator|Staff']], function () {
         Route::apiResource('postal_codes', PostalCoverageApi::class);
     });
 });
+
+

@@ -6658,5 +6658,12 @@ ul li a.mobile_menu {
     }
 }
 
+.list-group-scrollable {
+    max-height: 300px;
+    margin-bottom: 10px;
+    overflow-x: hidden;
+    -webkit-overflow-scrolling: touch;
+}
+
 
 /*# sourceMappingURL=style.css.map */

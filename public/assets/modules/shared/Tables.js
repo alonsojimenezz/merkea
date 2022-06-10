@@ -51,6 +51,12 @@ class DTables {
         });
     }
 
+    buttonClic(obj, btn, callback = () => {}) {
+        $(obj + " tbody").on('click', 'tr ' + btn, function() {
+            callback($(this));
+        });
+    }
+
 
     exportButtons(obj, title, objButtons) {
         var buttons = new $.fn.dataTable.Buttons(obj, {

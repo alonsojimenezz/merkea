@@ -12,7 +12,7 @@ class ProductStockMovements extends Model
     protected $fillable = [
         'UserId',
         'ProductId',
-        'UnitId',
+        'BranchId',
         'PreviousQuantity',
         'Quantity',
         'ReasonId',

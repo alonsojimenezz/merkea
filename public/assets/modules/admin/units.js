@@ -100,7 +100,7 @@ $(function() {
     }
 
     function initEditUnitLinks() {
-        buttons.initClick(".unit-name-edit-link", function(btn) {
+        table.buttonClic("#product_units_table", ".unit-name-edit-link", function(btn) {
             $("#modal_titles").addClass("d-none");
             $("#modal_alt_titles").removeClass("d-none");
             $("#unit_id").val(btn.data("id"));

@@ -42,6 +42,8 @@ class InitialRoleSeeder extends Seeder
 
         Permission::create(['name' => 'Change Product Image', 'category' => 'Product Details'])->assignRole($admin);
         Permission::create(['name' => 'Change Product Status', 'category' => 'Product Details'])->assignRole($admin);
+        Permission::create(['name' => 'Highlight Product', 'category' => 'Product Details'])->assignRole($admin);
+        Permission::create(['name' => 'Change Product Category', 'category' => 'Product Details'])->assignRole($admin);
         Permission::create(['name' => 'Change Product Tags', 'category' => 'Product Details'])->assignRole($admin);
         Permission::create(['name' => 'Modify Product Gallery', 'category' => 'Product Details'])->assignRole($admin);
         Permission::create(['name' => 'Change Product Units', 'category' => 'Product Details'])->assignRole($admin);

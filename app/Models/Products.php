@@ -12,13 +12,15 @@ class Products extends Model
 
     protected $fillable = [
         'UnitId',
+        'CategoryId',
         'Name',
         'Active',
         'Slug',
         'Key',
         'BarCode',
         'Image',
-        'Description'
+        'Description',
+        'Highlight'
     ];
 
 
@@ -27,6 +29,7 @@ class Products extends Model
     public static function AllData($productId)
     {
         $product = Products::find($productId);
+        $product->category = self::category($product->CategoryId);
         $product->tags = self::tags($productId);
         $product->gallery = self::gallery($productId);
         $product->units = self::units($productId);
@@ -75,7 +78,7 @@ class Products extends Model
     {
         $stock = [];
         foreach (ProductStock::where('ProductId', $pid)->get() as $stockItem) {
-            $stock[$stockItem->UnitId] = $stockItem;
+            $stock[$stockItem->BranchId] = $stockItem;
         }
 
         return $stock;
@@ -84,11 +87,20 @@ class Products extends Model
     public static function movements($pid)
     {
         return DB::table('product_stock_movements as psm')
-            ->join('units as u', 'psm.UnitId', '=', 'u.Id')
+            ->join('branch_offices as bo', 'bo.Id', '=', 'psm.BranchId')
             ->join('users as us', 'psm.UserId', '=', 'us.id')
             ->where('psm.ProductId', $pid)
-            ->select('psm.*', 'us.Name as UserName', 'u.Name as UnitName')
-            ->orderBy('psm.Id', 'desc')
+            ->select('psm.*', 'us.Name as UserName', 'bo.Name as BranchName')
+            ->orderBy('psm.Id', 'asc')
             ->get();
+    }
+
+    public static function category($cid)
+    {
+        return DB::table('product_categories as pc')
+            ->join('product_categories as pc2', 'pc2.Id', '=', 'pc.ParentId')
+            ->where('pc.Id', $cid)
+            ->select('pc.Name', 'pc2.Name as ParentName', 'pc.Active')
+            ->first();
     }
 }

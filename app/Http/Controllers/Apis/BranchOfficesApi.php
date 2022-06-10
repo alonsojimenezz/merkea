@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Apis;
 use App\Http\Controllers\Controller;
 use App\Models\BranchOffices;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class BranchOfficesApi extends Controller
 {
@@ -30,9 +31,17 @@ class BranchOfficesApi extends Controller
             $exist = BranchOffices::where('Name', $request->input('name'))->first();
             if (!$exist) {
 
+                $serviceKey = Str::random(32);
+                $searchServiceKey = BranchOffices::where('ServiceKey', $serviceKey)->first();
+                while ($searchServiceKey) {
+                    $serviceKey = Str::random(32);
+                    $searchServiceKey = BranchOffices::where('ServiceKey', $serviceKey)->first();
+                }
+
                 $staff = BranchOffices::create([
                     'Name' => $request->input('name'),
                     'Address' => $request->input('address'),
+                    'ServiceKey' => $serviceKey,
                     'Frame' => $request->input('frame'),
                     'IsActive' => 1
                 ]);

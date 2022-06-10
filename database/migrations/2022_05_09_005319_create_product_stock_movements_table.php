@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id('Id');
             $table->unsignedBigInteger('UserId');
             $table->unsignedBigInteger('ProductId');
-            $table->unsignedBigInteger('UnitId');
+            $table->unsignedBigInteger('BranchId');
             $table->float('PreviousQuantity', 10, 2);
             $table->float('Quantity', 10, 2);
             $table->string('ReasonId');

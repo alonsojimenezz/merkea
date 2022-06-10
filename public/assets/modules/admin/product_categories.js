@@ -113,7 +113,7 @@ $(function() {
     }
 
     function initEditCategoryLinks() {
-        buttons.initClick(".category-name-edit-link", function(btn) {
+        table.buttonClic("#product_categories_table", ".category-name-edit-link", function(btn) {
             $("#modal_titles").addClass("d-none");
             $("#modal_alt_titles").removeClass("d-none");
             $("#category_id").val(btn.data("id"));

@@ -7,10 +7,11 @@ use App\Models\ProductImages;
 use Illuminate\Http\Request;
 use App\Models\Products as ModelsProducts;
 use App\Models\ProductTags as ModelsProductTags;
-use App\Models\ProductUnits as ModelsProductUnits;
 use App\Models\ProductPrices as ModelsProductPrices;
 use App\Models\ProductStock as ModelsProductStock;
 use App\Models\ProductStockMovements as ModelsProductStockMovements;
+use App\Models\BranchOffices as ModelsBranchOffices;
+use Maatwebsite\Excel\Facades\Excel;
 use Throwable;
 
 class ProductsApi extends Controller
@@ -152,6 +153,40 @@ class ProductsApi extends Controller
         }
     }
 
+    public function changeProductCategory(Request $request)
+    {
+        try {
+            ModelsProducts::where('Id', $request->input('pid'))->update([
+                'CategoryId' => $request->input('category')
+            ]);
+            return $this->jsonResponse(200, __('Saved successfully'), [
+                'alert' => __('The product category was updated successfully')
+            ]);
+        } catch (Throwable $th) {
+            return $this->jsonResponse(500, __('Internal Server Error'), [
+                'exception' => $th->getMessage(),
+            ]);
+        }
+    }
+
+    public function highlightProduct(Request $request)
+    {
+        try {
+            ModelsProducts::where('Id', $request->input('pid'))->update([
+                'Highlight' => $request->input('highlight')
+            ]);
+
+            $alert = $request->input('highlight') == 1 ? __('The product was highlighted successfully') : __('The product highlight was removed successfully');
+            return $this->jsonResponse(200, __('Saved successfully'), [
+                'alert' => $alert
+            ]);
+        } catch (Throwable $th) {
+            return $this->jsonResponse(500, __('Internal Server Error'), [
+                'exception' => $th->getMessage(),
+            ]);
+        }
+    }
+
     public function changeProductTags(Request $request)
     {
         try {
@@ -267,10 +302,10 @@ class ProductsApi extends Controller
         try {
             $stocks = $request->input('stocks');
             foreach ($stocks as $stock) {
-                $previusStock = ModelsProductStock::where('ProductId', $stock['pid'])->where('UnitId', $stock['unit'])->first();
+                $previusStock = ModelsProductStock::where('ProductId', $stock['pid'])->where('BranchId', $stock['branch'])->first();
                 $newStock = ModelsProductStock::updateOrCreate([
                     'ProductId' => $stock['pid'],
-                    'UnitId' => $stock['unit'],
+                    'BranchId' => $stock['branch'],
                 ], [
                     'LastUpdater' => auth()->user()->id,
                     'Quantity' => $stock['stock']
@@ -279,7 +314,7 @@ class ProductsApi extends Controller
                 ModelsProductStockMovements::create([
                     'UserId' => auth()->user()->id,
                     'ProductId' => $stock['pid'],
-                    'UnitId' => $stock['unit'],
+                    'BranchId' => $stock['branch'],
                     'Quantity' => $stock['stock'],
                     'PreviousQuantity' => $previusStock ? $previusStock->Quantity : 0,
                     'UserId' => auth()->user()->id,
@@ -290,11 +325,56 @@ class ProductsApi extends Controller
 
             return $this->jsonResponse(200, __('Saved successfully'), [
                 'alert' => __('The product stock were updated successfully'),
+                'movements' => ModelsProducts::movements($request->input('pid'))
             ]);
         } catch (Throwable $th) {
             return $this->jsonResponse(500, __('Internal Server Error'), [
                 'exception' => $th->getMessage(),
             ]);
         }
+    }
+
+    public function uploadInventory(Request $request)
+    {
+        try {
+            $path = $request->file('inventory')->getRealPath();
+
+            $data = Excel::toArray([], $path);
+
+            return $this->jsonResponse(200, __('Saved successfully'), [
+                'alert' => __('The product stock were updated successfully'),
+                'data'  => $data
+            ]);
+        } catch (Throwable $th) {
+            return $this->jsonResponse(500, __('Internal Server Error'), [
+                'exception' => $th->getMessage(),
+            ]);
+        }
+    }
+
+    public function serviceUpdate(Request $request, $key)
+    {
+        try {
+            $isValidKey = $this->validateServiceKey($key);
+            if ($isValidKey > 0) {
+                return $this->jsonResponse(200, __('Products updated successfully'), [
+                    'request' => $request->all()
+                ]);
+            }else{
+                return $this->jsonResponse(500, __('Service Key is not valid'));
+            }
+        } catch (Throwable $th) {
+            return $this->jsonResponse(500, __('Internal Server Error'), [
+                'exception' => $th->getMessage(),
+            ]);
+        }
+    }
+
+    private function validateServiceKey($key)
+    {
+        $branchId = ModelsBranchOffices::where('ServiceKey', $key)->first();
+        if (!$branchId)
+            return 0;
+        return $branchId->Id;
     }
 }

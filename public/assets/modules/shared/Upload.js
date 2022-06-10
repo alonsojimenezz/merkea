@@ -28,6 +28,27 @@ class Upload {
         return null;
     }
 
+    customInit(obj, url, name, auto = false, maxFiles = 1, acceptedFiles = "image/*") {
+        if ($(obj).length > 0) {
+            return new Dropzone(obj, {
+                url: url,
+                paramName: name,
+                maxFiles: maxFiles,
+                maxFilesize: 10,
+                parallelUploads: 10,
+                addRemoveLinks: true,
+                autoProcessQueue: auto,
+                uploadMultiple: (maxFiles > 1) ? true : false,
+                acceptedFiles: acceptedFiles,
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+        }
+
+        return null;
+    }
+
     initDirectUpload(obj, url, name, maxFiles = 10) {
         let request_dropzone = new Dropzone(obj, {
             url: url,

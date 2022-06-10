@@ -22,6 +22,7 @@ $(function() {
     initNewProductForm();
     initProductsTable();
     initSlugCreator();
+    initUploadInventory();
 
     function initNewProductForm() {
         buttons.init("show_new_product_form", function() {
@@ -103,6 +104,29 @@ $(function() {
         }, () => {
 
         }, true, "Products", "#export-buttons-hiden");
+    }
+
+    function initUploadInventory() {
+        let uploadZone = upload.customInit("#upload_inventory_dz", "/api_v1/products/upload_inventory", "inventory", false, 1, ".xlsx");
+
+        buttons.initClick("#upload_inventory_button", function(btn) {
+            upload.addCallback(uploadZone, function(r) {
+                if (r.code == 200) {
+                    alerts.fire(r.body.alert, "success", "Continuar", "primary");
+                } else {
+                    alerts.fire(r.message, "warning", "Intentar de Nuevo", "warning", function() {
+                        location.reload();
+                    });
+                }
+            });
+
+            upload.addData(uploadZone, {
+                branch: $("#branch_inventory").val()
+            });
+
+            upload.processQueue(uploadZone);
+        });
+
     }
 
 });

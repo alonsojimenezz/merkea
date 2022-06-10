@@ -79,7 +79,7 @@
                                                 <option>{{ __('All Categories') }}</option>
                                                 @isset($categories)
                                                     @foreach ($categories as $category)
-                                                        <option value="{{ $category->Id }}">{{ $category->Name }}
+                                                        <option value="{{ $category['id'] }}">{{ $category['name'] }}
                                                         </option>
                                                     @endforeach
                                                 @endisset
@@ -163,8 +163,7 @@
                                     <nav>
                                         <ul>
                                             <li>
-                                                <a
-                                                    href="{{ Route::has('store.home') ? route('store.home') : '#' }}">{{ __('Home') }}
+                                                <a href="{{ Route::has('store.home') ? route('store.home') : '#' }}">{{ __('Home') }}
                                                     <i class="far fa-home"></i></a>
 
                                             </li>
@@ -172,27 +171,43 @@
                                                 <ul class="submenu">
                                                     @isset($categories)
                                                         @foreach ($categories as $category)
-                                                            <li><a href="#">{{ __($category->Name) }}</a></li>
-                                                        @endforeach
-                                                    @endisset
-                                                </ul>
-                                            </li>
-                                            <li>
-                                                <a href="#">{{ __('Branch Offices') }} <i
-                                                        class="far fa-location"></i></a>
-                                            </li>
-                                            <li>
-                                                <a href="#"> <i class="far fa-phone"></i></a>
-                                            </li>
-                                        </ul>
-                                    </nav>
-                                </div>
-                            @endif
-                        </div>
-                    </div>
+                                                            <li>
+                                                                <a href="#">{{ ucwords(strtolower($category['name'])) }}
+                                                                    @if (isset($category['children']) && count($category['children']) > 0)
+                                                                        <i class="far fa-angle-down"></i>
+                                                                </a>
 
+                                                                <ul class="submenu">
+                                                                    @foreach ($category['children'] as $child)
+                                                                        <li>
+                                                                            <a
+                                                                                href="#">{{ ucwords(strtolower($child['name'])) }}</a>
+                                                                        </li>
+                                                                    @endforeach
+                                                                </ul>
+                                                            @else
+                                                                </a>
+                                                        @endif
+                                                </li>
+                                @endforeach
+                            @endisset
+                            </ul>
+                            </li>
+                            <li>
+                                <a href="#">{{ __('Branch Offices') }} <i class="far fa-location"></i></a>
+                            </li>
+                            <li>
+                                <a href="#"> <i class="far fa-phone"></i></a>
+                            </li>
+                            </ul>
+                            </nav>
+                        </div>
+                        @endif
+                    </div>
                 </div>
+
             </div>
         </div>
+    </div>
     </div>
 </header>

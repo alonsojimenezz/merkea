@@ -55,7 +55,9 @@
                                         {{ __('Manage your products') }}</div>
                                 </div>
                                 @can('Add Products')
-                                    <div class="d-flex mb-4">
+                                    <div class="d-flex align-items-center flex-nowrap text-nowrap py-1">
+                                        <a href="#" class="btn btn-outline btn-outline-dashed btn-outline-warning btn-active-warning fw-bolder me-4"
+                                            data-bs-toggle="modal" data-bs-target="#modal_upload_inventory">{{__('Upload Inventory')}}</a>
                                         <a href="#" id="show_new_product_form"
                                             class="btn btn-primary">{{ __('New Product') }}</a>
                                     </div>
@@ -176,6 +178,15 @@
                 @slot('subtitle', __('Create a new product, please fill the form below'))
                 @slot('body')
                     @include('admin.products.form_new_product')
+                @endslot
+            @endcomponent
+
+            @component('components.admin.modal')
+                @slot('modal_id', 'modal_upload_inventory')
+                @slot('title', __('Upload Inventory'))
+                @slot('subtitle', __('To upload new inventory, select the branch office and look for the inventory format on your device'))
+                @slot('body')
+                    @include('admin.products.form_upload_inventory', ['branches' => $branches])
                 @endslot
             @endcomponent
         @endcan

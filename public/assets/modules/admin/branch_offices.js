@@ -81,7 +81,7 @@ $(function() {
     }
 
     function initEditBranchOfficeLinks() {
-        buttons.initClick(".branch_office-name-edit-link", function(btn) {
+        table.buttonClic("#branch_offices_table", ".branch_office-name-edit-link", function(btn) {
             $("#modal_titles").addClass("d-none");
             $("#modal_alt_titles").removeClass("d-none");
             $("#branch_office_id").val(btn.data("id"));

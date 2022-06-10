@@ -12,7 +12,7 @@ class ProductStock extends Model
     protected $fillable = [
         'LastUpdater',
         'ProductId',
-        'UnitId',
+        'BranchId',
         'Quantity'
     ];
 

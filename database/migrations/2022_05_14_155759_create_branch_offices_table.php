@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id('Id');
             $table->string('Name');
             $table->string('Address');
+            $table->string('ServiceKey');
             $table->boolean('IsActive')->default(true);
             $table->text('Frame')->nullable();
             $table->timestamps();
