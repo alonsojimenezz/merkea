@@ -416,6 +416,9 @@ class ProductsApi extends Controller
                     ]
                 );
 
+                var_dump($productN);
+                echo "<br>";
+
                 $price = ModelsProductPrices::updateOrCreate(
                     ['ProductId' => $productN->Id],
                     [
