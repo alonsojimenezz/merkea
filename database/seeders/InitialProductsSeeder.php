@@ -15,16 +15,16 @@ class InitialProductsSeeder extends Seeder
      */
     public function run()
     {
-        Products::create([
-            'UnitId' => 1,
-            'CategoryId' => 121,
-            'Name' => 'ABLANDADOR DE CARNE 155 G',
-            'Slug' => Str::slug('ABLANDADOR DE CARNE 155 G', '-', 'es'),
-            'Key' => '7501003337887',
-            'Barcode' => null,
-            'Image' => null,
-            'Active' => true,
-            'Highlight' => true
-        ]);
+        // Products::create([
+        //     'UnitId' => 1,
+        //     'CategoryId' => 121,
+        //     'Name' => 'ABLANDADOR DE CARNE 155 G',
+        //     'Slug' => Str::slug('ABLANDADOR DE CARNE 155 G', '-', 'es'),
+        //     'Key' => '7501003337887',
+        //     'Barcode' => null,
+        //     'Image' => null,
+        //     'Active' => true,
+        //     'Highlight' => true
+        // ]);
     }
 }

@@ -11,6 +11,7 @@ use App\Models\ProductPrices as ModelsProductPrices;
 use App\Models\ProductStock as ModelsProductStock;
 use App\Models\ProductStockMovements as ModelsProductStockMovements;
 use App\Models\BranchOffices as ModelsBranchOffices;
+use App\Models\ProductCategories as ModelsProductCategories;
 use Maatwebsite\Excel\Facades\Excel;
 use Throwable;
 
@@ -357,10 +358,11 @@ class ProductsApi extends Controller
         try {
             $isValidKey = $this->validateServiceKey($key);
             if ($isValidKey > 0) {
+                $processed = $this->processProducts($request->input('products'));
                 return $this->jsonResponse(200, __('Products updated successfully'), [
-                    'request' => $request->all()
+                    'proccesed' => $processed
                 ]);
-            }else{
+            } else {
                 return $this->jsonResponse(500, __('Service Key is not valid'));
             }
         } catch (Throwable $th) {
@@ -376,5 +378,26 @@ class ProductsApi extends Controller
         if (!$branchId)
             return 0;
         return $branchId->Id;
+    }
+
+    private function processProducts($products)
+    {
+        try {
+            foreach ($products as $product) {
+                $department = ModelsProductCategories::updateOrCreate(
+                    ['Name' => $product['department']],
+                    ['ParentId' => null, 'Description' => $product['department'], 'Active' => 1]
+                );
+
+                $category = ModelsProductCategories::updateOrCreate(
+                    ['Name' => $product['category']],
+                    ['ParentId' => $department->Id, 'Description' => $product['category'], 'Active' => 1]
+                );
+            }
+
+            return true;
+        } catch (Throwable $th) {
+            return false;
+        }
     }
 }
