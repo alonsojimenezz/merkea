@@ -398,7 +398,7 @@ class ProductsApi extends Controller
 
                 $unit = ModelsUnits::updateOrCreate(
                     ['Name' => $product['unit']],
-                    ['Key' => substr($product['unit'], 0, 2), 'Active' => 1]
+                    ['Active' => 1]
                 );
 
                 $product = ModelsProducts::updateOrCreate(
@@ -406,8 +406,8 @@ class ProductsApi extends Controller
                     [
                         'UnitId' => $unit->Id,
                         'CategoryId' => $category->Id,
-                        'Slug' => Str::slug($product['name'], '-', 'es'),
-                        'Name' => $product['name']
+                        'Slug' => Str::slug($product['description'], '-', 'es'),
+                        'Name' => $product['description']
                     ]
                 );
 
