@@ -401,7 +401,7 @@ class ProductsApi extends Controller
                     ['Active' => 1]
                 );
 
-                $product = ModelsProducts::updateOrCreate(
+                $productN = ModelsProducts::updateOrCreate(
                     ['Key' => $product['key']],
                     [
                         'UnitId' => $unit->Id,
@@ -411,14 +411,14 @@ class ProductsApi extends Controller
                     ]
                 );
 
-                $stock = ModelsProductStock::where('ProductId', $product->Id)->where('BranchId', $branchId)->first();
+                $stock = ModelsProductStock::where('ProductId', $productN->Id)->where('BranchId', $branchId)->first();
                 if ($stock) {
                     $stock->Quantity = $product['stock'];
                     $stock->save();
                 } else {
                     ModelsProductStock::create([
                         'LastUpdater' => 1,
-                        'ProductId' => $product->Id,
+                        'ProductId' => $productN->Id,
                         'BranchId' => $branchId,
                         'Quantity' => $product['stock']
                     ]);
