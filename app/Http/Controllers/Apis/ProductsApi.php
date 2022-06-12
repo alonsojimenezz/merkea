@@ -416,6 +416,15 @@ class ProductsApi extends Controller
                     ]
                 );
 
+                $price = ModelsProductPrices::updateOrCreate(
+                    ['ProductId' => $productN->Id],
+                    [
+                        'LastUpdater' => 1,
+                        'BasePrice' => $product['price'],
+                        'DiscountType' => 0
+                    ]
+                );
+
                 // $stock = ModelsProductStock::where('ProductId', $productN->Id)->where('BranchId', $branchId)->first();
                 // if ($stock) {
                 //     $stock->Quantity = $product['stock'];

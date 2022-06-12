@@ -9,13 +9,14 @@
             <div class="card-body pt-0">
                 <div class="py-5">
                     @php
-                        $price = (isset($product->price) && !empty($product->price)) ? $product->price[0] : null;
+                        $price = isset($product->price) && isset($product->price[0]) ? $product->price[0] : null;
                         if ($price != null) {
                             $price->BasePrice = number_format($price->BasePrice, 2, '.', '');
                             $price->DiscountPercent = number_format($price->DiscountPercent, 2, '.', '');
                             $price->DiscountFixed = number_format($price->DiscountFixed, 2, '.', '');
                         }
                     @endphp
+
 
                     <div class="col">
                         <div class="mb-10 fv-row fv-plugins-icon-container">
@@ -106,8 +107,7 @@
                         <div class="mb-10 fv-row discount_type_container {{ isset($price->DiscountType) && $price->DiscountType == 2 ? '' : 'd-none' }}"
                             id="discount_type_container_fixed">
                             <label class="form-label">{{ __('Fixed Discount') }}</label>
-                            <input class="form-control form-control-solid fixed_discount"
-                                id="fixed_discount"
+                            <input class="form-control form-control-solid fixed_discount" id="fixed_discount"
                                 value="{{ isset($price->DiscountType) && $price->DiscountType == 2 ? $price->DiscountFixed : '0.00' }}">
                             <div class="text-muted fs-7">
                                 {{ __('Set the discounted product price. The product will be reduced at the determined fixed price') }}
