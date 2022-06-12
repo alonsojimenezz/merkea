@@ -12,7 +12,9 @@ use App\Models\ProductStock as ModelsProductStock;
 use App\Models\ProductStockMovements as ModelsProductStockMovements;
 use App\Models\BranchOffices as ModelsBranchOffices;
 use App\Models\ProductCategories as ModelsProductCategories;
+use App\Models\Units as ModelsUnits;
 use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Support\Str;
 use Throwable;
 
 class ProductsApi extends Controller
@@ -358,7 +360,7 @@ class ProductsApi extends Controller
         try {
             $isValidKey = $this->validateServiceKey($key);
             if ($isValidKey > 0) {
-                $processed = $this->processProducts($request->input('products'));
+                $processed = $this->processProducts($request->input('products'), $isValidKey);
                 return $this->jsonResponse(200, __('Products updated successfully'), [
                     'proccesed' => $processed
                 ]);
@@ -380,7 +382,7 @@ class ProductsApi extends Controller
         return $branchId->Id;
     }
 
-    private function processProducts($products)
+    private function processProducts($products, $branchId)
     {
         try {
             foreach ($products as $product) {
@@ -390,9 +392,37 @@ class ProductsApi extends Controller
                 );
 
                 $category = ModelsProductCategories::updateOrCreate(
-                    ['Name' => $product['category']],
-                    ['ParentId' => $department->Id, 'Description' => $product['category'], 'Active' => 1]
+                    ['Name' => $product['category'], 'ParentId' => $department->Id],
+                    ['Description' => $product['category'], 'Active' => 1]
                 );
+
+                $unit = ModelsUnits::updateOrCreate(
+                    ['Name' => $product['unit']],
+                    ['Key' => substr($product['unit'], 0, 2), 'Active' => 1]
+                );
+
+                $product = ModelsProducts::updateOrCreate(
+                    ['Key' => $product['key']],
+                    [
+                        'UnitId' => $unit->Id,
+                        'CategoryId' => $category->Id,
+                        'Slug' => Str::slug($product['name'], '-', 'es'),
+                        'Name' => $product['name']
+                    ]
+                );
+
+                $stock = ModelsProductStock::where('ProductId', $product->Id)->where('BranchId', $branchId)->first();
+                if ($stock) {
+                    $stock->Quantity = $product['stock'];
+                    $stock->save();
+                } else {
+                    ModelsProductStock::create([
+                        'LastUpdater' => 1,
+                        'ProductId' => $product->Id,
+                        'BranchId' => $branchId,
+                        'Quantity' => $product['stock']
+                    ]);
+                }
             }
 
             return true;
