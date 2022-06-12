@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('units', function (Blueprint $table) {
             $table->id('Id');
             $table->string('Name')->unique();
-            $table->string('Key')->unique();
+            $table->string('Key');
             $table->boolean('Active')->default(true);
             $table->timestamps();
             $table->engine = 'InnoDB';

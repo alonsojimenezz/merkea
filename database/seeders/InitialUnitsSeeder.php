@@ -15,8 +15,8 @@ class InitialUnitsSeeder extends Seeder
      */
     public function run()
     {
-        Units::create(['Name' => 'Pieza', 'Key' => 'pz', 'Active' => true,]);
-        Units::create(['Name' => 'Kilogramo', 'Key' => 'kg', 'Active' => true,]);
-        Units::create(['Name' => 'Gramo', 'Key' => 'g', 'Active' => true,]);
+        // Units::create(['Name' => 'Pieza', 'Key' => 'pz', 'Active' => true,]);
+        // Units::create(['Name' => 'Kilogramo', 'Key' => 'kg', 'Active' => true,]);
+        // Units::create(['Name' => 'Gramo', 'Key' => 'g', 'Active' => true,]);
     }
 }
