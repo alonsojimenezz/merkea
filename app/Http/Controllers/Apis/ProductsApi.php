@@ -425,9 +425,14 @@ class ProductsApi extends Controller
                 }
             }
 
-            return true;
+            return [
+                'code'  => 200,
+            ];
         } catch (Throwable $th) {
-            return false;
+            return [
+                'code'  => 500,
+                'exception' => $th->getMessage(),
+            ];
         }
     }
 }
