@@ -398,16 +398,21 @@ class ProductsApi extends Controller
 
                 $unit = ModelsUnits::updateOrCreate(
                     ['Name' => $product['unit']],
-                    ['Active' => 1]
+                    ['Key' => substr($product['unit'], 0, 2), 'Active' => 1]
                 );
+
+                $searchDuplicityName = ModelsProducts::where('Name', $product['description'])->where('Key', '<>', $product['key'])->first();
+                if ($searchDuplicityName) {
+                    $product['description'] = $product['description'] . ' ' . $product['key'];
+                }
 
                 $productN = ModelsProducts::updateOrCreate(
                     ['Key' => $product['key']],
                     [
+                        'Name' => $product['description'],
                         'UnitId' => $unit->Id,
                         'CategoryId' => $category->Id,
                         'Slug' => Str::slug($product['description'], '-', 'es'),
-                        'Name' => $product['description']
                     ]
                 );
 
