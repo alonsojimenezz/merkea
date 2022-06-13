@@ -362,7 +362,7 @@ class ProductsApi extends Controller
             if ($isValidKey > 0) {
                 $processed = $this->processProducts($request->input('products'), $isValidKey);
                 return $this->jsonResponse(200, __('Products updated successfully'), [
-                    'proccesed' => $processed
+                    'result' => $processed
                 ]);
             } else {
                 return $this->jsonResponse(500, __('Service Key is not valid'));
@@ -385,21 +385,28 @@ class ProductsApi extends Controller
     private function processProducts($products, $branchId)
     {
         try {
-            foreach ($products as $product) {
+            $arrayReturn = [];
+            foreach ($products as $k => $product) {
                 $department = ModelsProductCategories::updateOrCreate(
                     ['Name' => $product['department']],
                     ['ParentId' => null, 'Description' => $product['department'], 'Active' => 1]
                 );
+
+                $arrayReturn[$k]['department'] = $department;
 
                 $category = ModelsProductCategories::updateOrCreate(
                     ['Name' => $product['category'], 'ParentId' => $department->Id],
                     ['Description' => $product['category'], 'Active' => 1]
                 );
 
+                $arrayReturn[$k]['category'] = $category;
+
                 $unit = ModelsUnits::updateOrCreate(
                     ['Name' => $product['unit']],
                     ['Key' => substr($product['unit'], 0, 2), 'Active' => 1]
                 );
+
+                $arrayReturn[$k]['unit'] = $unit;
 
                 $searchDuplicityName = ModelsProducts::where('Name', $product['description'])->where('Key', '<>', $product['key'])->first();
                 if ($searchDuplicityName) {
@@ -415,6 +422,8 @@ class ProductsApi extends Controller
                         'Slug' => Str::slug($product['description'], '-', 'es'),
                     ]
                 );
+
+                $arrayReturn[$k]['product'] = $productN;
 
                 // $price = ModelsProductPrices::updateOrCreate(
                 //     ['ProductId' => $productN->Id],
@@ -441,6 +450,7 @@ class ProductsApi extends Controller
 
             return [
                 'code'  => 200,
+                'products' => $arrayReturn
             ];
         } catch (Throwable $th) {
             return [
