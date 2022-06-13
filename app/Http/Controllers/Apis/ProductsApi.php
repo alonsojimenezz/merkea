@@ -434,18 +434,18 @@ class ProductsApi extends Controller
                 //     ]
                 // );
 
-                $stock = ModelsProductStock::where('ProductId', $productN->Id)->where('BranchId', $branchId)->first();
-                if ($stock) {
-                    $stock->Quantity = $product['stock'];
-                    $stock->save();
-                } else {
-                    ModelsProductStock::create([
-                        'LastUpdater' => 1,
-                        'ProductId' => $productN->Id,
-                        'BranchId' => $branchId,
-                        'Quantity' => $product['stock']
-                    ]);
-                }
+                // $stock = ModelsProductStock::where('ProductId', $productN->Id)->where('BranchId', $branchId)->first();
+                // if ($stock) {
+                //     $stock->Quantity = $product['stock'];
+                //     $stock->save();
+                // } else {
+                //     ModelsProductStock::create([
+                //         'LastUpdater' => 1,
+                //         'ProductId' => $productN->Id,
+                //         'BranchId' => $branchId,
+                //         'Quantity' => $product['stock']
+                //     ]);
+                // }
             }
 
             return [
