@@ -395,7 +395,7 @@ class ProductsApi extends Controller
 
                 $category = ModelsProductCategories::updateOrCreate(
                     ['Name' => $product['category'], 'ParentId' => $department->Id],
-                    ['Slug' => Str::slug($product['department'], '-', 'es'), 'Description' => $product['category'], 'Active' => 1]
+                    ['Slug' => Str::slug($product['category'], '-', 'es'), 'Description' => $product['category'], 'Active' => 1]
                 );
 
                 $unit = ModelsUnits::updateOrCreate(
