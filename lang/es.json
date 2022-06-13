@@ -304,5 +304,6 @@
     "Products updated successfully": "Productos actualizados con éxito",
     "Sicar Initial Inventory": "Inventario Inicial de Sicar",
     "Sicar Inventory Adjustment": "Ajuste de Inventario de Sicar",
-    "Sicar Service Inventory Update by user": "Actualización de Inventario de Servicio de Sicar por usuario"
+    "Sicar Initial Inventory by user": "Inventario Inicial de Sicar por usuario",
+    "Inventory Update from Sicar Service by user": "Actualización de Inventario desde Servicio de Sicar por usuario"
 }

@@ -447,8 +447,6 @@ class ProductsApi extends Controller
                     $stock = ModelsProductStock::where('ProductId', $productId)->where('BranchId', $branchId)->first();
                     if ($stock) {
                         if ($stock->Quantity != $product['stock']) {
-                            $stock->Quantity = $product['stock'];
-                            $stock->save();
 
                             ModelsProductStockMovements::create([
                                 'UserId' => 1,
@@ -457,8 +455,11 @@ class ProductsApi extends Controller
                                 'Quantity' => $product['stock'],
                                 'PreviousQuantity' => $stock->Quantity,
                                 'ReasonId' => 3,
-                                'Description' => 'Sicar Service Inventory Update by user'
+                                'Description' => 'Inventory Update from Sicar Service by user'
                             ]);
+
+                            $stock->Quantity = $product['stock'];
+                            $stock->save();
                         }
                     } else {
                         $stock = ModelsProductStock::create([
