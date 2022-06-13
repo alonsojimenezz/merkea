@@ -15,6 +15,7 @@ class ProductCategories extends Model
         'Description',
         'Active',
         'ParentId',
+        'Slug'
     ];
 
     public static function getAll()
