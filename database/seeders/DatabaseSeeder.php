@@ -24,7 +24,7 @@ class DatabaseSeeder extends Seeder
             InitialStates::class,
             InitialPostalCoverage::class,
             InitialBranchOffice::class,
-            InitialMovementsTypes::class,
+            InitialMovementsType::class,
         ]);
     }
 }
