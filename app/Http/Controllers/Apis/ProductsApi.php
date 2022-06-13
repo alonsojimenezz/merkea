@@ -408,6 +408,8 @@ class ProductsApi extends Controller
 
                 $arrayReturn[$k]['unit'] = $unit;
 
+                $product['description'] = trim(preg_replace('/\s\s+/', ' ', str_replace("\n", " ", $product['description'])));
+
                 $searchDuplicityName = ModelsProducts::where('Name', $product['description'])->where('Key', '<>', $product['key'])->first();
                 if ($searchDuplicityName) {
                     $product['description'] = $product['description'] . ' ' . $product['key'];
