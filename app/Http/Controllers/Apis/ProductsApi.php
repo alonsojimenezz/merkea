@@ -390,12 +390,12 @@ class ProductsApi extends Controller
             foreach ($products as $k => $product) {
                 $department = ModelsProductCategories::updateOrCreate(
                     ['Name' => $product['department']],
-                    ['Slug' => Str::slug($product['deparment'], '-', 'es'), 'ParentId' => null, 'Description' => $product['department'], 'Active' => 1]
+                    ['Slug' => Str::slug($product['department'], '-', 'es'), 'ParentId' => null, 'Description' => $product['department'], 'Active' => 1]
                 );
 
                 $category = ModelsProductCategories::updateOrCreate(
                     ['Name' => $product['category'], 'ParentId' => $department->Id],
-                    ['Slug' => Str::slug($product['deparment'], '-', 'es'), 'Description' => $product['category'], 'Active' => 1]
+                    ['Slug' => Str::slug($product['department'], '-', 'es'), 'Description' => $product['category'], 'Active' => 1]
                 );
 
                 $unit = ModelsUnits::updateOrCreate(
