@@ -23,7 +23,8 @@ class DatabaseSeeder extends Seeder
             InitialProductPrices::class,
             InitialStates::class,
             InitialPostalCoverage::class,
-            InitialBranchOffice::class
+            InitialBranchOffice::class,
+            InitialMovementsTypes::class,
         ]);
     }
 }

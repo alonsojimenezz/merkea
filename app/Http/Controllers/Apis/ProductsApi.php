@@ -420,6 +420,8 @@ class ProductsApi extends Controller
                         'UnitId' => $unit->Id,
                         'CategoryId' => $category->Id,
                         'Slug' => Str::slug($product['description'], '-', 'es'),
+                        'BarCode' => $product['key'],
+                        'Active' => $product['status'] > 0 ? 1 : 0,
                     ]
                 );
 
@@ -432,8 +434,7 @@ class ProductsApi extends Controller
                         ['ProductId' => $productId],
                         [
                             'LastUpdater' => 1,
-                            'BasePrice' => $product['price'],
-                            'DiscountType' => 0
+                            'BasePrice' => $product['price']
                         ]
                     );
                 } catch (Throwable $th) {
@@ -443,14 +444,36 @@ class ProductsApi extends Controller
                 try {
                     $stock = ModelsProductStock::where('ProductId', $productId)->where('BranchId', $branchId)->first();
                     if ($stock) {
-                        $stock->Quantity = $product['stock'];
-                        $stock->save();
+                        if ($stock->Quantity != $product['stock']) {
+                            $stock->Quantity = $product['stock'];
+                            $stock->save();
+
+                            ModelsProductStockMovements::create([
+                                'UserId' => 1,
+                                'ProductId' => $productId,
+                                'BranchId' => $branchId,
+                                'Quantity' => $product['stock'],
+                                'PreviousQuantity' => $stock->Quantity,
+                                'ReasonId' => 3,
+                                'Description' => 'Sicar Service Inventory Update by user'
+                            ]);
+                        }
                     } else {
-                        ModelsProductStock::create([
+                        $stock = ModelsProductStock::create([
                             'LastUpdater' => 1,
                             'ProductId' => $productId,
                             'BranchId' => $branchId,
-                            'Quantity' => $product['stock']
+                            'Quantity' => ($product['stock'] < 0) ? 0 : $product['stock']
+                        ]);
+
+                        ModelsProductStockMovements::create([
+                            'UserId' => 1,
+                            'ProductId' => $productId,
+                            'BranchId' => $branchId,
+                            'Quantity' => $product['stock'],
+                            'PreviousQuantity' => 0,
+                            'ReasonId' => 2,
+                            'Description' => 'Sicar Initial Inventory by user'
                         ]);
                     }
                 } catch (Throwable $th) {

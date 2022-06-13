@@ -301,5 +301,8 @@
     "The product was highlighted successfully": "El producto fue destacado con éxito",
     "The product highlight was removed successfully": "El destaque del producto fue removido con éxito",
     "Service Key is not valid": "La clave del servicio no es válida",
-    "Products updated successfully": "Productos actualizados con éxito"
+    "Products updated successfully": "Productos actualizados con éxito",
+    "Sicar Initial Inventory": "Inventario Inicial de Sicar",
+    "Sicar Inventory Adjustment": "Ajuste de Inventario de Sicar",
+    "Sicar Service Inventory Update by user": "Actualización de Inventario de Servicio de Sicar por usuario"
 }

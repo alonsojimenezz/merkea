@@ -16,6 +16,8 @@ class InitialMovementsType extends Seeder
     public function run()
     {
         MovementsType::create(['Name' => 'Inventory Adjustment']);
+        MovementsType::create(['Name' => 'Sicar Initial Inventory']);
+        MovementsType::create(['Name' => 'Sicar Inventory Adjustment']);
         MovementsType::create(['Name' => 'Purchase']);
     }
 }
