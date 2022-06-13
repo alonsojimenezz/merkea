@@ -416,17 +416,14 @@ class ProductsApi extends Controller
                     ]
                 );
 
-                var_dump($productN);
-                echo "<br>";
-
-                $price = ModelsProductPrices::updateOrCreate(
-                    ['ProductId' => $productN->Id],
-                    [
-                        'LastUpdater' => 1,
-                        'BasePrice' => $product['price'],
-                        'DiscountType' => 0
-                    ]
-                );
+                // $price = ModelsProductPrices::updateOrCreate(
+                //     ['ProductId' => $productN->Id],
+                //     [
+                //         'LastUpdater' => 1,
+                //         'BasePrice' => $product['price'],
+                //         'DiscountType' => 0
+                //     ]
+                // );
 
                 $stock = ModelsProductStock::where('ProductId', $productN->Id)->where('BranchId', $branchId)->first();
                 if ($stock) {
