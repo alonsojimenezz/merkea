@@ -425,26 +425,34 @@ class ProductsApi extends Controller
 
                 $arrayReturn[$k]['product'] = $productN;
 
-                $price = ModelsProductPrices::updateOrCreate(
-                    ['ProductId' => $productN->id],
-                    [
-                        'LastUpdater' => 1,
-                        'BasePrice' => $product['price'],
-                        'DiscountType' => 0
-                    ]
-                );
+                try {
+                    $price = ModelsProductPrices::updateOrCreate(
+                        ['ProductId' => $productN->id],
+                        [
+                            'LastUpdater' => 1,
+                            'BasePrice' => $product['price'],
+                            'DiscountType' => 0
+                        ]
+                    );
+                } catch (Throwable $th) {
+                    $arrayReturn[$k]['error']['price'] = $th->getMessage();
+                }
 
-                $stock = ModelsProductStock::where('ProductId', $productN->id)->where('BranchId', $branchId)->first();
-                if ($stock) {
-                    $stock->Quantity = $product['stock'];
-                    $stock->save();
-                } else {
-                    ModelsProductStock::create([
-                        'LastUpdater' => 1,
-                        'ProductId' => $productN->id,
-                        'BranchId' => $branchId,
-                        'Quantity' => $product['stock']
-                    ]);
+                try {
+                    $stock = ModelsProductStock::where('ProductId', $productN->id)->where('BranchId', $branchId)->first();
+                    if ($stock) {
+                        $stock->Quantity = $product['stock'];
+                        $stock->save();
+                    } else {
+                        ModelsProductStock::create([
+                            'LastUpdater' => 1,
+                            'ProductId' => $productN->id,
+                            'BranchId' => $branchId,
+                            'Quantity' => $product['stock']
+                        ]);
+                    }
+                } catch (Throwable $th) {
+                    $arrayReturn[$k]['error']['stock'] = $th->getMessage();
                 }
             }
 
