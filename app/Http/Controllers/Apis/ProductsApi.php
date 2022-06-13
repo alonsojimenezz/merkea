@@ -425,9 +425,11 @@ class ProductsApi extends Controller
 
                 $arrayReturn[$k]['product'] = $productN;
 
+                $productId = $productN->Id ?? $productN->id;
+
                 try {
                     $price = ModelsProductPrices::updateOrCreate(
-                        ['ProductId' => $productN->id],
+                        ['ProductId' => $productId],
                         [
                             'LastUpdater' => 1,
                             'BasePrice' => $product['price'],
@@ -439,14 +441,14 @@ class ProductsApi extends Controller
                 }
 
                 try {
-                    $stock = ModelsProductStock::where('ProductId', $productN->id)->where('BranchId', $branchId)->first();
+                    $stock = ModelsProductStock::where('ProductId', $productId)->where('BranchId', $branchId)->first();
                     if ($stock) {
                         $stock->Quantity = $product['stock'];
                         $stock->save();
                     } else {
                         ModelsProductStock::create([
                             'LastUpdater' => 1,
-                            'ProductId' => $productN->id,
+                            'ProductId' => $productId,
                             'BranchId' => $branchId,
                             'Quantity' => $product['stock']
                         ]);
