@@ -478,8 +478,10 @@ class ProductsApi extends Controller
             }
 
             try {
-                DB::query('UPDATE product_categories set Active = 1');
-                DB::query("update
+                DB::unprepared("
+                UPDATE product_categories set Active = 1;
+
+                update
                 product_categories c
                 set c.Active = 0
                 where c.ParentId is not null
@@ -492,9 +494,9 @@ class ProductsApi extends Controller
                     and s.Quantity > 0
                     and p.CategoryId is not null
                     group by p.CategoryId
-                );");
+                );
 
-                DB::query("update product_categories
+                update product_categories
                 set Active = 0
                 where Id in (
                     select * from (
