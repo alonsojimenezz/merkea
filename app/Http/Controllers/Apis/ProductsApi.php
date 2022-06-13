@@ -425,27 +425,27 @@ class ProductsApi extends Controller
 
                 $arrayReturn[$k]['product'] = $productN;
 
-                // $price = ModelsProductPrices::updateOrCreate(
-                //     ['ProductId' => $productN->Id],
-                //     [
-                //         'LastUpdater' => 1,
-                //         'BasePrice' => $product['price'],
-                //         'DiscountType' => 0
-                //     ]
-                // );
+                $price = ModelsProductPrices::updateOrCreate(
+                    ['ProductId' => $productN->id],
+                    [
+                        'LastUpdater' => 1,
+                        'BasePrice' => $product['price'],
+                        'DiscountType' => 0
+                    ]
+                );
 
-                // $stock = ModelsProductStock::where('ProductId', $productN->Id)->where('BranchId', $branchId)->first();
-                // if ($stock) {
-                //     $stock->Quantity = $product['stock'];
-                //     $stock->save();
-                // } else {
-                //     ModelsProductStock::create([
-                //         'LastUpdater' => 1,
-                //         'ProductId' => $productN->Id,
-                //         'BranchId' => $branchId,
-                //         'Quantity' => $product['stock']
-                //     ]);
-                // }
+                $stock = ModelsProductStock::where('ProductId', $productN->id)->where('BranchId', $branchId)->first();
+                if ($stock) {
+                    $stock->Quantity = $product['stock'];
+                    $stock->save();
+                } else {
+                    ModelsProductStock::create([
+                        'LastUpdater' => 1,
+                        'ProductId' => $productN->id,
+                        'BranchId' => $branchId,
+                        'Quantity' => $product['stock']
+                    ]);
+                }
             }
 
             return [
