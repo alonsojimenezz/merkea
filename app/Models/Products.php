@@ -103,4 +103,55 @@ class Products extends Model
             ->select('pc.Name', 'pc2.Name as ParentName', 'pc.Active')
             ->first();
     }
+
+    public static function getFeaturedProducts()
+    {
+        $featured = self::baseQuery()
+            ->where('p.Highlight', 1)
+            ->where('pp.BasePrice', '>', 0)
+            ->orderBy(DB::raw('RAND()'))
+            ->limit(20)
+            ->get();
+
+        $needFill = 20 - count($featured);
+
+        if ($needFill > 0) {
+            $featured2 = self::baseQuery()
+                ->where('Highlight', 0)
+                ->where('pp.BasePrice', '>', 0)
+                ->orderBy(DB::raw('RAND()'))
+                ->limit($needFill)
+                ->get();
+
+            $featured = $featured->merge($featured2);
+        }
+
+        return $featured;
+    }
+
+    public static function baseQuery($branchId = 1)
+    {
+        return DB::table('products as p')
+            ->leftJoin('product_prices as pp', 'p.Id', '=', 'pp.ProductId')
+            ->leftJoin('units as u', 'u.Id', '=', 'p.UnitId')
+            ->leftJoin('product_categories as pc', 'pc.Id', '=', 'p.CategoryId')
+            ->leftJoin('product_stocks as ps', 'ps.ProductId', '=', 'p.Id')
+            ->select(
+                'p.Id',
+                'p.Name',
+                'u.Name as UnitName',
+                'pc.Name as CategoryName',
+                'p.Slug',
+                'p.Key',
+                'p.Description',
+                'p.Image',
+                'pp.BasePrice',
+                'pp.DiscountType',
+                'pp.DiscountPercent',
+                'pp.DiscountFixed'
+            )
+            ->where('p.Active', 1)
+            ->where('ps.BranchId', $branchId)
+            ->where('ps.Quantity', '>', 0);
+    }
 }

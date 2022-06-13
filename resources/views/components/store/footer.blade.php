@@ -52,6 +52,11 @@
                 <div class="col-xl-12">
                     <div class="footer__links text-center">
                         <p>
+                            @isset($categories)
+                                @foreach($categories as $category)
+                                    <a href="{{ route('store.category', $category->slug) }}">{{ $category->name }}</a>
+                                @endforeach
+                            @endisset
                             <a href="#">Despensa</a>
                             <a href="#">Pan y tortillas</a>
                             <a href="#">Cerveza, vinos y licores</a>
@@ -61,7 +66,6 @@
                             <a href="#">Granel</a>
                             <a href="#">Frutas y verduras</a>
                         </p>
-
                     </div>
 
                 </div>

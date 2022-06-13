@@ -15,6 +15,7 @@ use App\Models\ProductCategories as ModelsProductCategories;
 use App\Models\Units as ModelsUnits;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\DB;
 use Throwable;
 
 class ProductsApi extends Controller
@@ -389,24 +390,18 @@ class ProductsApi extends Controller
             foreach ($products as $k => $product) {
                 $department = ModelsProductCategories::updateOrCreate(
                     ['Name' => $product['department']],
-                    ['ParentId' => null, 'Description' => $product['department'], 'Active' => 1]
+                    ['Slug' => Str::slug($product['deparment'], '-', 'es'), 'ParentId' => null, 'Description' => $product['department'], 'Active' => 1]
                 );
-
-                $arrayReturn[$k]['department'] = $department;
 
                 $category = ModelsProductCategories::updateOrCreate(
                     ['Name' => $product['category'], 'ParentId' => $department->Id],
-                    ['Description' => $product['category'], 'Active' => 1]
+                    ['Slug' => Str::slug($product['deparment'], '-', 'es'), 'Description' => $product['category'], 'Active' => 1]
                 );
-
-                $arrayReturn[$k]['category'] = $category;
 
                 $unit = ModelsUnits::updateOrCreate(
                     ['Name' => $product['unit']],
                     ['Key' => substr($product['unit'], 0, 2), 'Active' => 1]
                 );
-
-                $arrayReturn[$k]['unit'] = $unit;
 
                 $product['description'] = trim(preg_replace('/\s\s+/', ' ', str_replace("\n", " ", $product['description'])));
 
@@ -426,8 +421,6 @@ class ProductsApi extends Controller
                         'Active' => $product['status'] > 0 ? 1 : 0,
                     ]
                 );
-
-                $arrayReturn[$k]['product'] = $productN;
 
                 $productId = $productN->Id ?? $productN->id;
 
@@ -484,9 +477,41 @@ class ProductsApi extends Controller
                 }
             }
 
+            try {
+                DB::query('UPDATE product_categories set Active = 1');
+                DB::query("update
+                product_categories c
+                set c.Active = 0
+                where c.ParentId is not null
+                and c.Id not in (
+                    select
+                    p.CategoryId
+                    from products p
+                    inner join product_stocks s on p.Id = s.ProductId
+                    where p.Active = 1
+                    and s.Quantity > 0
+                    and p.CategoryId is not null
+                    group by p.CategoryId
+                );");
+
+                DB::query("update product_categories
+                set Active = 0
+                where Id in (
+                    select * from (
+                        select
+                        c.Id
+                        from product_categories c
+                        where c.ParentId is null
+                        and (select count(*) from product_categories c2 where c2.ParentId = c.Id and c2.Active = 1) = 0
+                    ) as tf
+                )");
+            } catch (Throwable $th) {
+                $arrayReturn['error']['category'] = $th->getMessage();
+            }
+
             return [
                 'code'  => 200,
-                'products' => $arrayReturn
+                'errors' => $arrayReturn
             ];
         } catch (Throwable $th) {
             return [

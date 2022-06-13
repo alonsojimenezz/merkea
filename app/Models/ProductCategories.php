@@ -68,26 +68,26 @@ class ProductCategories extends Model
 
     public static function getActivesTree()
     {
-        $categories = self::getActives();
         $tree = [];
-        foreach ($categories as $category) {
-            if ($category->ParentId == 0) {
-                $tree[] = [
-                    'id' => $category->Id,
-                    'name' => $category->Name,
-                    'children' => []
+        $categories = self::where('Active', 1)->whereNull('ParentId')->orWhere('ParentId', 0)->orderBy('Name')->get();
+        foreach ($categories as $k => $v) {
+            $childs = self::where('Active', 1)->where('ParentId', $v->Id)->orderBy('Name')->get();
+            $tree[$k] = [
+                'id' => $v->Id,
+                'text' => $v->Name,
+                'parent' => $v->ParentId,
+                'children' => []
+            ];
+
+            foreach ($childs as $child) {
+                $tree[$k]['children'][] = [
+                    'id' => $child->Id,
+                    'text' => $child->Name,
+                    'parent' => $child->ParentId,
                 ];
-            } else {
-                foreach($tree as &$parent) {
-                    if ($parent['id'] == $category->ParentId) {
-                        $parent['children'][] = [
-                            'id' => $category->Id,
-                            'name' => $category->Name,
-                        ];
-                    }
-                }
             }
         }
+
         return $tree;
     }
 }

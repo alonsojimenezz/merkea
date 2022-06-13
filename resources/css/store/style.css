@@ -1976,8 +1976,8 @@ only screen and (min-width: 576px) and (max-width: 767px) {
     border: 2px solid #ffb81c;
     outline: none;
     padding: 0 15px;
-    padding-left: 180px;
-    padding-right: 190px;
+    padding-left: 200px;
+    padding-right: 100px;
 }
 
 @media (max-width: 575px) {
@@ -1997,12 +1997,12 @@ only screen and (min-width: 576px) and (max-width: 767px) {
     right: 0;
     border: none;
     height: 50px;
-    color: #9da3af;
+    color: #FFF;
     display: block;
     line-height: 50px;
-    padding: 0 65px;
+    padding: 0 20px;
     font-size: 14px;
-    font-weight: 400;
+    font-weight: 600;
     background: #ffb81c;
     border-radius: 0 30px 30px 0;
     text-transform: capitalize;
@@ -6617,15 +6617,15 @@ ul li a.mobile_menu {
 }
 
 #btn-wa {
-    border-radius: 80px;
-    border-color: white;
+    border-radius: 60px;
+    /* border-color: white;
     border-style: solid;
     border-width: 3px;
-    background-color: #2bb941;
+    background-color: #2bb941; */
     position: fixed;
     bottom: 106px;
-    right: 10px;
-    width: 250px;
+    right: 45px;
+    width: 60px;
     height: 60px;
     z-index: 998;
     animation-name: groundUp;
@@ -6635,7 +6635,7 @@ ul li a.mobile_menu {
 #btn-wa img {
     display: inline-block;
     vertical-align: middle;
-    margin: 0px 8px;
+    margin: 0px 3px;
     width: auto;
     height: 90%
 }
@@ -6663,6 +6663,26 @@ ul li a.mobile_menu {
     margin-bottom: 10px;
     overflow-x: hidden;
     -webkit-overflow-scrolling: touch;
+}
+
+
+/*
+ *  STYLE BAR CODE
+ */
+
+ ::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+    background-color: #F5F5F5;
+}
+
+ ::-webkit-scrollbar {
+    width: 10px;
+    background-color: #F5F5F5;
+}
+
+ ::-webkit-scrollbar-thumb {
+    background-color: #F90;
+    background-image: -webkit-linear-gradient(90deg, rgba(255, 184, 28, .2) 25%, transparent 25%, transparent 50%, rgba(255, 184, 28, .2) 50%, rgba(255, 184, 28, .2) 75%, transparent 75%, transparent)
 }
 
 

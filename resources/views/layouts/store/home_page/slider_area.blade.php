@@ -12,7 +12,7 @@
                                     @isset($categories)
                                         @foreach ($categories as $category)
                                             <li>
-                                                <a href="">{{ ucwords(strtolower($category['name'])) }}
+                                                <a href="">{{ ucwords(strtolower($category['text'])) }}
                                                     @if (isset($category['children']) && count($category['children']) > 0)
                                                         <i class="far fa-angle-down"></i>
                                                 </a>
@@ -20,7 +20,7 @@
                                                 <ul class="submenu">
                                                     @foreach ($category['children'] as $child)
                                                         <li>
-                                                            <a href="#">{{ ucwords(strtolower($child['name'])) }}</a>
+                                                            <a href="#">{{ ucwords(strtolower($child['text'])) }}</a>
                                                         </li>
                                                     @endforeach
                                                 </ul>
