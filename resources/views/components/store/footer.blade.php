@@ -53,18 +53,10 @@
                     <div class="footer__links text-center">
                         <p>
                             @isset($categories)
-                                @foreach($categories as $category)
-                                    <a href="{{ route('store.category', $category->slug) }}">{{ $category->name }}</a>
+                                @foreach ($categories as $category)
+                                    <a href="/deparment/{{ $category['slug'] }}">{{ $category['text'] }}</a>
                                 @endforeach
                             @endisset
-                            <a href="#">Despensa</a>
-                            <a href="#">Pan y tortillas</a>
-                            <a href="#">Cerveza, vinos y licores</a>
-                            <a href="#">Congelados</a>
-                            <a href="#">Salchichonería</a>
-                            <a href="#">Lácteos y huevo</a>
-                            <a href="#">Granel</a>
-                            <a href="#">Frutas y verduras</a>
                         </p>
                     </div>
 

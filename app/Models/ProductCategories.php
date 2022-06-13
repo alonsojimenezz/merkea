@@ -77,6 +77,7 @@ class ProductCategories extends Model
                 'id' => $v->Id,
                 'text' => $v->Name,
                 'parent' => $v->ParentId,
+                'slug' => $v->Slug,
                 'children' => []
             ];
 
@@ -85,6 +86,7 @@ class ProductCategories extends Model
                     'id' => $child->Id,
                     'text' => $child->Name,
                     'parent' => $child->ParentId,
+                    'slug' => $child->Slug,
                 ];
             }
         }
