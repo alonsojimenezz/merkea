@@ -21,6 +21,10 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
+Route::get('/department/{department}', [Store::class, 'show_department'])->name('store.department');
+Route::get('/category/{category}', [Store::class, 'show_category'])->name('store.category');
+Route::get('/product/{id}', [Store::class, 'show_product'])->name('store.product');
+
 // Route::resource('/product-categories', ProductCategoriesController::class)->middleware(['auth', 'verified']);
 
 require __DIR__ . '/auth.php';

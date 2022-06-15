@@ -7,7 +7,7 @@
                     <div class="footer__widget" style="margin:0px 0px;">
                         <div class="footer__widget-title">
                             <div class="footer__logo">
-                                <a href="index.html"><img src="store/img/logo/logo.svg" alt=""></a>
+                                <a href="index.html"><img src="/store/img/logo/logo.svg" alt=""></a>
                             </div>
                         </div>
                     </div>
@@ -17,7 +17,7 @@
                     <div class="footer__widget-content">
                         <div class="footer__hotline d-flex align-items-center">
                             <div class="icon mr-15">
-                                <img src="store/img/whatsapp.svg" style="width: 50px;">
+                                <img src="/store/img/whatsapp.svg" style="width: 50px;">
                             </div>
                             <div class="text">
                                 <a href="https://wa.me/+525510562027"><span>Contáctanos</span>
@@ -54,7 +54,7 @@
                         <p>
                             @isset($categories)
                                 @foreach ($categories as $category)
-                                    <a href="/deparment/{{ $category['slug'] }}">{{ $category['text'] }}</a>
+                                    <a href="/department/{{ $category['slug'] }}">{{ $category['text'] }}</a>
                                 @endforeach
                             @endisset
                         </p>
@@ -69,7 +69,7 @@
             <div class="row align-items-center">
                 <div class="col-xl-12 col-lg-12">
                     <div class="footer__copyright-text">
-                        <p>Copyright © <a href="index.html">Merkea.</a> Todos los derechos reservador. Sitio
+                        <p>Copyright © <a href="/">Merkea.</a> Todos los derechos reservador. Sitio
                             diseñado por <a href="https://3clue.com">3CLUE.</a></p>
                     </div>
                 </div>

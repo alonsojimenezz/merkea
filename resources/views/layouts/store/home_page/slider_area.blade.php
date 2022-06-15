@@ -20,7 +20,8 @@
                                                 <ul class="submenu">
                                                     @foreach ($category['children'] as $child)
                                                         <li>
-                                                            <a href="#">{{ ucwords(strtolower($child['text'])) }}</a>
+                                                            <a
+                                                                href="{{ route('store.category', $child['slug']) }}">{{ ucwords(strtolower($child['text'])) }}</a>
                                                         </li>
                                                     @endforeach
                                                 </ul>

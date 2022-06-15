@@ -307,5 +307,11 @@
     "Sicar Initial Inventory by user": "Inventario Inicial de Sicar por usuario",
     "Inventory Update from Sicar Service by user": "Actualización de Inventario desde Servicio de Sicar por usuario",
     "Featured Products": "Productos Destacados",
-    "Contact": "Contacto"
+    "Contact": "Contacto",
+    "Showing": "Mostrando",
+    "of": "de",
+    "results": "resultados",
+    "Lower Price": "Precio Más Bajo",
+    "Higher Price": "Precio Más Alto",
+    "Add to cart": "Agregar al carrito"
 }

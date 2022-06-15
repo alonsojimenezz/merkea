@@ -40,6 +40,8 @@
     @yield('footer')
 
     <script src="{{ asset('js/store.js') }}"></script>
+    @yield('modules_js')
 </body>
-    @yield('whatsapp')
+@yield('whatsapp')
+
 </html>

@@ -135,6 +135,7 @@ class Products extends Model
             ->leftJoin('product_prices as pp', 'p.Id', '=', 'pp.ProductId')
             ->leftJoin('units as u', 'u.Id', '=', 'p.UnitId')
             ->leftJoin('product_categories as pc', 'pc.Id', '=', 'p.CategoryId')
+            ->leftJoin('product_categories as pd', 'pd.Id', '=', 'pc.ParentId')
             ->leftJoin('product_stocks as ps', 'ps.ProductId', '=', 'p.Id')
             ->select(
                 'p.Id',
@@ -153,5 +154,70 @@ class Products extends Model
             ->where('p.Active', 1)
             ->where('ps.BranchId', $branchId)
             ->where('ps.Quantity', '>', 0);
+    }
+
+    public static function getProductsByDepartment($department, $order = 'name', $orderDirection = 'asc', $limit = 12, $page = 1, $branchId = 1)
+    {
+        switch ($order) {
+            case 'name':
+                $order = 'p.Name';
+                break;
+            case 'price':
+                $order = 'pp.BasePrice';
+                break;
+        }
+
+        $totals = self::baseQuery($branchId)->where('pd.Slug', $department)->count();
+
+        $products = self::baseQuery($branchId)
+            ->where('pd.Slug', $department)
+            ->orderBy($order, $orderDirection)
+            ->offset(($page - 1) * $limit)
+            ->limit($limit)
+            ->get();
+
+        return [
+            'products' => $products,
+            'department' => $department,
+            'order' => $order,
+            'orderDirection' => $orderDirection,
+            'limit' => $limit,
+            'page' => $page,
+            'offset' => ($page - 1) * $limit,
+            'totals' => $totals,
+            'total_pages' => ceil($totals / $limit)
+        ];
+    }
+
+    public static function getProductsByCategory($category, $order = 'name', $orderDirection = 'asc', $limit = 12, $page = 1, $branchId = 1)
+    {
+        switch ($order) {
+            case 'name':
+                $order = 'p.Name';
+                break;
+            case 'price':
+                $order = 'pp.BasePrice';
+                break;
+        }
+
+        $totals = self::baseQuery($branchId)->where('pc.Id', $category)->count();
+
+        $products = self::baseQuery($branchId)
+            ->where('pc.Id', $category)
+            ->orderBy($order, $orderDirection)
+            ->offset(($page - 1) * $limit)
+            ->limit($limit)
+            ->get();
+
+        return [
+            'products' => $products,
+            'order' => $order,
+            'orderDirection' => $orderDirection,
+            'limit' => $limit,
+            'page' => $page,
+            'offset' => ($page - 1) * $limit,
+            'totals' => $totals,
+            'total_pages' => ceil($totals / $limit)
+        ];
     }
 }

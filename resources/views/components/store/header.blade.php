@@ -50,13 +50,13 @@
                             <div
                                 class="header__info-left d-flex justify-content-center justify-content-sm-between align-items-center">
                                 <div class="logo">
-                                    <a href="index.html"><img src="store/img/logo/logo.svg" alt="logo"
+                                    <a href="/"><img src="/store/img/logo/logo.svg" alt="logo"
                                             class="merkea"></a>
                                 </div>
                                 <div class="header__hotline align-items-center d-none d-sm-flex  d-lg-none d-xl-flex">
 
                                     <div class="header__hotline-icon">
-                                        <img src="store/img/whatsapp.svg" style="width: 50px;">
+                                        <img src="/store/img/whatsapp.svg" style="width: 50px;">
                                     </div>
                                     <div class="header__hotline-info">
                                         <a href="https://wa.me/+525510562027"><span>Contáctanos</span>
@@ -180,7 +180,7 @@
                                                                     @foreach ($category['children'] as $child)
                                                                         <li>
                                                                             <a
-                                                                                href="#">{{ ucwords(strtolower($child['text'])) }}</a>
+                                                                                href="{{ route('store.category', $child['slug']) }}">{{ ucwords(strtolower($child['text'])) }}</a>
                                                                         </li>
                                                                     @endforeach
                                                                 </ul>
