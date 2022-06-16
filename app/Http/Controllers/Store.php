@@ -75,7 +75,49 @@ class Store extends Controller
         return view('store.department', $viewArray);
     }
 
-    public function show_product()
+    public function show_search(Request $request)
     {
+        if (!is_null($request->input('department')) && $request->input('department') > 0) {
+            $department = ModelsProductCategories::where('Id', $request->input('department'))->whereNull('ParentId')->first();
+            $child = [
+                'text' => $department->Name,
+                'url' => route('store.department', $department->Slug),
+                'child' => [
+                    'text' => __('Searching') . ': ' . ($request->input('query') != '' ? $request->input('query') : __('Empty Query')),
+                    'url' => '#'
+                ]
+            ];
+        } else {
+            $child = [
+                'text' => __('Searching') . ': ' . ($request->input('query') != '' ? $request->input('query') : __('Empty Query')),
+                'url' => '#'
+            ];
+        }
+
+        $viewArray = [
+            'categories' => ModelsProductCategories::getActivesTree(),
+            'products' => ModelsProducts::getProductsBySearch(
+                $request->input('query', ''),
+                $request->input('department', null),
+                $request->input('order', 'name'),
+                $request->input('direction', 'asc'),
+                $request->input('limit', 12),
+                $request->input('page', 1),
+                $request->input('branchId', 1)
+            ),
+            'breadcrumbs' => [
+                'text' => __('Home'),
+                'url' => route('store.home'),
+                'child' => $child
+            ],
+            'is_search' => true
+        ];
+
+        return view('store.department', $viewArray);
+    }
+
+    public function show_product($slug)
+    {
+
     }
 }

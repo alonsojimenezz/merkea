@@ -41,6 +41,7 @@
 
     <script src="{{ asset('js/store.js') }}"></script>
     @yield('modules_js')
+    <script type="module" src="{{ asset('assets/modules/store/store.js') }}"></script>
 </body>
 @yield('whatsapp')
 

@@ -71,15 +71,24 @@
                                 <div class="header__search f-left d-none d-sm-block">
                                     <form action="#">
                                         <div class="header__search-box">
-                                            <input type="text" placeholder="Busca tus productos favoritos...">
-                                            <button type="submit">Buscar</button>
+                                            <input type="hidden" id="search_text_"
+                                                value="{{ isset($products['search']) ? mb_strtoupper($products['search']) : '' }}">
+                                            <input type="hidden" id="search_department_"
+                                                value="{{ isset($products['department']) ? mb_strtoupper($products['department']) : 0 }}">
+
+                                            <input type="text" id="search_text" style="text-align:right;"
+                                                placeholder="{{ __('Find your favorite products...') }}"
+                                                value="{{ isset($products['search']) ? mb_strtoupper($products['search']) : '' }}">
+                                            <button id="search_button">Buscar</button>
                                         </div>
                                         <div class="header__search-cat">
-                                            <select>
-                                                <option>{{ __('All Categories') }}</option>
+                                            <select id="search_department">
+                                                <option value="0">{{ __('All Categories') }}</option>
                                                 @isset($categories)
                                                     @foreach ($categories as $category)
-                                                        <option value="{{ $category['id'] }}">{{ $category['text'] }}
+                                                        <option value="{{ $category['id'] }}"
+                                                            {{ isset($products['department']) && $products['department'] == $category['id'] ? 'selected' : '' }}>
+                                                            {{ $category['text'] }}
                                                         </option>
                                                     @endforeach
                                                 @endisset

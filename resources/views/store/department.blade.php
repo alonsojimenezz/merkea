@@ -1,7 +1,7 @@
 @extends('layouts.store.main')
 
 @section('header')
-    @component('components.store.header', ['categories' => $categories])
+    @component('components.store.header', ['categories' => $categories, 'products' => $products])
         @slot('show_search', true)
         @slot('show_menu', true)
     @endcomponent
@@ -13,7 +13,11 @@
 @endsection
 
 @section('modules_js')
-    <script type="module" src="{{ asset('assets/modules/store/grid_result.js') }}"></script>
+    @if (isset($is_search) && $is_search)
+        <script type="module" src="{{ asset('assets/modules/store/search_result.js') }}"></script>
+    @else
+        <script type="module" src="{{ asset('assets/modules/store/grid_result.js') }}"></script>
+    @endif
 @endsection
 
 @section('footer')

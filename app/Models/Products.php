@@ -189,6 +189,51 @@ class Products extends Model
         ];
     }
 
+    public static function getProductsBySearch($search, $department = null, $order = 'name', $orderDirection = 'asc', $limit = 12, $page = 1, $branchId = 1)
+    {
+        switch ($order) {
+            case 'name':
+                $order = 'p.Name';
+                break;
+            case 'price':
+                $order = 'pp.BasePrice';
+                break;
+        }
+
+        $products = self::baseQuery($branchId);
+
+        if (!is_null($department) && $department > 0) {
+            $products = $products->where('pd.Id', $department);
+        }
+
+        $products = $products->where(function ($query) use ($search) {
+            $query->where('p.Name', 'like', '%' . $search . '%')
+                ->orWhere('p.Key', 'like', '%' . $search . '%')
+                ->orWhere('p.Description', 'like', '%' . $search . '%');
+        });
+
+        $totals = $products;
+        $totals = $totals->count();
+
+        $products = $products->orderBy($order, $orderDirection)
+            ->offset(($page - 1) * $limit)
+            ->limit($limit)
+            ->get();
+
+        return [
+            'products' => $products,
+            'search' => $search,
+            'department' => $department,
+            'order' => $order,
+            'orderDirection' => $orderDirection,
+            'limit' => $limit,
+            'page' => $page,
+            'offset' => ($page - 1) * $limit,
+            'totals' => $totals,
+            'total_pages' => ceil($totals / $limit)
+        ];
+    }
+
     public static function getProductsByCategory($category, $order = 'name', $orderDirection = 'asc', $limit = 12, $page = 1, $branchId = 1)
     {
         switch ($order) {
