@@ -22,7 +22,7 @@ class Products extends Model
         'Image',
         'Description',
         'Highlight',
-        'granel'
+        'Granel'
     ];
 
 

@@ -422,9 +422,10 @@ class ProductsApi extends Controller
                         'Slug' => Str::slug($product['description'], '-', 'es'),
                         'BarCode' => $product['key'],
                         'Active' => $product['status'] > 0 ? 1 : 0,
-                        'granel' => $product['granel'] > 0 ? 1 : 0,
+                        'Granel' => $product['granel'],
                     ]
                 );
+
 
                 $productId = $productN->Id ?? $productN->id;
 

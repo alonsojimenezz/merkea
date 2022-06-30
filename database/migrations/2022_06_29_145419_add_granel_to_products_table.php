@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::table('products', function (Blueprint $table) {
-            $table->string('granel')->default('0')->after('Highlight');
+            $table->boolean('Granel')->default(false)->after('Highlight');
         });
     }
 
@@ -26,7 +26,7 @@ return new class extends Migration
     public function down()
     {
         Schema::table('products', function (Blueprint $table) {
-            $table->dropColumn('granel');
+            $table->dropColumn('Granel');
         });
     }
 };
