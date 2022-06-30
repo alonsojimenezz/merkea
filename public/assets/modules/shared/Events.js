@@ -14,7 +14,7 @@ class Events {
         $("#loading").removeClass("d-none");
     }
 
-    post(url, data, doneCallback = null, failCallback = null) {
+    post(url, data, doneCallback = null, failCallback = null, autoHideLoading = true) {
         let _this = this;
         const alerts = new Alerts();
 
@@ -30,7 +30,9 @@ class Events {
                     _this.showLoading();
                 },
             }).done(function(r) {
-                _this.hideLoading();
+                if (autoHideLoading == true) {
+                    _this.hideLoading();
+                }
                 doneCallback(r);
             })
             .fail(function(xhr, textStatus, errorThrown) {

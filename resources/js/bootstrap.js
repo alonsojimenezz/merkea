@@ -3,6 +3,12 @@ window._ = require('lodash');
 require('bootstrap');
 
 try {
+    window.bootstrap = require('bootstrap');
+} catch (e) {
+
+}
+
+try {
     window.$ = window.jQuery = require('jquery');
 
 } catch (e) {}

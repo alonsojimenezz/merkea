@@ -6,6 +6,7 @@ use App\Http\Controllers\Apis\ProductCategoriesApi;
 use App\Http\Controllers\Apis\ProductsApi;
 use App\Http\Controllers\Apis\StaffApi;
 use App\Http\Controllers\Apis\UnitsApi;
+use App\Http\Controllers\Store;
 use Illuminate\Support\Facades\Route;
 
 Route::group(['middleware' => ['role:Administrator|Staff']], function () {
@@ -37,4 +38,11 @@ Route::group(['middleware' => ['role:Administrator|Staff']], function () {
     });
 });
 
-
+Route::prefix('api_v1')->group(function () {
+    Route::post('store/change_branch', [Store::class, 'changeBranch']);
+    Route::post('store/add_to_cart', [Store::class, 'addToCart']);
+    Route::post('store/remove_from_cart', [Store::class, 'removeFromCart']);
+    Route::post('store/empty_cart', [Store::class, 'emptyCart']);
+    Route::post('store/update_cart', [Store::class, 'updateCart']);
+    Route::post('store/checkout', [Store::class, 'completeOrder']);
+});

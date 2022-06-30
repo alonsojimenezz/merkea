@@ -21,20 +21,27 @@
                         @endif
                         <div class="product__item white-bg d-flex mb-20">
                             <div class="product__thumb product__thumb-sale p-relative">
-                                <a href="product-details.html" class="w-img">
-                                    <img src="{{ $product->Image != '' ? asset($product->Image) : asset('img/no_image.png') }}"
+                                <a href="{{ route('store.product', $product->Slug) }}" class="w-img">
+                                    <img src="{{ $product->Image != '' ? asset($product->Image) : MProduct::product_image($product->Key) }}"
                                         alt="{{ $product->Name }}">
                                 </a>
                             </div>
                             <div class="product__content ml-15">
                                 <h6 class="product-name">
                                     <a class="product-item-link"
-                                        href="/products/{{ __($product->Slug) }}">{{ $product->Name }}</a>
+                                        href="{{ route('store.product', $product->Slug) }}">{{ $product->Name }}</a>
                                 </h6>
-                                <span
-                                    class="new new-2">${{ number_format($product->BasePrice, 2) . '  ' . $product->UnitName }}
-                                </span>
-                                {{-- <span class="price-old"> <del>$800.00</del> </span> --}}
+                                @if ($product->DiscountFixed > 0)
+                                    <span
+                                        class="new new-2">${{ number_format($product->BasePrice - $product->DiscountFixed, 2) . '  ' . $product->UnitName }}
+                                    </span><br>
+                                    <span class="price-old"> <del>${{ number_format($product->BasePrice, 2) }}</del>
+                                    </span>
+                                @else
+                                    <span
+                                        class="new new-2">${{ number_format($product->BasePrice, 2) . '  ' . $product->UnitName }}
+                                    </span>
+                                @endif
                             </div>
                         </div>
                         @php

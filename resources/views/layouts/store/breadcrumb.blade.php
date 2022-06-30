@@ -1,4 +1,4 @@
-<section class="breadcrumb__area box-plr-75">
+<section class="breadcrumb__area box-plr-75 ">
     <div class="container-fluid">
         <div class="row">
             <div class="col-xxl-12">

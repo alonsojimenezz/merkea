@@ -71,11 +71,6 @@
                                 <div class="header__search f-left d-none d-sm-block">
                                     <form action="#">
                                         <div class="header__search-box">
-                                            <input type="hidden" id="search_text_"
-                                                value="{{ isset($products['search']) ? mb_strtoupper($products['search']) : '' }}">
-                                            <input type="hidden" id="search_department_"
-                                                value="{{ isset($products['department']) ? mb_strtoupper($products['department']) : 0 }}">
-
                                             <input type="text" id="search_text" style="text-align:right;"
                                                 placeholder="{{ __('Find your favorite products...') }}"
                                                 value="{{ isset($products['search']) ? mb_strtoupper($products['search']) : '' }}">
@@ -97,60 +92,7 @@
                                     </form>
                                 </div>
                                 <div class="cart__mini-wrapper d-none d-md-flex f-right p-relative">
-                                    <a href="javascript:void(0);" class="cart__toggle">
-                                        <span class="cart__total-item">01</span>
-                                    </a>
-                                    <span class="cart__content">
-                                        <span class="cart__my">Carrito:</span>
-                                        <span class="cart__total-price">$ 255.00</span>
-                                    </span>
-                                    <div class="cart__mini">
-                                        <div class="cart__close"><button type="button" class="cart__close-btn"><i
-                                                    class="fal fa-times"></i></button></div>
-                                        <ul>
-                                            <li>
-                                                <div class="cart__title">
-                                                    <h4>Carrito</h4>
-                                                    <span>(1 elemento en el carrito)</span>
-                                                </div>
-                                            </li>
-                                            <li>
-                                                <div
-                                                    class="cart__item d-flex justify-content-between align-items-center">
-                                                    <div class="cart__inner d-flex">
-                                                        <div class="cart__thumb">
-                                                            <a href="product-details.html">
-                                                                <img src="store/img/shop/product/cart/cart-mini-1.jpg"
-                                                                    alt="">
-                                                            </a>
-                                                        </div>
-                                                        <div class="cart__details">
-                                                            <h6><a href="product-details.html"> Samsung C49J89: £875,
-                                                                    Debenhams Plus </a></h6>
-                                                            <div class="cart__price">
-                                                                <span>$255.00</span>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="cart__del">
-                                                        <a href="#"><i class="fal fa-trash-alt"></i></a>
-                                                    </div>
-                                                </div>
-                                            </li>
-                                            <li>
-                                                <div
-                                                    class="cart__sub d-flex justify-content-between align-items-center">
-                                                    <h6>Subtotal</h6>
-                                                    <span class="cart__sub-total">$255.00</span>
-                                                </div>
-                                            </li>
-                                            <li>
-                                                <a href="checkout.html" class="t-y-btn w-100 mb-10">Proceder al pago</a>
-                                                <a href="cart.html" class="t-y-btn t-y-btn-border w-100 mb-10">Ver
-                                                    carrito</a>
-                                            </li>
-                                        </ul>
-                                    </div>
+                                    @include('layouts.store.cart_mini')
                                 </div>
                             </div>
                         </div>
@@ -161,7 +103,7 @@
         <div class="header__bottom">
             <div class="container">
                 <div class="row align-items-center">
-                    <div class="col-xl-9 col-lg-9 col-md-12 col-sm-6 col-6">
+                    <div class="col">
                         <div class="header__bottom-left d-flex d-xl-block align-items-center">
                             <div class="side-menu d-xl-none mr-20">
                                 <button type="button" class="side-menu-btn offcanvas-toggle-btn"><i
@@ -176,7 +118,8 @@
                                                     <i class="ms-1 far fa-home"></i></a>
 
                                             </li>
-                                            <li><a href="#">{{ __('Products') }} <i class="far fa-store"></i></a>
+                                            <li><a href="#">{{ __('Products') }} <i
+                                                        class="far fa-store"></i></a>
                                                 @isset($categories)
                                                     <ul class="submenu">
                                                         @foreach ($categories as $category)
@@ -203,8 +146,31 @@
                                                         class="ms-1 far fa-location"></i></a>
                                             </li>
                                             <li>
-                                                <a href="#"> {{ __('Contact') }}<i class="ms-1 far fa-phone"></i></a>
+                                                <a href="#"> {{ __('Contact') }}<i
+                                                        class="ms-1 far fa-phone"></i></a>
                                             </li>
+                                            @isset($branches)
+                                                <li class="float-end">
+                                                    @if (count($branches) < 2)
+                                                        <a>{{ $branches[0]->Name }}</a>
+                                                    @else
+                                                        <a role="button">
+                                                            @foreach ($branches as $branch)
+                                                                {{ $branch->Id == $bid ? $branch->Name : '' }}
+                                                            @endforeach
+                                                            <i class="far fa-angle-down"></i>
+                                                        </a>
+                                                        <ul class="submenu">
+                                                            @foreach ($branches as $branch)
+                                                                <li>
+                                                                    <a role="button" class="header_branch_select"
+                                                                        data-branch="{{ $branch->Id }}">{{ $branch->Name }}</a>
+                                                                </li>
+                                                            @endforeach
+                                                        </ul>
+                                                    @endif
+                                                </li>
+                                            @endisset
                                         </ul>
                                     </nav>
                                 </div>

@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
+use stdClass;
 
 class Products extends Model
 {
@@ -33,7 +34,7 @@ class Products extends Model
         $product->tags = self::tags($productId);
         $product->gallery = self::gallery($productId);
         $product->units = self::units($productId);
-        $product->price = self::price($productId);
+        $product->prices = self::price($productId);
         $product->stock = self::stock($productId);
         $product->movements = self::movements($productId);
         return $product;
@@ -71,7 +72,12 @@ class Products extends Model
 
     public static function price($pid)
     {
-        return ProductPrices::where('ProductId', $pid)->get();
+        $prices = [];
+        foreach (ProductPrices::where('ProductId', $pid)->get() as $price) {
+            $prices[$price->BranchId] = $price;
+        }
+
+        return $prices;
     }
 
     public static function stock($pid)
@@ -104,9 +110,9 @@ class Products extends Model
             ->first();
     }
 
-    public static function getFeaturedProducts()
+    public static function getFeaturedProducts($branchId)
     {
-        $featured = self::baseQuery()
+        $featured = self::baseQuery($branchId)
             ->where('p.Highlight', 1)
             ->where('pp.BasePrice', '>', 0)
             ->orderBy(DB::raw('RAND()'))
@@ -116,7 +122,7 @@ class Products extends Model
         $needFill = 20 - count($featured);
 
         if ($needFill > 0) {
-            $featured2 = self::baseQuery()
+            $featured2 = self::baseQuery($branchId)
                 ->where('Highlight', 0)
                 ->where('pp.BasePrice', '>', 0)
                 ->orderBy(DB::raw('RAND()'))
@@ -129,14 +135,69 @@ class Products extends Model
         return $featured;
     }
 
-    public static function baseQuery($branchId = 1)
+    public static function productStore($slug, $branchId)
     {
         return DB::table('products as p')
-            ->leftJoin('product_prices as pp', 'p.Id', '=', 'pp.ProductId')
-            ->leftJoin('units as u', 'u.Id', '=', 'p.UnitId')
-            ->leftJoin('product_categories as pc', 'pc.Id', '=', 'p.CategoryId')
-            ->leftJoin('product_categories as pd', 'pd.Id', '=', 'pc.ParentId')
-            ->leftJoin('product_stocks as ps', 'ps.ProductId', '=', 'p.Id')
+            ->join('units as u', 'u.Id', '=', 'p.UnitId')
+            ->join('product_categories as pc', 'pc.Id', '=', 'p.CategoryId')
+            ->join('product_categories as pd', 'pd.Id', '=', 'pc.ParentId')
+            ->select(
+                'p.Id',
+                'p.Name',
+                'u.Name as UnitName',
+                'pc.Name as CategoryName',
+                'pc.Slug as CategorySlug',
+                'pd.Name as DepartmentName',
+                'pd.Slug as DepartmentSlug',
+                'p.Slug',
+                'p.Key',
+                'p.Description',
+                'p.Image',
+                'p.Active',
+                'pc.Active as CategoryActive',
+                'pd.Active as DepartmentActive'
+            )
+            ->where('p.Slug', $slug)
+            ->first();
+    }
+
+    public static function productPrice($productId, $branchId)
+    {
+        $price = ProductPrices::where('ProductId', $productId)
+            ->where('BranchId', $branchId)
+            ->first();
+        if ($price) {
+            return $price;
+        } else {
+            $price = new stdClass();
+            $price->BasePrice = 0;
+            $price->DiscountFixed = 0;
+            return $price;
+        }
+    }
+
+    public static function productStock($productId, $branchId)
+    {
+        $stock = ProductStock::where('ProductId', $productId)
+            ->where('BranchId', $branchId)
+            ->first();
+        if ($stock) {
+            return $stock;
+        } else {
+            $stock = new stdClass();
+            $stock->Quantity = 0;
+            return $stock;
+        }
+    }
+
+    public static function baseQuery($branchId)
+    {
+        $query = DB::table('products as p')
+            ->join('product_prices as pp', 'p.Id', '=', 'pp.ProductId')
+            ->join('units as u', 'u.Id', '=', 'p.UnitId')
+            ->join('product_categories as pc', 'pc.Id', '=', 'p.CategoryId')
+            ->join('product_categories as pd', 'pd.Id', '=', 'pc.ParentId')
+            ->join('product_stocks as ps', 'ps.ProductId', '=', 'p.Id')
             ->select(
                 'p.Id',
                 'p.Name',
@@ -149,11 +210,42 @@ class Products extends Model
                 'pp.BasePrice',
                 'pp.DiscountType',
                 'pp.DiscountPercent',
-                'pp.DiscountFixed'
+                'pp.DiscountFixed',
+                'ps.Quantity'
             )
             ->where('p.Active', 1)
             ->where('ps.BranchId', $branchId)
+            ->where('pp.BranchId', $branchId)
             ->where('ps.Quantity', '>', 0);
+
+        // $sql = $query->toSql();
+        // dd([
+        //     'bid' => $branchId,
+        //     'sql' => $sql
+        // ]);
+
+
+        return $query;
+    }
+
+    public static function getProductsForAdmin()
+    {
+        return DB::table('products as p')
+            ->leftJoin('units as u', 'u.Id', '=', 'p.UnitId')
+            ->leftJoin('product_categories as pc', 'pc.Id', '=', 'p.CategoryId')
+            ->leftJoin('product_categories as pd', 'pd.Id', '=', 'pc.ParentId')
+            ->select(
+                'p.Id',
+                'p.Name',
+                'u.Name as UnitName',
+                'pc.Name as CategoryName',
+                'pd.Name as DepartmentName',
+                'p.Slug',
+                'p.Key',
+                'p.Description',
+                'p.Image',
+                'p.Active'
+            )->get();
     }
 
     public static function getProductsByDepartment($department, $order = 'name', $orderDirection = 'asc', $limit = 12, $page = 1, $branchId = 1)

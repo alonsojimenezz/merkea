@@ -39,6 +39,9 @@
 
     @yield('footer')
 
+    @component('components.admin.toast', ['position' => 'top-50 end-0 translate-middle-y'])
+    @endcomponent
+
     <script src="{{ asset('js/store.js') }}"></script>
     @yield('modules_js')
     <script type="module" src="{{ asset('assets/modules/store/store.js') }}"></script>

@@ -16,6 +16,7 @@ class ProductPrices extends Model
     protected $fillable = [
         'LastUpdater',
         'ProductId',
+        'BranchId',
         'BasePrice',
         'DiscountType',
         'DiscountPercent',

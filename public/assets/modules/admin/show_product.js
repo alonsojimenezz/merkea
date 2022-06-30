@@ -263,11 +263,17 @@ $(function() {
     }
 
     function initFixedDiscountMax() {
-        $("#fixed_discount").on("keyup change", function() {
-            let fixedDiscountVal = removeCurrencyMask($("#fixed_discount").val());
-            let productPrice = removeCurrencyMask(utils.trim("#product_price"));
-            if (fixedDiscountVal >= productPrice) {
-                $(this).val(productPrice - 1);
+        $(".product_discount").on("keyup change", function() {
+            const _this = $(this);
+            let branchId = $(this).data('branch');
+            let fixedDiscountVal = removeCurrencyMask(utils.trim("#product_discount_" + branchId));
+            let productPrice = removeCurrencyMask(utils.trim("#product_price_" + branchId));
+            if (parseFloat(fixedDiscountVal) >= parseFloat(productPrice)) {
+                if (productPrice > 0) {
+                    _this.val(productPrice - 1);
+                } else {
+                    _this.val(0);
+                }
             }
         });
     }
@@ -276,11 +282,21 @@ $(function() {
         buttons.initClick("#save_product_prices", function(btn) {
             let data = {
                 pid: utils.trim("#product_id"),
-                price: removeCurrencyMask(utils.trim("#product_price")),
-                discount_type: $('input[name="discount_option"]:checked').val(),
-                discount_percent: $("#discount_label").html(),
-                discount_fixed: removeCurrencyMask($("#fixed_discount").val())
+                prices: [],
             };
+
+            $(".product_price").each(function(index, element) {
+                let branchId = $(this).data('branch');
+                let priceData = {
+                    branch: branchId,
+                    price: parseFloat(removeCurrencyMask($(this).val())),
+                    discount_fixed: parseFloat(removeCurrencyMask(utils.trim("#product_discount_" + branchId))),
+                    discount_percent: 0
+                };
+                priceData.discount_type = priceData.discount_fixed > 0 ? 2 : 0;
+
+                data.prices.push(priceData);
+            });
 
             event.post('/api_v1/products/prices', data, function(r) {
                 buttons.removeLoadingButton(null, "save_product_prices");
@@ -334,7 +350,6 @@ $(function() {
 
         }, true, "Product Movements", "#export-buttons-hiden");
     }
-
 
 
 });

@@ -56,8 +56,8 @@
                                 </div>
                                 @can('Add Products')
                                     <div class="d-flex align-items-center flex-nowrap text-nowrap py-1">
-                                        <a href="#" class="btn btn-outline btn-outline-dashed btn-outline-warning btn-active-warning fw-bolder me-4"
-                                            data-bs-toggle="modal" data-bs-target="#modal_upload_inventory">{{__('Upload Inventory')}}</a>
+                                        {{-- <a href="#" class="btn btn-outline btn-outline-dashed btn-outline-warning btn-active-warning fw-bolder me-4"
+                                            data-bs-toggle="modal" data-bs-target="#modal_upload_inventory">{{__('Upload Inventory')}}</a> --}}
                                         <a href="#" id="show_new_product_form"
                                             class="btn btn-primary">{{ __('New Product') }}</a>
                                     </div>
@@ -152,8 +152,10 @@
                         <thead class="fs-7 text-gray-400 text-uppercase">
                             <tr>
                                 <th class="min-w-70px">{{ __('ID') }}</th>
-                                <th class="min-w-200px">{{ __('Slug') }}</th>
+                                <th class="min-w-200px">{{ __('Key') }}</th>
                                 <th class="min-w-250px">{{ __('Product') }}</th>
+                                <th class="min-w-200px">{{ __('Department') }}</th>
+                                <th class="min-w-200px">{{ __('Category') }}</th>
                                 <th class="min-w-150px">{{ __('Status') }}</th>
                             </tr>
                         </thead>
@@ -181,13 +183,13 @@
                 @endslot
             @endcomponent
 
-            @component('components.admin.modal')
+            {{-- @component('components.admin.modal')
                 @slot('modal_id', 'modal_upload_inventory')
                 @slot('title', __('Upload Inventory'))
                 @slot('subtitle', __('To upload new inventory, select the branch office and look for the inventory format on your device'))
                 @slot('body')
                     @include('admin.products.form_upload_inventory', ['branches' => $branches])
                 @endslot
-            @endcomponent
+            @endcomponent --}}
         @endcan
     @endsection

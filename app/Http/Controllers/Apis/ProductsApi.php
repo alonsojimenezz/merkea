@@ -279,15 +279,18 @@ class ProductsApi extends Controller
     public function setProductPrices(Request $request)
     {
         try {
-            ModelsProductPrices::updateOrCreate([
-                'ProductId' => $request->input('pid')
-            ], [
-                'LastUpdater' => auth()->user()->id,
-                'BasePrice' => $request->input('price'),
-                'DiscountType' => $request->input('discount_type'),
-                'DiscountPercent' => $request->input('discount_percent'),
-                'DiscountFixed' => $request->input('discount_fixed'),
-            ]);
+            foreach ($request->input('prices') as $price) {
+                ModelsProductPrices::updateOrCreate([
+                    'ProductId' => $request->input('pid'),
+                    'BranchId' => $price['branch'],
+                ], [
+                    'LastUpdater' => auth()->user()->id,
+                    'BasePrice' => $price['price'],
+                    'DiscountType' => $price['discount_type'],
+                    'DiscountPercent' => $price['discount_percent'],
+                    'DiscountFixed' => $price['discount_fixed'],
+                ]);
+            }
 
             return $this->jsonResponse(200, __('Saved successfully'), [
                 'alert' => __('The product price was updated successfully'),
@@ -419,6 +422,7 @@ class ProductsApi extends Controller
                         'Slug' => Str::slug($product['description'], '-', 'es'),
                         'BarCode' => $product['key'],
                         'Active' => $product['status'] > 0 ? 1 : 0,
+                        'granel' => $product['granel'] > 0 ? 1 : 0,
                     ]
                 );
 
@@ -426,7 +430,10 @@ class ProductsApi extends Controller
 
                 try {
                     $price = ModelsProductPrices::updateOrCreate(
-                        ['ProductId' => $productId],
+                        [
+                            'ProductId' => $productId,
+                            'BranchId' => $branchId
+                        ],
                         [
                             'LastUpdater' => 1,
                             'BasePrice' => $product['price']

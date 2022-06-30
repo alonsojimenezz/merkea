@@ -14,11 +14,11 @@
             </div>
             <div class="offcanvas__search mb-25">
                 <form action="#">
-                    <input type="text" placeholder="¿Qué estas buscando?">
-                    <button type="submit"><i class="far fa-search"></i></button>
+                    <input type="text" id="search_text_m" placeholder="{{ __('What are you looking for?') }}">
+                    <button id="search_button_m" type="submit"><i class="far fa-search"></i></button>
                 </form>
             </div>
-            <div class="mobile-menu fix"></div>
+            {{-- <div class="mobile-menu fix"></div> --}}
             <div class="offcanvas__action">
 
             </div>
@@ -50,8 +50,7 @@
                                 <a class="mobile_menu" href="{{ route('logout') }}"
                                     onclick="event.preventDefault(); document.getElementById('logout-form').submit();">{{ __('Logout') }}</a>
 
-                                <form id="logout-form" action="{{ route('logout') }}" method="POST"
-                                    class="d-none">
+                                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                                     @csrf
                                 </form>
                             </li>

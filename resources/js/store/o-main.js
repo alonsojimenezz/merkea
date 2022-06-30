@@ -124,7 +124,6 @@
 
 
 
-
     ////////////////////////////////////////////////////
     // 04. Sticky Header Js
     $(window).on('scroll', function() {
@@ -981,7 +980,9 @@
         // filter items on button click
         $('.masonary-menu').on('click', 'button', function() {
             var filterValue = $(this).attr('data-filter');
-            $grid.isotope({ filter: filterValue });
+            $grid.isotope({
+                filter: filterValue
+            });
         });
 
         //for menu active class
@@ -1002,17 +1003,16 @@
     // 21. Cart Plus Minus Js
     $(".cart-plus-minus").append('<div class="dec qtybutton">-</div><div class="inc qtybutton">+</div>');
     $(".qtybutton").on("click", function() {
-        var $button = $(this);
-        var oldValue = $button.parent().find("input").val();
+        let $button = $(this);
+        let element = $button.parent().find("input");
+        let oldValue = $button.parent().find("input").val();
+        let newVal = 1;
         if ($button.text() == "+") {
-            var newVal = parseFloat(oldValue) + 1;
+            newVal = parseFloat(oldValue) + 1;
+            newVal = (newVal > element.data("max")) ? element.data("max") : newVal;
         } else {
-            // Don't allow decrementing below zero
-            if (oldValue > 0) {
-                var newVal = parseFloat(oldValue) - 1;
-            } else {
-                newVal = 0;
-            }
+            newVal = parseFloat(oldValue) - 1;
+            newVal = (newVal < 1) ? 1 : newVal;
         }
         $button.parent().find("input").val(newVal);
     });

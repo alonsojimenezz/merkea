@@ -25,6 +25,9 @@ Route::get('/department/{department}', [Store::class, 'show_department'])->name(
 Route::get('/category/{category}', [Store::class, 'show_category'])->name('store.category');
 Route::get('/search', [Store::class, 'show_search'])->name('store.search');
 Route::get('/product/{product}', [Store::class, 'show_product'])->name('store.product');
+Route::get('/cart', [Store::class, 'show_cart'])->name('store.cart');
+Route::get('/checkout', [Store::class, 'checkout'])->name('store.checkout');
+Route::get('/order/{order}', [Store::class, 'show_order'])->name('store.order');
 
 // Route::resource('/product-categories', ProductCategoriesController::class)->middleware(['auth', 'verified']);
 

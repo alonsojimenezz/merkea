@@ -13,7 +13,7 @@ class Products extends Controller
     public function index()
     {
         return view('admin.products.index', [
-            'products' => ModelsProducts::orderBy('Name')->get(),
+            'products' => ModelsProducts::getProductsForAdmin(),
             'branches' => ModelsBranch::all()->sortBy('Name')
         ]);
     }
@@ -26,5 +26,23 @@ class Products extends Controller
             'categories' => ModelsCategories::getChilds(),
             'branches' => ModelsBranch::all()->sortBy('Name'),
         ]);
+    }
+
+    public static function product_image($sku)
+    {
+        // return asset('files/products/initials/' . $sku . '.jpg');
+        if (file_exists(public_path('files/products/initials/' . $sku . '.jpg')))
+            return asset('files/products/initials/' . $sku . '.jpg');
+
+        if (file_exists(public_path('files/products/initials/' . $sku . '.jpeg')))
+            return asset('files/products/initials/' . $sku . '.jpeg');
+
+        if (file_exists(public_path('files/products/initials/' . $sku . '.png')))
+            return asset('files/products/initials/' . $sku . '.png');
+
+        if (file_exists(public_path('files/products/initials/' . $sku . '.webp')))
+            return asset('files/products/initials/' . $sku . '.webp');
+
+        return  asset('img/no_image.png');
     }
 }

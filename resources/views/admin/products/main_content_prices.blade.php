@@ -8,7 +8,42 @@
             </div>
             <div class="card-body pt-0">
                 <div class="py-5">
-                    @php
+                    @foreach ($branches as $branch)
+                        <div class="col-12 bg-mkea-primary py-2 px-4 text-white fw-bold ls-2">
+                            {{ $branch->Name }}
+                        </div>
+                        <div class="col-12 pt-2 border-bottom border-warning">
+                            <div class="row pb-1 px-4">
+                                <div class="col-4 text-start mt-3">
+                                    <label class="required form-label">{{ __('Base Price') }} $</label>
+                                </div>
+                                <div class="col-4">
+                                    <input type="number" data-branch="{{ $branch->Id }}"
+                                        class="form-control form-control-sm product_price"
+                                        value="{{ number_format($product->prices[$branch->Id]->BasePrice ?? 0, 2) }}"
+                                        name="product_price_{{ $branch->Id }}"
+                                        id="product_price_{{ $branch->Id }}" min="0" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 pt-2 border-bottom border-warning mb-10">
+                            <div class="row pb-1 px-4">
+                                <div class="col-4 text-start mt-3">
+                                    <label class="form-label">{{ __('Fixed Discount') }} $</label>
+                                </div>
+                                <div class="col-4">
+                                    <input type="number" data-branch="{{ $branch->Id }}"
+                                        class="form-control form-control-sm product_discount"
+                                        value="{{ number_format($product->prices[$branch->Id]->DiscountFixed ?? 0, 2) }}"
+                                        name="product_discount_{{ $branch->Id }}"
+                                        id="product_discount_{{ $branch->Id }}" min="0" />
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
+
+
+                    {{-- @php
                         $price = isset($product->price) && isset($product->price[0]) ? $product->price[0] : null;
                         if ($price != null) {
                             $price->BasePrice = number_format($price->BasePrice, 2, '.', '');
@@ -113,7 +148,7 @@
                                 {{ __('Set the discounted product price. The product will be reduced at the determined fixed price') }}
                             </div>
                         </div>
-                    </div>
+                    </div> --}}
 
                 </div>
                 @can('Change Product Prices')

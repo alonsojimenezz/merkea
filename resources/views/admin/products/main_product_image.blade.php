@@ -11,7 +11,7 @@
             style="background-image: url({{ asset('img/no_image.png') }})">
             <!--begin::Image preview wrapper-->
             <div class="image-input-wrapper w-125px h-125px"
-                style="background-image: url({{ $product->Image != '' ? asset($product->Image) : asset('img/no_image.png') }})">
+                style="background-size: contain; background-image: url({{ $product->Image != '' ? asset($product->Image) : MProduct::product_image($product->Key) }})">
             </div>
             <!--end::Image preview wrapper-->
 
