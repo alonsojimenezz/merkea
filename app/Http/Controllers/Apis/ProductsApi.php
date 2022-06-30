@@ -413,18 +413,37 @@ class ProductsApi extends Controller
                     $product['description'] = $product['description'] . ' ' . $product['key'];
                 }
 
-                $productN = ModelsProducts::updateOrCreate(
-                    ['Key' => $product['key']],
-                    [
-                        'Name' => $product['description'],
-                        'UnitId' => $unit->Id,
-                        'CategoryId' => $category->Id,
-                        'Slug' => Str::slug($product['description'], '-', 'es'),
-                        'BarCode' => $product['key'],
-                        'Active' => $product['status'] > 0 ? 1 : 0,
-                        'Granel' => $product['granel'],
-                    ]
-                );
+                $arrayProduct = [
+                    'Name' => $product['description'],
+                    'UnitId' => $unit->Id,
+                    'CategoryId' => $category->Id,
+                    'Slug' => Str::slug($product['description'], '-', 'es'),
+                    'BarCode' => $product['key'],
+                    'Active' => $product['status'] > 0 ? 1 : 0,
+                    'Granel' => $product['granel'],
+                ];
+
+                $searchProduct = ModelsProducts::where('Key', $product['key'])->first();
+
+                if ($searchProduct) {
+                    $productN = ModelsProducts::where('Id', $searchProduct->Id)->update($arrayProduct);
+                } else {
+                    $productN = ModelsProducts::create(array_merge($arrayProduct, ['Key' => $product['key']]));
+                }
+
+
+                // $productN = ModelsProducts::updateOrCreate(
+                //     ['Key' => $product['key']],
+                //     [
+                //         'Name' => $product['description'],
+                //         'UnitId' => $unit->Id,
+                //         'CategoryId' => $category->Id,
+                //         'Slug' => Str::slug($product['description'], '-', 'es'),
+                //         'BarCode' => $product['key'],
+                //         'Active' => $product['status'] > 0 ? 1 : 0,
+                //         'Granel' => $product['granel'],
+                //     ]
+                // );
 
 
                 $productId = $productN->Id ?? $productN->id;

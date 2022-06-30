@@ -156,7 +156,8 @@ class Products extends Model
                 'p.Image',
                 'p.Active',
                 'pc.Active as CategoryActive',
-                'pd.Active as DepartmentActive'
+                'pd.Active as DepartmentActive',
+                'p.Granel'
             )
             ->where('p.Slug', $slug)
             ->first();
@@ -212,7 +213,8 @@ class Products extends Model
                 'pp.DiscountType',
                 'pp.DiscountPercent',
                 'pp.DiscountFixed',
-                'ps.Quantity'
+                'ps.Quantity',
+                'p.Granel'
             )
             ->where('p.Active', 1)
             ->where('ps.BranchId', $branchId)
