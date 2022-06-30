@@ -21,7 +21,8 @@ class Products extends Model
         'BarCode',
         'Image',
         'Description',
-        'Highlight'
+        'Highlight',
+        'granel'
     ];
 
 
