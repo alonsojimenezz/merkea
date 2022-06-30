@@ -426,7 +426,8 @@ class ProductsApi extends Controller
                 $searchProduct = ModelsProducts::where('Key', $product['key'])->first();
 
                 if ($searchProduct) {
-                    $productN = ModelsProducts::where('Id', $searchProduct->Id)->update($arrayProduct);
+                    ModelsProducts::where('Id', $searchProduct->Id)->update($arrayProduct);
+                    $productN = $searchProduct;
                 } else {
                     $productN = ModelsProducts::create(array_merge($arrayProduct, ['Key' => $product['key']]));
                 }
