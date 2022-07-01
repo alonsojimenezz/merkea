@@ -20,8 +20,14 @@
                 <a class="t-y-btn t-y-btn-border mb-10" href="{{ route('store.cart') }}"
                     type="button">{{ __('View in cart') }}</a>
             @else
-                <button class="add_to_cart" data-pid="{{ $p->Id }}"
-                    type="button">{{ __('Add to cart') }}</button>
+                @if ($p->Granel == 1)
+                    <a class="t-y-btn t-y-btn-border mb-10"
+                        href="{{ route('store.product', ['product' => $p->Slug]) }}"
+                        type="button">{{ __('Add to cart') }}</a>
+                @else
+                    <button class="add_to_cart" data-pid="{{ $p->Id }}"
+                        type="button">{{ __('Add to cart') }}</button>
+                @endif
             @endif
         </div>
     </div>

@@ -45,7 +45,7 @@ $(function() {
         } else {
             event.post('/api_v1/store/checkout', data, function(r) {
                 if (r.code == 200) {
-                    console.log(r);
+                    window.location.href = r.body.url;
                 } else {
                     alerts.fire(r.message || "Ocurrió un error al procesar la solicitud", "warning", "Continuar", "primary");
                     event.hideLoading();

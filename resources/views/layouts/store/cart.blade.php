@@ -38,10 +38,12 @@
                                     <td class="product-quantity">
                                         <div class="cart-plus-minus p-relative">
                                             <input type="text" class="product_quantity"
+                                                data-granel="{{ $item['granel'] ?? 0 }}"
                                                 data-pid="{{ $item['id'] }}" value="{{ $item['quantity'] }}"
                                                 data-max="{{ $item['stock']->Quantity }}"
                                                 data-unitprice="{{ $item['price']->BasePrice - $item['price']->DiscountFixed }}"
-                                                data-original="{{ $item['quantity'] }}" />
+                                                data-original="{{ $item['quantity'] }}"
+                                                {{ $item['granel'] == 1 ? '' : 'disabled' }} />
                                         </div>
                                         <span class="py-3">{{ __('Max') . ' ' . $item['stock']->Quantity }}</span>
                                     </td>

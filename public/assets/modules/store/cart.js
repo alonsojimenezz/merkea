@@ -22,14 +22,41 @@ $(function() {
         }, null, false);
     });
 
-    $(".inc.qtybutton, .dec.qtybutton").on("click", function() {
-        const btn = $(this);
-        const inputControl = btn.parent('.cart-plus-minus').find('.product_quantity');
-        let subtotal = parseFloat(inputControl.val()) * parseFloat(inputControl.data('unitprice'));
-        $(".product-subtotal-" + inputControl.data('pid')).empty().append(utils.formatMoney(subtotal));
+    button.initClick(".qtybutton", function(btn) {
+        const q = btn.parent().find(".product_quantity");
+        let v = (q.data("granel") == 1) ? 0.05 : 1;
+        const base = v;
+        v = (btn.hasClass("inc")) ? v : -v;
+        let newval = parseFloat(q.val()) + v;
+        newval = (newval > parseFloat(q.data("max"))) ? parseFloat(q.data("max")) : ((newval < base) ? base : newval);
+        q.val(newval.toFixed(2));
 
+        let subtotal = parseFloat(q.val()) * parseFloat(q.data('unitprice'));
+        $(".product-subtotal-" + q.data('pid')).empty().append(utils.formatMoney(subtotal));
         updateCartTotals();
     });
+
+    $(".product_quantity").on("blur", function(e) {
+        const q = $(this);
+        const base = (q.data("granel") == 1) ? 0.05 : 1;
+        let newval = parseFloat(q.val());
+        newval = (newval > parseFloat(q.data("max"))) ? parseFloat(q.data("max")) : ((newval < base) ? base : newval);
+        q.val(newval);
+
+        let subtotal = parseFloat(newval) * parseFloat(q.data('unitprice'));
+        $(".product-subtotal-" + q.data('pid')).empty().append(utils.formatMoney(subtotal));
+        updateCartTotals();
+    });
+
+
+    // $(".inc.qtybutton, .dec.qtybutton").on("click", function() {
+    //     const btn = $(this);
+    //     const inputControl = btn.parent('.cart-plus-minus').find('.product_quantity');
+    //     let subtotal = parseFloat(inputControl.val()) * parseFloat(inputControl.data('unitprice'));
+    //     $(".product-subtotal-" + inputControl.data('pid')).empty().append(utils.formatMoney(subtotal));
+
+    //     updateCartTotals();
+    // });
 
     function updateCartTotals() {
         let subtotal = 0;

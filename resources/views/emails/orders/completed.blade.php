@@ -1,7 +1,7 @@
 @component('mail::message')
-# Hola {{ $r['name'] ?? 'Cliente de Merkea Mini Market' }},
+# Hola {{ $order->Name ?? 'Cliente de Merkea Mini Market' }},
 
-Agradecemos su preferencia y confirmamos que su pedido ha sido registrado con los siguientes productos:
+Agradecemos su preferencia y confirmamos que su pedido con número {{str_pad(($order->Id ?? $order->id), 12, "0", STR_PAD_LEFT)}} ha sido registrado con los siguientes productos:
 @php
 $total = 0;
 @endphp
@@ -18,10 +18,10 @@ $total += ($item['price']->BasePrice - $item['price']->DiscountFixed) * $item['q
 @endcomponent
 
 @component('mail::panel')
-Sus productos serán entregados en <strong>{{$r['address'] ?? ''}}</strong>, que es la dirección que nos proporcionó en el momento de su pedido.
+Sus productos serán entregados en <strong>{{$order->Address ?? ''}}</strong>, que es la dirección que nos proporcionó en el momento de su pedido.
 @endcomponent
 
-@component('mail::button', ['url' => route('store.order',['order' => 123]), 'color' => 'info'])
+@component('mail::button', ['url' => route('store.order',['order' => ($order->Slug ?? '123')])])
 Ver Pedido
 @endcomponent
 

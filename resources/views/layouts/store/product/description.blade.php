@@ -31,10 +31,14 @@
             <div class="product__details-stock">
                 @if ($product->stock->Quantity > 0 && $product->price->BasePrice > 0)
                     <h3><span>{{ __('Hurry Up!') }}</span>
-                        @if ($product->stock->Quantity < 2)
-                            {{ __('Only :stock product left in stock', ['stock' => $product->stock->Quantity]) }}
+                        @if ($product->Granel == 1)
+                            {{ __('Only :stock :unit left in stock', ['stock' => $product->stock->Quantity, 'unit' => $product->UnitName]) }}
                         @else
-                            {{ __('Only :stock products left in stock', ['stock' => $product->stock->Quantity]) }}
+                            @if ($product->stock->Quantity < 2)
+                                {{ __('Only :stock product left in stock', ['stock' => $product->stock->Quantity]) }}
+                            @else
+                                {{ __('Only :stock products left in stock', ['stock' => $product->stock->Quantity]) }}
+                            @endif
                         @endif
                     </h3>
                 @else
@@ -53,8 +57,9 @@
                         <div class="pro-quan-area d-lg-flex align-items-center">
                             <div class="product-quantity mr-20 mb-25">
                                 <div class="cart-plus-minus p-relative">
-                                    <input id="product_quantity" data-max="{{ $product->stock->Quantity }}"
-                                        type="text" value="1" disabled />
+                                    <input id="product_quantity" data-granel="{{ $product->Granel }}"
+                                        data-max="{{ $product->stock->Quantity }}" type="text"
+                                        value="{{ $product->Granel == 1 ? 0.05 : 1 }}" {{ $product->Granel == 1 ? "" : "disabled" }}>
                                 </div>
                             </div>
                             <div class="pro-cart-btn mb-25">

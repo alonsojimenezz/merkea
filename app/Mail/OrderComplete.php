@@ -17,11 +17,11 @@ class OrderComplete extends Mailable
      * @return void
      */
 
-    private $r;
+    private $order;
 
-    public function __construct($r)
+    public function __construct($order)
     {
-        $this->r = $r;
+        $this->order = $order;
     }
 
     /**
@@ -31,6 +31,6 @@ class OrderComplete extends Mailable
      */
     public function build()
     {
-        return $this->markdown('emails.orders.completed', ['r' => $this->r, 'cart' => session('cart')]);
+        return $this->markdown('emails.orders.completed', ['order' => $this->order, 'cart' => session('cart')])->subject(__('New order received #:order_id', ['order_id' => (str_pad(($this->order->Id ?? $this->order->id), 12, "0", STR_PAD_LEFT))]));
     }
 }

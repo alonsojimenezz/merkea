@@ -8,10 +8,14 @@ use App\Models\Products as ModelsProducts;
 use App\Models\BranchOffices as ModelsBranchOffices;
 use App\Models\ProductImages as ModelsProductImages;
 use App\Models\PostalCoverage as ModelsPostalCoverage;
+use App\Models\Orders as ModelsOrders;
+use App\Models\OrderItems as ModelsOrderItems;
 use App\Mail\OrderComplete;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Contracts\Session\Session;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 class Store extends Controller
 {
@@ -219,6 +223,7 @@ class Store extends Controller
                 'id' => $product->Id,
                 'key' => $product->Key,
                 'name' => $product->Name,
+                'granel' => $product->Granel,
                 'slug' => $product->Slug,
                 'price' => $product->price,
                 'stock' => $product->stock,
@@ -355,12 +360,71 @@ class Store extends Controller
     public function completeOrder(Request $request)
     {
         try {
-            Mail::to('ajimmenezz@gmail.com')->send(new OrderComplete($request->all()));
-            return $this->jsonResponse(200, "success");
+            DB::beginTransaction();
+
+            $slug = Str::uuid()->toString();
+            while (ModelsOrders::where('Slug', $slug)->count() > 0) {
+                $slug = Str::uuid()->toString();
+            }
+
+            $order = ModelsOrders::create([
+                'BranchId' => session('branch'),
+                'StatusId' => 1,
+                'Name' => $request->input('name'),
+                'Email' => $request->input('email'),
+                'Phone' => $request->input('phone'),
+                'Address' => $request->input('address'),
+                'PostalCodeId' => $request->input('postalcode'),
+                'Slug' => $slug
+            ]);
+
+            $cart = session()->get('cart');
+
+            foreach ($cart as $item) {
+                ModelsOrderItems::create([
+                    'OrderId' => $order->Id ?? $order->id,
+                    'ProductId' => $item['id'],
+                    'Quantity' => $item['quantity'],
+                    'BasePrice' => $item['price']->BasePrice,
+                    'Discount' => $item['price']->DiscountFixed
+                ]);
+            }
+
+
+            Mail::to($request->input('email'))->bcc('ajimenez@siccob.com.mx')->send(new OrderComplete($order));
+
+            session()->forget('cart');
+            DB::commit();
+
+            return $this->jsonResponse(200, "success", [
+                'url' => route('store.order', ['order' => $order->Slug])
+            ]);
         } catch (\Throwable $e) {
+            DB::rollback();
             return $this->jsonResponse(500, __('Internal Server Error'), [
                 'exception' => $e->getMessage(),
             ]);
         }
+    }
+
+    public function show_order($order)
+    {
+        $viewArray = [
+            'categories' => ModelsProductCategories::getActivesTree(),
+            'branches' => ModelsBranchOffices::getActives(),
+            'branch' => session('branch'),
+            'postal_codes' => ModelsPostalCoverage::getActivesByBranch(session('branch')),
+            'breadcrumbs' => [
+                'text' => __('Home'),
+                'url' => route('store.home'),
+                'child' => [
+                    'text' => __('Order'),
+                    'url' => route('store.checkout')
+                ]
+            ],
+            'cart' => session()->has('cart') ? session()->get('cart') : []
+        ];
+
+        return view('store.order', $viewArray);
     }
 }

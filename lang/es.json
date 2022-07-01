@@ -355,5 +355,12 @@
     "Your order": "Tu pedido",
     "Cart Subtotal": "Subtotal del Carrito",
     "Order Total": "Total del Pedido",
-    "Place Order": "Realizar Pedido"
+    "Place Order": "Realizar Pedido",
+    "Only :stock :unit left in stock": "Solo queda :stock :unit en existencia",
+    "New": "Nuevo",
+    "Preparing the order": "Preparando el pedido",
+    "On the way": "En camino",
+    "Delivered": "Entregado",
+    "Cancelled": "Cancelado",
+    "New order received #:order_id": "Nuevo pedido recibido #:order_id"
 }
