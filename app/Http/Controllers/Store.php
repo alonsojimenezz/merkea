@@ -26,7 +26,8 @@ class Store extends Controller
             'featured_products' => ModelsProducts::getFeaturedProducts(session('branch')),
             'categories' => ModelsProductCategories::getActivesTree(),
             'branches' => ModelsBranchOffices::getActives(),
-            'branch' => session('branch')
+            'branch' => session('branch'),
+            'branch_info' => ModelsBranchOffices::where('Id', session('branch'))->first()
         ]);
     }
 
@@ -47,6 +48,7 @@ class Store extends Controller
             ),
             'branches' => ModelsBranchOffices::getActives(),
             'branch' => session('branch'),
+            'branch_info' => ModelsBranchOffices::where('Id', session('branch'))->first(),
             'breadcrumbs' => [
                 'text' => __('Home'),
                 'url' => route('store.home'),
@@ -78,6 +80,7 @@ class Store extends Controller
             ),
             'branches' => ModelsBranchOffices::getActives(),
             'branch' => session('branch'),
+            'branch_info' => ModelsBranchOffices::where('Id', session('branch'))->first(),
             'breadcrumbs' => [
                 'text' => __('Home'),
                 'url' => route('store.home'),
@@ -128,6 +131,7 @@ class Store extends Controller
             ),
             'branches' => ModelsBranchOffices::getActives(),
             'branch' => session('branch'),
+            'branch_info' => ModelsBranchOffices::where('Id', session('branch'))->first(),
             'breadcrumbs' => [
                 'text' => __('Home'),
                 'url' => route('store.home'),
@@ -159,6 +163,7 @@ class Store extends Controller
             'categories' => ModelsProductCategories::getActivesTree(),
             'branches' => ModelsBranchOffices::getActives(),
             'branch' => session('branch'),
+            'branch_info' => ModelsBranchOffices::where('Id', session('branch'))->first(),
             'breadcrumbs' => [
                 'text' => __('Home'),
                 'url' => route('store.home'),
@@ -183,6 +188,7 @@ class Store extends Controller
             'categories' => ModelsProductCategories::getActivesTree(),
             'branches' => ModelsBranchOffices::getActives(),
             'branch' => session('branch'),
+            'branch_info' => ModelsBranchOffices::where('Id', session('branch'))->first(),
             'breadcrumbs' => [
                 'text' => __('Home'),
                 'url' => route('store.home'),
@@ -342,6 +348,7 @@ class Store extends Controller
             'categories' => ModelsProductCategories::getActivesTree(),
             'branches' => ModelsBranchOffices::getActives(),
             'branch' => session('branch'),
+            'branch_info' => ModelsBranchOffices::where('Id', session('branch'))->first(),
             'postal_codes' => ModelsPostalCoverage::getActivesByBranch(session('branch')),
             'breadcrumbs' => [
                 'text' => __('Home'),

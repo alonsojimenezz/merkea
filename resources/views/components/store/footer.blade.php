@@ -20,8 +20,8 @@
                                 <img src="/store/img/whatsapp.svg" style="width: 50px;">
                             </div>
                             <div class="text">
-                                <a href="https://wa.me/+525510562027"><span>Contáctanos</span>
-                                    <h2 style="color:#9da3af;">55 1056-2027</h2>
+                                <a href="https://wa.me/+52{{ preg_replace('/[^0-9]/', '', $branch_info->Phone) }}"><span>Contáctanos</span>
+                                    <h2 style="color:#9da3af;">{{ $branch_info->Phone }}</h2>
                                 </a>
                             </div>
                         </div>
@@ -35,8 +35,9 @@
                             <li><span style="color:#9da3af;"><strong>Email:</strong> <a
                                         href="mailto:info@merkeaminimarket.com">info@merkeaminimarket.com</a>
                                 </span></li>
-                            <li><span style="color:#9da3af;"><strong>Phone:</strong> <a href="tel:5510562027">55
-                                        1056-2027</a></span></li>
+                            <li><span style="color:#9da3af;"><strong>Phone:</strong> <a
+                                        href="tel:{{ preg_replace('/[^0-9]/', '', $branch_info->Phone) }}">{{ $branch_info->Phone }}</a></span>
+                            </li>
                         </ul>
                     </div>
                 </div>

@@ -15,6 +15,7 @@ $(function() {
 
     initNewBranchOfficeForm();
     initBranchOfficesTable();
+    initBranchHours();
 
     function initNewBranchOfficeForm() {
         buttons.init("show_new_branch_office_form", function() {
@@ -31,6 +32,10 @@ $(function() {
             fv.validate("new_branch_office_form", "new_branch_office_button", {}, function() {
                 let data = {
                     name: utils.trim("#branch_office_name"),
+                    prefix: utils.trim("#branch_office_prefix"),
+                    phone: utils.trim("#branch_office_phone"),
+                    openning: utils.trim("#timepicker_open"),
+                    closing: utils.trim("#timepicker_close"),
                     address: utils.trim("#branch_office_address"),
                     frame: utils.trim("#branch_office_google_maps_code"),
                     id: utils.trim("#branch_office_id"),
@@ -50,9 +55,12 @@ $(function() {
 
     function resetNewBranchOfficeForm() {
         utils.reset("#branch_office_name");
+        utils.reset("#branch_office_prefix");
+        utils.reset("#branch_office_phone");
         utils.reset("#branch_office_address");
         utils.reset("#branch_office_google_maps_code");
         buttons.removeLoadingButton(null, "new_branch_office_button");
+        initBranchHours();
     }
 
     function proccessNewBranchOfficeResponse(r) {
@@ -90,15 +98,39 @@ $(function() {
                 _method: 'GET'
             }, function(r) {
                 if (r.code == 200) {
+                    let open = r.body.branch_office.OpenHours;
+                    open = open !== null && open.length > 0 ? open.substr(0, 5) : '';
+                    let close = r.body.branch_office.CloseHours;
+                    close = close !== null && close.length > 0 ? close.substr(0, 5) : '';
+
+
                     $("#branch_office_name").val(r.body.branch_office.Name);
+                    $("#branch_office_prefix").val(r.body.branch_office.Prefix);
+                    $("#branch_office_phone").val(r.body.branch_office.Phone);
                     $("#branch_office_address").val(r.body.branch_office.Address);
                     $("#branch_office_google_maps_code").val(r.body.branch_office.Frame);
                     $("#branch_office_status").prop("checked", r.body.branch_office.IsActive == 1);
+                    initBranchHours(open, close);
                     $("#modal_new_branch_office").modal('show');
                 } else {
                     alerts.fire(r.message || "Ocurrió un error al procesar la solicitud", "warning", "Continuar", "primary");
                 }
             });
+        });
+    }
+
+    function initBranchHours(open = '', close = '') {
+        $("#timepicker_open").flatpickr({
+            enableTime: true,
+            noCalendar: true,
+            dateFormat: "H:i",
+            defaultDate: open,
+        });
+        $("#timepicker_close").flatpickr({
+            enableTime: true,
+            noCalendar: true,
+            dateFormat: "H:i",
+            defaultDate: close,
         });
     }
 

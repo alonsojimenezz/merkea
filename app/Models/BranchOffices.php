@@ -14,10 +14,15 @@ class BranchOffices extends Model
 
     protected $fillable = [
         'Name',
+        'Prefix',
         'Address',
         'IsActive',
         'ServiceKey',
-        'Frame'
+        'Frame',
+        'OpenHours',
+        'CloseHours',
+        'Phone'
+
     ];
 
     protected $primaryKey = 'Id';

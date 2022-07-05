@@ -362,5 +362,15 @@
     "On the way": "En camino",
     "Delivered": "Entregado",
     "Cancelled": "Cancelado",
-    "New order received #:order_id": "Nuevo pedido recibido #:order_id"
+    "New order received #:order_id": "Nuevo pedido recibido #:order_id",
+    "Prefix": "Prefijo",
+    "Branch Office Prefix is a required field": "El prefijo de la sucursal es un campo obligatorio",
+    "Edit branch office": "Editar sucursal",
+    "Edit the branch office info": "Editar la información de la sucursal",
+    "Open Hours": "Horario de Apertura",
+    "Close Hours": "Horario de Cierre",
+    "Open Hours is a required field": "El horario de apertura es un campo obligatorio",
+    "Close Hours is a required field": "El horario de cierre es un campo obligatorio",
+    "Branch Office Phone is a required field": "El teléfono de la sucursal es un campo obligatorio",
+    "Select a branch": "Selecciona una sucursal"
 }

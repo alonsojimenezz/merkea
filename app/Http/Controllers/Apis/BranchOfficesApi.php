@@ -38,12 +38,16 @@ class BranchOfficesApi extends Controller
                     $searchServiceKey = BranchOffices::where('ServiceKey', $serviceKey)->first();
                 }
 
-                $staff = BranchOffices::create([
+                $branch_office = BranchOffices::create([
+                    'Prefix' => $request->input('prefix'),
                     'Name' => $request->input('name'),
                     'Address' => $request->input('address'),
                     'ServiceKey' => $serviceKey,
                     'Frame' => $request->input('frame'),
-                    'IsActive' => 1
+                    'IsActive' => 1,
+                    'OpenHours' => $request->input('openning'),
+                    'CloseHours' => $request->input('closing'),
+                    'Phone' => $request->input('phone')
                 ]);
 
                 return $this->jsonResponse(200, 'Saved', [
@@ -92,10 +96,14 @@ class BranchOfficesApi extends Controller
                 $branch_office = BranchOffices::findOrFail($id);
 
                 $arrayUpdate = [
+                    'Prefix' => $request->input('prefix'),
                     'Name' => $request->input('name'),
                     'Address' => $request->input('address'),
                     'IsActive' => $request->input('active'),
-                    'Frame' => $request->input('frame')
+                    'Frame' => $request->input('frame'),
+                    'OpenHours' => $request->input('openning'),
+                    'CloseHours' => $request->input('closing'),
+                    'Phone' => $request->input('phone')
                 ];
 
                 $branch_office->update($arrayUpdate);

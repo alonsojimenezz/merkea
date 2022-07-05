@@ -59,8 +59,9 @@
                                         <img src="/store/img/whatsapp.svg" style="width: 50px;">
                                     </div>
                                     <div class="header__hotline-info">
-                                        <a href="https://wa.me/+525510562027"><span>Contáctanos</span>
-                                            <h6>55 1056-2027</h6>
+                                        <a
+                                            href="https://wa.me/+52{{ preg_replace('/[^0-9]/', '', $branch_info->Phone) }}"><span>Contáctanos</span>
+                                            <h6>{{ $branch_info->Phone }}</h6>
                                         </a>
                                     </div>
                                 </div>
@@ -155,15 +156,14 @@
                                                         <a>{{ $branches[0]->Name }}</a>
                                                     @else
                                                         <a role="button">
-                                                            @foreach ($branches as $branch)
-                                                                {{ $branch->Id == $bid ? $branch->Name : '' }}
-                                                            @endforeach
+                                                            {{ __('Select a branch') }}
                                                             <i class="far fa-angle-down"></i>
                                                         </a>
                                                         <ul class="submenu">
                                                             @foreach ($branches as $branch)
                                                                 <li>
-                                                                    <a role="button" class="header_branch_select"
+                                                                    <a role="button"
+                                                                        class="header_branch_select {{ $branch->Id == $branch_info->Id ? 'text-warning' : '' }}"
                                                                         data-branch="{{ $branch->Id }}">{{ $branch->Name }}</a>
                                                                 </li>
                                                             @endforeach
