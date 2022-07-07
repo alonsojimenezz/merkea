@@ -203,7 +203,8 @@ return [
         */
         'DataTables' => Yajra\DataTables\Facades\DataTables::class,
         'Excel' => Maatwebsite\Excel\Facades\Excel::class,
-        'MProduct' => App\Http\Controllers\Products::class
+        'MProduct' => App\Http\Controllers\Products::class,
+        'MUtils' => App\Lib\Utilities::class
     ])->toArray(),
 
 ];

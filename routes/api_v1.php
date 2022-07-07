@@ -6,6 +6,8 @@ use App\Http\Controllers\Apis\ProductCategoriesApi;
 use App\Http\Controllers\Apis\ProductsApi;
 use App\Http\Controllers\Apis\StaffApi;
 use App\Http\Controllers\Apis\UnitsApi;
+use App\Http\Controllers\Apis\OrderItem;
+use App\Http\Controllers\Apis\Order;
 use App\Http\Controllers\Store;
 use Illuminate\Support\Facades\Route;
 
@@ -35,6 +37,10 @@ Route::group(['middleware' => ['role:Administrator|Staff']], function () {
         Route::apiResource('branch_offices', BranchOfficesApi::class);
 
         Route::apiResource('postal_codes', PostalCoverageApi::class);
+
+        Route::apiResource('order_items', OrderItem::class);
+
+        Route::post('order/status', [Order::class, 'changeOrderStatus']);
     });
 });
 

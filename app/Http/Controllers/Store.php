@@ -10,12 +10,14 @@ use App\Models\ProductImages as ModelsProductImages;
 use App\Models\PostalCoverage as ModelsPostalCoverage;
 use App\Models\Orders as ModelsOrders;
 use App\Models\OrderItems as ModelsOrderItems;
+use App\Models\TestCron;
 use App\Mail\OrderComplete;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Contracts\Session\Session;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
+use App\Lib\Utilities;
 
 class Store extends Controller
 {
@@ -184,6 +186,7 @@ class Store extends Controller
 
     public function show_cart()
     {
+        session()->put('branch', (session()->has('branch')) ? session('branch') : 1);
         $viewArray = [
             'categories' => ModelsProductCategories::getActivesTree(),
             'branches' => ModelsBranchOffices::getActives(),
@@ -344,6 +347,7 @@ class Store extends Controller
 
     public function checkout()
     {
+        session()->put('branch', (session()->has('branch')) ? session('branch') : 1);
         $viewArray = [
             'categories' => ModelsProductCategories::getActivesTree(),
             'branches' => ModelsBranchOffices::getActives(),
@@ -382,6 +386,7 @@ class Store extends Controller
                 'Phone' => $request->input('phone'),
                 'Address' => $request->input('address'),
                 'PostalCodeId' => $request->input('postalcode'),
+                'PaymentMethodId' => $request->input('payment_method'),
                 'Slug' => $slug
             ]);
 
@@ -416,22 +421,37 @@ class Store extends Controller
 
     public function show_order($order)
     {
+        session()->put('branch', (session()->has('branch')) ? session('branch') : 1);
+        $order = ModelsOrders::getOrder($order);
+
         $viewArray = [
             'categories' => ModelsProductCategories::getActivesTree(),
             'branches' => ModelsBranchOffices::getActives(),
             'branch' => session('branch'),
+            'branch_info' => ModelsBranchOffices::where('Id', session('branch'))->first(),
             'postal_codes' => ModelsPostalCoverage::getActivesByBranch(session('branch')),
             'breadcrumbs' => [
                 'text' => __('Home'),
                 'url' => route('store.home'),
                 'child' => [
-                    'text' => __('Order'),
+                    'text' => __('Order') . ': ' . Utilities::fullOrderNumber($order->Id),
                     'url' => route('store.checkout')
                 ]
             ],
-            'cart' => session()->has('cart') ? session()->get('cart') : []
+            'order' => $order,
         ];
 
         return view('store.order', $viewArray);
+    }
+
+    public function test_cron()
+    {
+        $test = TestCron::create([
+            'Test' => Str::random(10)
+        ]);
+
+        return $this->jsonResponse(200, "success", [
+            'test' => $test
+        ]);
     }
 }

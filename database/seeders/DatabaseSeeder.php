@@ -17,14 +17,12 @@ class DatabaseSeeder extends Seeder
         $this->call([
             InitialRoleSeeder::class,
             InitialUsersSeeder::class,
-            ProductCategoriesSeeder::class,
-            InitialProductsSeeder::class,
-            InitialUnitsSeeder::class,
-            InitialProductPrices::class,
             InitialStates::class,
             InitialPostalCoverage::class,
             InitialBranchOffice::class,
             InitialMovementsType::class,
+            OrderStatus::class,
+            InitialPaymentMethods::class
         ]);
     }
 }

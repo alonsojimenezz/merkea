@@ -59,5 +59,10 @@ class InitialRoleSeeder extends Seeder
         Permission::create(['name' => 'Add Postal Code Coverage', 'category' => 'Postal Code Coverage'])->assignRole($admin);
         Permission::create(['name' => 'Edit Postal Code Coverage', 'category' => 'Postal Code Coverage'])->assignRole($admin);
         Permission::create(['name' => 'Export Postal Code Coverage', 'category' => 'Postal Code Coverage'])->assignRole($admin);
+
+        Permission::create(['name' => 'View Orders', 'category' => 'Orders'])->assignRole($admin);
+        Permission::create(['name' => 'Add Order', 'category' => 'Orders'])->assignRole($admin);
+        Permission::create(['name' => 'Edit Order', 'category' => 'Orders'])->assignRole($admin);
+        Permission::create(['name' => 'Export Orders', 'category' => 'Orders'])->assignRole($admin);
     }
 }

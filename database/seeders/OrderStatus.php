@@ -16,23 +16,23 @@ class OrderStatus extends Seeder
     public function run()
     {
         ModelsOrderStatus::create([
-            'Name' => 'New',
-            'Active' => true
-        ]);
-        ModelsOrderStatus::create([
-            'Name' => 'Preparing the order',
+            'Name' => 'Validating',
+            'Color' => 'warning',
             'Active' => true
         ]);
         ModelsOrderStatus::create([
             'Name' => 'On the way',
+            'Color' => 'info',
             'Active' => true
         ]);
         ModelsOrderStatus::create([
             'Name' => 'Delivered',
+            'Color' => 'success',
             'Active' => true
         ]);
         ModelsOrderStatus::create([
             'Name' => 'Cancelled',
+            'Color' => 'danger',
             'Active' => true
         ]);
     }

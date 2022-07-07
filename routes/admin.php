@@ -5,6 +5,7 @@ use App\Http\Controllers\Products;
 use App\Http\Controllers\Staff;
 use App\Http\Controllers\Units;
 use App\Http\Controllers\BranchOffices;
+use App\Http\Controllers\Orders;
 use App\Http\Controllers\PostalCoverage;
 use Illuminate\Support\Facades\Route;
 
@@ -30,5 +31,9 @@ Route::group(['middleware' => ['role:Administrator|Staff']], function () {
         Route::get('/branch-offices', [BranchOffices::class, 'index'])->middleware(['auth', 'verified', 'permission:View Branch Offices'])->name('admin.branch_offices');
 
         Route::get('/postal-coverage', [PostalCoverage::class, 'index'])->middleware(['auth', 'verified', 'permission:View Postal Code Coverage'])->name('admin.postal_coverage');
+
+        Route::get('/orders', [Orders::class, 'index'])->middleware(['auth', 'verified', 'permission:View Orders'])->name('admin.orders');
+
+        Route::get('/orders/{id}', [Orders::class, 'show_order'])->middleware(['auth', 'verified', 'permission:View Orders'])->name('admin.show_order');
     });
 });

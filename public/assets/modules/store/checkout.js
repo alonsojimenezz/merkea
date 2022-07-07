@@ -29,7 +29,8 @@ $(function() {
             "email": $("#checkout-email").val(),
             "phone": $("#checkout-phone").val(),
             "postalcode": $("#checkout-postalcode").val(),
-            'address': $("#checkout-address").val()
+            'address': $("#checkout-address").val(),
+            'payment_method': $("input[type=radio][name=payment_method]:checked").val(),
         };
 
         if (data.name == "" || typeof data.name == "undefined") {
