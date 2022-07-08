@@ -467,6 +467,7 @@ class ProductsApi extends Controller
                 try {
                     $stock = ModelsProductStock::where('ProductId', $productId)->where('BranchId', $branchId)->first();
                     if ($stock) {
+                        $product['stock'] = number_format($product['stock'] > 0 ? $product['stock'] : 0, 2);
                         if ($stock->Quantity != $product['stock']) {
 
                             ModelsProductStockMovements::create([
