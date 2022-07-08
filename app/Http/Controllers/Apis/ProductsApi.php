@@ -16,6 +16,7 @@ use App\Models\Units as ModelsUnits;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Throwable;
 
 class ProductsApi extends Controller
@@ -539,6 +540,8 @@ class ProductsApi extends Controller
             } catch (Throwable $th) {
                 $arrayReturn['error']['category'] = $th->getMessage();
             }
+
+            Log::debug("New Sicar Update from Branch ${branchId} " . date('Y-m-d H:i:s'));
 
             return [
                 'code'  => 200,

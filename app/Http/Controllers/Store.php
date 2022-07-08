@@ -18,6 +18,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use App\Lib\Utilities;
+use Illuminate\Support\Facades\Log;
 
 class Store extends Controller
 {
@@ -446,12 +447,7 @@ class Store extends Controller
 
     public function test_cron()
     {
-        $test = TestCron::create([
-            'Test' => Str::random(10)
-        ]);
-
-        return $this->jsonResponse(200, "success", [
-            'test' => $test
-        ]);
+        Log::debug("New Cron test" . date('Y-m-d H:i:s'));
+        return $this->jsonResponse(200, "success");
     }
 }
