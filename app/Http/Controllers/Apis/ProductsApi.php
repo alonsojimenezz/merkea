@@ -408,7 +408,7 @@ class ProductsApi extends Controller
 
                 $product['description'] = trim(preg_replace('/\s\s+/', ' ', str_replace("\n", " ", $product['description'])));
 
-                $searchDuplicityName = ModelsProducts::where('Name', $product['description'])->where('Key', '<>', $product['key'])->first();
+                $searchDuplicityName = ModelsProducts::where('Slug', Str::slug($product['description'], '-', 'es'))->where('Key', '<>', $product['key'])->first();
                 if ($searchDuplicityName) {
                     $product['description'] = $product['description'] . ' ' . $product['key'];
                 }
