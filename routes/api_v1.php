@@ -38,9 +38,11 @@ Route::group(['middleware' => ['role:Administrator|Staff']], function () {
 
         Route::apiResource('postal_codes', PostalCoverageApi::class);
 
+        Route::get('order_items/search', [ProductsApi::class, 'searchProducts']);
         Route::apiResource('order_items', OrderItem::class);
 
         Route::post('order/status', [Order::class, 'changeOrderStatus']);
+
     });
 });
 

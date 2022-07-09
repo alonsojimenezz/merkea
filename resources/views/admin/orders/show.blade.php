@@ -31,11 +31,22 @@
     </div>
 @endsection
 
-@component('components.admin.modal')
-    @slot('modal_id', 'modal_edit_product')
-    @slot('title', __('Modify Product'))
-    @slot('subtitle', __('Modify the product quantity or delete the product from the order'))
-    @slot('body')
-        @include('admin.orders.edit_product_form')
-    @endslot
-@endcomponent
+@can('Edit Order')
+    @component('components.admin.modal')
+        @slot('modal_id', 'modal_edit_product')
+        @slot('title', __('Modify Product'))
+        @slot('subtitle', __('Modify the product quantity or delete the product from the order'))
+        @slot('body')
+            @include('admin.orders.edit_product_form')
+        @endslot
+    @endcomponent
+
+    @component('components.admin.modal')
+        @slot('modal_id', 'modal_add_product')
+        @slot('title', __('Add Product to Order'))
+        @slot('subtitle', __('Did the customer forget any product?'))
+        @slot('body')
+            @include('admin.orders.add_product_form', ['order' => $order])
+        @endslot
+    @endcomponent
+@endcan

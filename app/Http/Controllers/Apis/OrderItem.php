@@ -4,8 +4,10 @@ namespace App\Http\Controllers\Apis;
 
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Products;
+use App\Models\Products as ModelsProducts;
 use App\Models\OrderItems as ModelsOrderItem;
 use App\Models\OrderHistory as ModelsOrderHistory;
+use App\Models\Orders as ModelsOrders;
 use App\Models\ProductStock as ModelsProductStock;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
@@ -30,7 +32,50 @@ class OrderItem extends Controller
      */
     public function store(Request $request)
     {
-        //
+        try {
+            DB::beginTransaction();
+            $item = ModelsOrderItem::where('OrderId', $request->input('order'))
+                ->where('ProductId', $request->input('pid'))
+                ->first();
+            $order = ModelsOrders::where('Id', $request->input('order'))->first();
+            $product = ModelsProducts::where('Id', $request->input('pid'))->first();
+
+            if (!$item) {
+                ModelsOrderItem::create([
+                    'OrderId' => $request->input('order'),
+                    'ProductId' => $request->input('pid'),
+                    'Quantity' => $request->input('quantity'),
+                    'BasePrice' => $request->input('price'),
+                    'Discount' => $request->input('discount'),
+                ]);
+
+                ModelsOrderHistory::create([
+                    'OrderId' => $order->Id,
+                    'StatusId' => $order->StatusId,
+                    'UserId' => auth()->user()->id,
+                    'Comment' => __("The product ':product' has been added to the order", ['product' => $product->Name])
+                ]);
+            } else {
+                ModelsOrderItem::where('Id', $item->Id)->update([
+                    'Quantity' => ($item->Quantity + $request->input('quantity'))
+                ]);
+
+                ModelsOrderHistory::create([
+                    'OrderId' => $order->Id,
+                    'StatusId' => $order->StatusId,
+                    'UserId' => auth()->user()->id,
+                    'Comment' => __("The quantity of the product ':product' has been changed from :from to :to", ['product' => $product->Name, 'from' => $item->Quantity, 'to' => $request->input('quantity')])
+                ]);
+            }
+
+            DB::commit();
+            return $this->jsonResponse(200, __('Updated'));
+        } catch (\Throwable $e) {
+            DB::rollback();
+            return $this->jsonResponse(500, __('Internal Server Error'), [
+                'exception' => $e->getMessage(),
+            ]);
+        }
     }
 
     /**

@@ -42,13 +42,7 @@
             <div class="col-xl-10 custom-col-10 col-lg-12 hidesm">
                 <div class="slider__inner slider-active">
                     <div class="single-slider w-img">
-                        <img src="store/img/slider/03/slider-01.jpg" alt="slider">
-                    </div>
-                    <div class="single-slider w-img">
-                        <img src="store/img/slider/03/slider-01.jpg" alt="slider">
-                    </div>
-                    <div class="single-slider w-img">
-                        <img src="store/img/slider/03/slider-01.jpg" alt="slider">
+                        <img src="{{asset('img/main_banner.png')}}" alt="Merkea Mini Market">
                     </div>
                 </div>
 
@@ -58,13 +52,7 @@
             <div class="col-xl-10 custom-col-10 col-lg-12 hidelg">
                 <div class="slider__inner slider-active">
                     <div class="single-slider w-img">
-                        <img src="store/img/slider/03/slide1-mov.jpg" alt="slider">
-                    </div>
-                    <div class="single-slider w-img">
-                        <img src="store/img/slider/03/slide1-mov.jpg" alt="slider">
-                    </div>
-                    <div class="single-slider w-img">
-                        <img src="store/img/slider/03/slide1-mov.jpg" alt="slider">
+                        <img src="{{asset('img/main_banner_m.png')}}" alt="Merkea Mini Market">
                     </div>
                 </div>
             </div>

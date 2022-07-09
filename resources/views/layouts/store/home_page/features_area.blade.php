@@ -8,7 +8,7 @@
                     </div>
                     <div class="features__content">
                         <h6>GARANTÍA DE ENTREGA</h6>
-                        <p>Tu pedido en 30minutos</p>
+                        <p>Tu pedido hasta la puerta de tu casa</p>
                     </div>
                 </div>
             </div>

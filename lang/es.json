@@ -412,5 +412,13 @@
     "Comment": "Comentario",
     "Order Status": "Estado del Pedido",
     "User": "Usuario",
-    "The order changed from ':prev_status' to ':new_status'": "El pedido ha cambiado de ':prev_status' a ':new_status'"
+    "The order changed from ':prev_status' to ':new_status'": "El pedido ha cambiado de ':prev_status' a ':new_status'",
+    "Add Product to Order": "Agregar Producto al Pedido",
+    "Did the customer forget any product?": "¿El cliente olvidó algún producto?",
+    "SKU, Name or Product Tag": "Clave, Nombre o Etiqueta del Producto",
+    "Empty search field": "Campo de búsqueda vacío",
+    "At least one word is required to search for your product": "Es necesaria al menos una palabra para buscar tu producto",
+    "No results found": "No se han encontrado resultados",
+    "Back": "Regresar",
+    "The product ':product' has been added to the order": "El producto ':product' ha sido agregado al pedido"
 }

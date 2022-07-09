@@ -24,27 +24,19 @@
         </span>
     </button>
 
-    <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-bold fs-7 w-200px py-4"
-        data-kt-menu="true">
-        @foreach ($status as $s)
-            @if ($order->Status->Id != $s->Id)
-                <div class="menu-item px-3">
-                    <a role="button" data-order="{{ $order->Id }}" data-status="{{ $s->Id }}"
-                        class="menu-link px-3 status_order_change">
-                        {{ __($s->Name) }}
-                    </a>
-                </div>
-            @endif
-        @endforeach
-    </div>
-
-    {{-- <select id="order_status" class="form-select" style="width: 40% !important" data-dropdown-css-class="w-200px"
-        data-control="select2" data-placeholder="Select an option" data-hide-search="true">
-        <option></option>
-        @foreach ($status as $s)
-            <option class="text-{{ $s->Color }}" value="{{ $s->Id }}"
-                {{ $order->StatusId == $s->Id ? 'selected' : '' }}>
-                {{ __($s->Name) }}</option>
-        @endforeach
-    </select> --}}
+    @can('Edit Order')
+        <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-bold fs-7 w-200px py-4"
+            data-kt-menu="true">
+            @foreach ($status as $s)
+                @if ($order->Status->Id != $s->Id)
+                    <div class="menu-item px-3">
+                        <a role="button" data-order="{{ $order->Id }}" data-status="{{ $s->Id }}"
+                            class="menu-link px-3 status_order_change">
+                            {{ __($s->Name) }}
+                        </a>
+                    </div>
+                @endif
+            @endforeach
+        </div>
+    @endcan
 </div>

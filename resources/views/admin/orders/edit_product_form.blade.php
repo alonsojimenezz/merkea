@@ -3,7 +3,7 @@
         <div class="d-flex flex-wrap flex-sm-nowrap">
             <div class="me-7 mb-4">
                 <div class="symbol symbol-100px symbol-lg-160px symbol-fixed position-relative">
-                    <img id="edit_product_image" src="" alt="Product Image">
+                    <img style="object-fit: scale-down" id="edit_product_image" src="" alt="Product Image">
                 </div>
             </div>
             <div class="flex-grow-1">

@@ -45,8 +45,10 @@
                 </div>
                 <div class="card-toolbar flex-row-fluid justify-content-end gap-5">
                     @can('Edit Order')
-                        <a href="/craft/apps/ecommerce/catalog/add-product.html"
-                            class="btn btn-primary">{{ __('Add Product') }}</a>
+                        @if ($order->StatusId == 1)
+                            <a role="button" id="add_order_item" data-bs-toggle="modal" data-bs-target="#modal_add_product"
+                                class="btn btn-primary">{{ __('Add Product') }}</a>
+                        @endif
                     @endcan
                 </div>
             </div>
@@ -73,11 +75,20 @@
                                             <div class="d-flex align-items-center">
                                                 <a class="symbol symbol-50px">
                                                     <span class="symbol-label"
-                                                        style="background-image:url({{ isset($item->Image) && $item->Image != '' ? asset($item->Image) : MProduct::product_image($item->Key) }});"></span>
+                                                        style="background-size: contain; background-image:url({{ isset($item->Image) && $item->Image != '' ? asset($item->Image) : MProduct::product_image($item->Key) }});"></span>
                                                 </a>
                                                 <div class="ms-5">
-                                                    <a role="button" data-id="{{ $item->Id }}"
-                                                        class="fw-bolder text-gray-600 text-hover-primary order_product">{{ $item->ProductName }}</a>
+                                                    @can('Edit Order')
+                                                        @if ($order->StatusId == 1)
+                                                            <a role="button" data-id="{{ $item->Id }}"
+                                                                class="fw-bolder text-gray-600 text-hover-primary order_product">{{ $item->ProductName }}</a>
+                                                        @else
+                                                            <span
+                                                                class="fw-bolder text-gray-600">{{ $item->ProductName }}</span>
+                                                        @endif
+                                                    @else
+                                                        <span class="fw-bolder text-gray-600">{{ $item->ProductName }}</span>
+                                                    @endcan
                                                 </div>
                                             </div>
                                         </td>

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Apis;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Products;
 use App\Models\ProductImages;
 use Illuminate\Http\Request;
 use App\Models\Products as ModelsProducts;
@@ -552,6 +553,38 @@ class ProductsApi extends Controller
                 'code'  => 500,
                 'exception' => $th->getMessage(),
             ];
+
+            Log::debug("ERROR: New Sicar Update from Branch ${branchId} " . date('Y-m-d H:i:s'));
+            Log::debug(date('Y-m-d H:i:s') . ' ' . $th->getMessage());
+        }
+    }
+
+    public function searchProducts(Request $request)
+    {
+        try {
+            $search = $request->input('search');
+            $products = DB::table('products as p')
+                ->join('product_stocks as s', 'p.Id', '=', 's.ProductId')
+                ->join('product_prices as pr', 'p.Id', '=', 'pr.ProductId')
+                ->where('s.BranchId', $request->input('branch'))
+                ->where('p.Active', 1)
+                ->where('pr.BranchId', $request->input('branch'))
+                ->where('pr.BasePrice', '>', 0)
+                ->where(function ($query) use ($search) {
+                    $query->where('p.Name', 'like', '%' . $search . '%')
+                        ->orWhere('p.Key', 'like', '%' . $search . '%')
+                        ->orWhere('p.Description', 'like', '%' . $search . '%');
+                })
+                ->select('p.*', 's.Quantity', 'pr.BasePrice', 'pr.DiscountFixed', 's.BranchId', DB::raw('(select sum(oi.Quantity) from orders o inner join order_items oi on o.Id = oi.OrderId where o.StatusId = 1 and oi.ProductId = p.Id and o.BranchId = '.$request->input('branch').') as QuantitySold'))
+                ->get();
+
+            return $this->jsonResponse(200, __('Saved successfully'), [
+                'html' => !empty($products) ? view('admin.orders.search_result', ['products' => $products])->render() : '',
+            ]);
+        } catch (Throwable $th) {
+            return $this->jsonResponse(500, __('Internal Server Error'), [
+                'exception' => $th->getMessage(),
+            ]);
         }
     }
 }
