@@ -302,9 +302,15 @@ class Products extends Model
         }
 
         $products = $products->where(function ($query) use ($search) {
+            $s = explode(' ', $search);
             $query->where('p.Name', 'like', '%' . $search . '%')
                 ->orWhere('p.Key', 'like', '%' . $search . '%')
                 ->orWhere('p.Description', 'like', '%' . $search . '%');
+            foreach ($s as $word) {
+                $query->orWhere('p.Name', 'like', '%' . $word . '%');
+                $query->orWhere('p.Key', 'like', '%' . $word . '%');
+                $query->orWhere('p.Description', 'like', '%' . $word . '%');
+            }
         });
 
         $totals = $products;

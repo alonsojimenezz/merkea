@@ -1051,7 +1051,7 @@
 
     ////////////////////////////////////////////////////
     // 07. Nice Select Js
-    $('select').niceSelect();
+    $('select:not(.nonice)').niceSelect();
 
 
     /* magnificPopup img view */

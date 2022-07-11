@@ -106,7 +106,7 @@
                             <div class="col-md-6">
                                 <div class="country-select">
                                     <label>{{ __('Postal Code') }} <span class="required">*</span></label>
-                                    <select id="checkout-postalcode">
+                                    <select id="checkout-postalcode" class="nonice">
                                         <option value="">{{ __('Select your postal code') }}</option>
                                         @foreach ($postal_codes as $code)
                                             <option data-city="{{ $code->City }}" data-state="{{ $code->State }}"

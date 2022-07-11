@@ -106,9 +106,15 @@
                 <div class="row align-items-center">
                     <div class="col">
                         <div class="header__bottom-left d-flex d-xl-block align-items-center">
-                            <div class="side-menu d-xl-none mr-20">
+                            <div class="side-menu d-xl-none mr-20 flex-fill">
                                 <button type="button" class="side-menu-btn offcanvas-toggle-btn"><i
                                         class="fas fa-bars"></i></button>
+                                @php
+                                    $cart = session()->has('cart') ? session()->get('cart') : [];
+                                @endphp
+                                <a href="{{ route('store.cart') }}" class="float-end side-menu-btn"><i
+                                        class="fas fa-shopping-cart"></i> <span
+                                        class="badge badge-light cart_total_items_small">{{ count($cart) }}</span></a>
                             </div>
                             @if (isset($show_menu) && $show_menu == true)
                                 <div class="main-menu d-none d-md-block">

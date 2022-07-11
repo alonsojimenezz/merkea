@@ -15,8 +15,8 @@ $(function() {
             'order': $("#result_sort option:selected").data('sort'),
             'direction': $("#result_sort option:selected").data('direction'),
             'limit': s.val(),
-            'search': utils.trim("#search_text_"),
-            'department': utils.trim("#search_department_")
+            'search': utils.trim("#search_text"),
+            'department': utils.trim("#search_department")
         };
 
         window.location.href = '?page=1&order=' + data.order + '&direction=' + data.direction + '&limit=' + data.limit + '&query=' + data.search + '&department=' + data.department;
@@ -29,8 +29,8 @@ $(function() {
             'direction': $("#result_sort option:selected").data('direction'),
             'limit': $("#result_limit option:selected").val(),
             'page': $("#result_page").val(),
-            'search': utils.trim("#search_text_"),
-            'department': utils.trim("#search_department_")
+            'search': utils.trim("#search_text"),
+            'department': utils.trim("#search_department")
         };
 
         window.location.href = '?page=' + data.page + '&order=' + data.order + '&direction=' + data.direction + '&limit=' + data.limit + '&query=' + data.search + '&department=' + data.department;
@@ -43,8 +43,8 @@ $(function() {
             'direction': $("#result_sort option:selected").data('direction'),
             'limit': $("#result_limit option:selected").val(),
             'page': btn.data('page'),
-            'search': utils.trim("#search_text_"),
-            'department': utils.trim("#search_department_")
+            'search': utils.trim("#search_text"),
+            'department': utils.trim("#search_department")
         };
 
         window.location.href = '?page=' + data.page + '&order=' + data.order + '&direction=' + data.direction + '&limit=' + data.limit + '&query=' + data.search + '&department=' + data.department;
