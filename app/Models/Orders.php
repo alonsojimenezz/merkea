@@ -181,7 +181,7 @@ class Orders extends Model
             ->select(
                 'p.Name as x',
                 DB::raw('SUM((oi.BasePrice - oi.Discount) * oi.Quantity) as y'),
-            )->groupBy('p.Id')->orderBy('y', 'desc')->get();
+            )->groupBy('p.Name')->orderBy('y', 'desc')->get();
     }
 
     public static function getTotalSalesByDepartment($start, $end)
@@ -195,6 +195,6 @@ class Orders extends Model
             ->select(
                 'd.Name as x',
                 DB::raw('SUM((oi.BasePrice - oi.Discount) * oi.Quantity) as y'),
-            )->groupBy('d.Id')->orderBy('y', 'desc')->get();
+            )->groupBy('d.Name')->orderBy('y', 'desc')->get();
     }
 }
