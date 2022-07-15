@@ -414,8 +414,8 @@ class Store extends Controller
             }
 
 
-            // Mail::to($request->input('email'))->cc('tienda@merkeaminimarket.com')->bcc('ajimmenezz@gmail.com')->send(new OrderComplete($order));
-            Mail::to($request->input('email'))->cc('ajimmenezz@gmail.com')->send(new OrderComplete($order));
+            Mail::to($request->input('email'))->cc('tienda@merkeaminimarket.com')->bcc('ajimmenezz@gmail.com')->send(new OrderComplete($order));
+            // Mail::to($request->input('email'))->cc('ajimmenezz@gmail.com')->send(new OrderComplete($order));
 
             session()->forget('cart');
             DB::commit();
