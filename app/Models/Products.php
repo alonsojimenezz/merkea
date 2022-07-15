@@ -305,11 +305,17 @@ class Products extends Model
             $s = explode(' ', $search);
             $query->where('p.Name', 'like', '%' . $search . '%')
                 ->orWhere('p.Key', 'like', '%' . $search . '%')
-                ->orWhere('p.Description', 'like', '%' . $search . '%');
+                ->orWhere('p.Description', 'like', '%' . $search . '%')
+                ->orWhere('pc.Name', 'like', '%' . $search . '%')
+                ->orWhere('pd.Name', 'like', '%' . $search . '%');
             foreach ($s as $word) {
-                $query->orWhere('p.Name', 'like', '%' . $word . '%');
-                $query->orWhere('p.Key', 'like', '%' . $word . '%');
-                $query->orWhere('p.Description', 'like', '%' . $word . '%');
+                if (strlen($word) > 2) {
+                    $query->orWhere('p.Name', 'like', '%' . $word . '%');
+                    $query->orWhere('p.Key', 'like', '%' . $word . '%');
+                    $query->orWhere('p.Description', 'like', '%' . $word . '%');
+                    $query->orWhere('pc.Name', 'like', '%' . $word . '%');
+                    $query->orWhere('pd.Name', 'like', '%' . $word . '%');
+                }
             }
         });
 

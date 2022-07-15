@@ -379,14 +379,24 @@ class Store extends Controller
                 $slug = Str::uuid()->toString();
             }
 
+            $schedule = null;
+            if ($request->input('delivery_schedule') == 2) {
+                $today = new \DateTime();
+                $tomorrow = new \DateTime();
+                $tomorrow->modify('+1 day');
+                $schedule = ($request->input('delivery_date_day') == 'tomorrow' ? $tomorrow->format('Y-m-d') : $today->format('Y-m-d')) . ' ' . $request->input('delivery_date_time') . ':00';
+            }
+
             $order = ModelsOrders::create([
                 'BranchId' => session('branch'),
                 'StatusId' => 1,
                 'Name' => $request->input('name'),
                 'Email' => $request->input('email'),
                 'Phone' => $request->input('phone'),
-                'Address' => $request->input('address'),
-                'PostalCodeId' => $request->input('postalcode'),
+                'Address' => ($request->input('delivery_method') == 2) ? '' : $request->input('address'),
+                'PostalCodeId' => ($request->input('delivery_method') == 2) ? null : $request->input('postalcode'),
+                'DeliveryMethod' => $request->input('delivery_method'),
+                'DeliveryDate' => $schedule,
                 'PaymentMethodId' => $request->input('payment_method'),
                 'Slug' => $slug
             ]);
@@ -404,7 +414,8 @@ class Store extends Controller
             }
 
 
-            Mail::to($request->input('email'))->cc('tienda@merkeaminimarket.com')->bcc('ajimmenezz@gmail.com')->send(new OrderComplete($order));
+            // Mail::to($request->input('email'))->cc('tienda@merkeaminimarket.com')->bcc('ajimmenezz@gmail.com')->send(new OrderComplete($order));
+            Mail::to($request->input('email'))->cc('ajimmenezz@gmail.com')->send(new OrderComplete($order));
 
             session()->forget('cart');
             DB::commit();

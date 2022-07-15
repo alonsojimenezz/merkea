@@ -58,7 +58,7 @@ class DTables {
     }
 
 
-    exportButtons(obj, title, objButtons) {
+    exportButtons(obj, title, objButtons, menu = "#export_menu", sheetName = "sheet1") {
         var buttons = new $.fn.dataTable.Buttons(obj, {
             buttons: [{
                     extend: 'copyHtml5',
@@ -66,6 +66,10 @@ class DTables {
                 },
                 {
                     extend: 'excelHtml5',
+                    customize: function(xlsx) {
+                        var source = xlsx.xl['workbook.xml'].getElementsByTagName('sheet')[0];
+                        source.setAttribute('name', sheetName);
+                    },
                     title: title
                 },
                 {
@@ -80,14 +84,15 @@ class DTables {
         }).container().appendTo(objButtons);
 
         // Hook dropdown menu click event to datatable export buttons
-        const exportButtons = document.querySelectorAll('#export_menu [data-export]');
+        const exportButtons = document.querySelectorAll(menu + ' [data-export]');
         exportButtons.forEach(exportButton => {
+            console.log(menu);
             exportButton.addEventListener('click', e => {
                 e.preventDefault();
 
                 // Get clicked export value
                 const exportValue = e.target.getAttribute('data-export');
-                const target = document.querySelector('.dt-buttons .buttons-' + exportValue);
+                const target = document.querySelector(objButtons + ' .dt-buttons .buttons-' + exportValue);
 
                 // Trigger click event on hidden datatable export buttons
                 target.click();

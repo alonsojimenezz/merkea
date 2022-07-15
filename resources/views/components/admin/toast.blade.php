@@ -1,4 +1,4 @@
-<div class="position-fixed {{$position ?? 'top-0 end-0'}} p-3 z-index-100">
+<div class="toast-container-main {{$position ?? 'top-0 end-0'}} p-3 z-index-100">
     <div id="main_toast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
         <div class="toast-header">
             <div class="symbol symbol-20px">

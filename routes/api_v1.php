@@ -9,6 +9,7 @@ use App\Http\Controllers\Apis\UnitsApi;
 use App\Http\Controllers\Apis\OrderItem;
 use App\Http\Controllers\Apis\Order;
 use App\Http\Controllers\Store;
+use App\Http\Controllers\Apis\Dashboard;
 use Illuminate\Support\Facades\Route;
 
 Route::group(['middleware' => ['role:Administrator|Staff']], function () {
@@ -43,6 +44,7 @@ Route::group(['middleware' => ['role:Administrator|Staff']], function () {
 
         Route::post('order/status', [Order::class, 'changeOrderStatus']);
 
+        Route::get('dashboard/sales', [Dashboard::class, 'sales']);
     });
 });
 

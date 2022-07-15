@@ -15,5 +15,7 @@
 @endsection
 
 @section('content')
-    {{ __('Here goes the Admin Dashboard') }}
+    <div class="container-xxl">
+        @include('admin.dashboard.content')
+    </div>
 @endsection

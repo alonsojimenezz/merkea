@@ -1,8 +1,8 @@
 class Alerts {
 
     constructor() {
-        const toastElement = document.getElementById('main_toast');
-        this.toast = bootstrap.Toast.getOrCreateInstance(toastElement);
+        this.toastElement = document.getElementById('main_toast');
+        this.toast = bootstrap.Toast.getOrCreateInstance(this.toastElement);
     }
 
     fire(html, icon = "success", confirmText = "OK", confirmBtnClass = "primary", callback = () => {}) {
@@ -22,10 +22,15 @@ class Alerts {
     }
 
     fire_toast(title, subtitle = '', message = '') {
+        $(".toast-container-main").addClass("position-fixed");
         $('#main_toast_title').empty().append(title);
         $('#main_toast_subtitle').empty().append(subtitle);
         $('#main_toast_body').empty().append(message);
         this.toast.show();
+
+        this.toastElement.addEventListener('hidden.bs.toast', function() {
+            $(".toast-container-main").removeClass("position-fixed");
+        });
     }
 }
 

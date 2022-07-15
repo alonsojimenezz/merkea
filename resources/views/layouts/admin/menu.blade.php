@@ -15,6 +15,79 @@
                 data-kt-scroll-activate="{default: false, lg: true}" data-kt-scroll-height="auto"
                 data-kt-scroll-wrappers="#kt_aside_menu" data-kt-scroll-offset="20px"
                 data-kt-scroll-dependencies="#kt_aside_logo, #kt_aside_footer">
+
+                <div class="menu-item pt-5">
+                    <div class="menu-content">
+                        <span class="fw-bolder text-muted text-uppercase fs-7">{{ __('Reports') }}</span>
+                    </div>
+                </div>
+
+                <div class="menu-item {{ Route::is('admin.index') ? 'here' : '' }}">
+                    <a class="menu-link" href="{{ Route::has('admin.index') ? route('admin.index') : '#' }}">
+                        <span class="menu-icon">
+                            <span class="svg-icon svg-icon-2">
+                                <svg aria-hidden="true" focusable="false" data-prefix="fa-duotone" data-icon="chart-pie"
+                                    class="svg-inline--fa fa-chart-pie fa-w-18" role="img"
+                                    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512">
+                                    <defs>
+                                        <style>
+                                            .fa-secondary {
+                                                opacity: .4
+                                            }
+                                        </style>
+                                    </defs>
+                                    <g class="fa-group">
+                                        <path class="fa-primary"
+                                            d="M559.7 288l-237.2-.0006l157.1 158c6.124 6.124 15.99 6.484 22.24 .7343c38.62-36.5 65.25-85.62 73.12-140.9C577.2 296.4 569.4 288 559.7 288zM543.1 223.2c-8.249-119.5-103.7-214.1-223.2-223.2c-9.124-.6249-16.76 7.113-16.76 16.24L304 240l223.7-.0012C536.9 240 544.6 232.4 543.1 223.2z"
+                                            fill="currentColor" />
+                                        <path class="fa-secondary"
+                                            d="M411.9 443.9c6.874 6.874 6.387 18.49-1.612 24.11c-38.25 27.12-84.88 43.38-135.2 44c-128.1 1.625-238.5-103.5-242.9-231.6c-4.25-124.7 86.88-228.9 205.1-245.7c9.499-1.375 17.87 6.485 17.87 16.11v237.3L411.9 443.9z"
+                                            fill="currentColor" />
+                                    </g>
+                                </svg>
+                            </span>
+                        </span>
+                        <span class="menu-title fw-boldest">{{ __('Sales') }}</span>
+                    </a>
+                </div>
+
+
+                <div class="menu-item pt-5">
+                    <div class="menu-content">
+                        <span class="fw-bolder text-muted text-uppercase fs-7">{{ __('Operations') }}</span>
+                    </div>
+                </div>
+
+                <div class="menu-item {{ Route::is('admin.orders') ? 'here' : '' }}">
+                    <a class="menu-link" href="{{ Route::has('admin.orders') ? route('admin.orders') : '#' }}">
+                        <span class="menu-icon">
+                            <span class="svg-icon svg-icon-2">
+                                <svg aria-hidden="true" focusable="false" data-prefix="fa-duotone"
+                                    data-icon="clipboard-list" class="svg-inline--fa fa-clipboard-list fa-w-12"
+                                    role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512">
+                                    <defs>
+                                        <style>
+                                            .fa-secondary {
+                                                opacity: .4
+                                            }
+                                        </style>
+                                    </defs>
+                                    <g class="fa-group">
+                                        <path class="fa-primary"
+                                            d="M256 64c0-35.35-28.65-64-64-64S128 28.65 128 64C92.65 64 64 92.65 64 128v16C64 152.8 71.16 160 80 160h224C312.8 160 320 152.8 320 144V128C320 92.65 291.3 64 256 64zM192 88C178.7 88 168 77.25 168 64c0-13.26 10.75-24 24-24S216 50.74 216 64C216 77.25 205.3 88 192 88zM96 344c-13.25 0-24 10.75-24 24S82.75 392 96 392s24-10.75 24-24S109.3 344 96 344zM96 248c-13.25 0-24 10.75-24 24S82.75 296 96 296S120 285.3 120 272S109.3 248 96 248z"
+                                            fill="currentColor" />
+                                        <path class="fa-secondary"
+                                            d="M336 64H256c35.35 0 64 28.65 64 64v16C320 152.8 312.8 160 304 160h-224C71.16 160 64 152.8 64 144V128c0-35.35 28.65-64 64-64H48C21.49 64 0 85.49 0 112v352C0 490.5 21.49 512 48 512h288c26.51 0 48-21.49 48-48v-352C384 85.49 362.5 64 336 64zM96 392c-13.25 0-24-10.75-24-24S82.75 344 96 344s24 10.75 24 24S109.3 392 96 392zM96 296c-13.25 0-24-10.75-24-24S82.75 248 96 248S120 258.8 120 272S109.3 296 96 296zM304 384h-128C167.2 384 160 376.8 160 368C160 359.2 167.2 352 176 352h128c8.801 0 16 7.199 16 16C320 376.8 312.8 384 304 384zM304 288h-128C167.2 288 160 280.8 160 272C160 263.2 167.2 256 176 256h128C312.8 256 320 263.2 320 272C320 280.8 312.8 288 304 288z"
+                                            fill="currentColor" />
+                                    </g>
+                                </svg>
+                            </span>
+                        </span>
+                        <span class="menu-title fw-boldest">{{ __('Orders') }}</span>
+                    </a>
+                </div>
+
+
                 <div class="menu-item pt-5">
                     <div class="menu-content">
                         <span class="fw-bolder text-muted text-uppercase fs-7">{{ __('Catalogs') }}</span>
@@ -85,8 +158,8 @@
                         <span class="menu-icon">
                             <span class="svg-icon svg-icon-2">
                                 <svg aria-hidden="true" focusable="false" data-prefix="fa-duotone"
-                                    data-icon="wine-bottle" class="svg-inline--fa fa-wine-bottle fa-w-16" role="img"
-                                    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                                    data-icon="wine-bottle" class="svg-inline--fa fa-wine-bottle fa-w-16"
+                                    role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
                                     <defs>
                                         <style>
                                             .fa-secondary {
@@ -195,24 +268,6 @@
                             </span>
                         </span>
                         <span class="menu-title fw-boldest">{{ __('Postal Code Coverage') }}</span>
-                    </a>
-                </div>
-
-                <div class="menu-item pt-5">
-                    <div class="menu-content">
-                        <span class="fw-bolder text-muted text-uppercase fs-7">{{ __('Operations') }}</span>
-                    </div>
-                </div>
-
-                <div class="menu-item {{ Route::is('admin.orders') ? 'here' : '' }}">
-                    <a class="menu-link"
-                        href="{{ Route::has('admin.orders') ? route('admin.orders') : '#' }}">
-                        <span class="menu-icon">
-                            <span class="svg-icon svg-icon-2">
-                                <svg aria-hidden="true" focusable="false" data-prefix="fa-duotone" data-icon="clipboard-list" class="svg-inline--fa fa-clipboard-list fa-w-12" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><defs><style>.fa-secondary{opacity:.4}</style></defs><g class="fa-group"><path class="fa-primary" d="M256 64c0-35.35-28.65-64-64-64S128 28.65 128 64C92.65 64 64 92.65 64 128v16C64 152.8 71.16 160 80 160h224C312.8 160 320 152.8 320 144V128C320 92.65 291.3 64 256 64zM192 88C178.7 88 168 77.25 168 64c0-13.26 10.75-24 24-24S216 50.74 216 64C216 77.25 205.3 88 192 88zM96 344c-13.25 0-24 10.75-24 24S82.75 392 96 392s24-10.75 24-24S109.3 344 96 344zM96 248c-13.25 0-24 10.75-24 24S82.75 296 96 296S120 285.3 120 272S109.3 248 96 248z" fill="currentColor"/><path class="fa-secondary" d="M336 64H256c35.35 0 64 28.65 64 64v16C320 152.8 312.8 160 304 160h-224C71.16 160 64 152.8 64 144V128c0-35.35 28.65-64 64-64H48C21.49 64 0 85.49 0 112v352C0 490.5 21.49 512 48 512h288c26.51 0 48-21.49 48-48v-352C384 85.49 362.5 64 336 64zM96 392c-13.25 0-24-10.75-24-24S82.75 344 96 344s24 10.75 24 24S109.3 392 96 392zM96 296c-13.25 0-24-10.75-24-24S82.75 248 96 248S120 258.8 120 272S109.3 296 96 296zM304 384h-128C167.2 384 160 376.8 160 368C160 359.2 167.2 352 176 352h128c8.801 0 16 7.199 16 16C320 376.8 312.8 384 304 384zM304 288h-128C167.2 288 160 280.8 160 272C160 263.2 167.2 256 176 256h128C312.8 256 320 263.2 320 272C320 280.8 312.8 288 304 288z" fill="currentColor"/></g></svg>
-                            </span>
-                        </span>
-                        <span class="menu-title fw-boldest">{{ __('Orders') }}</span>
                     </a>
                 </div>
             </div>
