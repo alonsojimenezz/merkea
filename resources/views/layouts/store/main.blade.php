@@ -25,6 +25,8 @@
         <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience and security.</p>
     <![endif]-->
 
+    <input type="hidden" id="branch_selected" value="{{ session('branch') ?? 0 }}" />
+
     @include('layouts.store.preloader')
 
     @include('layouts.store.back_to_top')
@@ -40,6 +42,14 @@
     @yield('footer')
 
     @component('components.admin.toast', ['position' => 'top-50 end-0 translate-middle-y'])
+    @endcomponent
+
+    @component('components.admin.modal')
+        @slot('modal_id', 'modal_no_branch_selected')
+        @slot('body')
+            @include('store.modal_no_branch')
+        @endslot
+        @slot('no_close')
     @endcomponent
 
     <script src="{{ asset('js/store.js') }}"></script>

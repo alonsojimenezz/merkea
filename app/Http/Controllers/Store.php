@@ -24,7 +24,7 @@ class Store extends Controller
 {
     public function index()
     {
-        session()->put('branch', (session()->has('branch')) ? session('branch') : 1);
+        session()->put('branch', (session()->has('branch')) ? session('branch') : 0);
         return view('store.index', [
             'featured_products' => ModelsProducts::getFeaturedProducts(session('branch')),
             'categories' => ModelsProductCategories::getActivesTree(session('branch')),
@@ -415,8 +415,8 @@ class Store extends Controller
             }
 
 
-            // Mail::to($request->input('email'))->cc('tienda@merkeaminimarket.com')->bcc('ajimmenezz@gmail.com')->send(new OrderComplete($order));
-            Mail::to($request->input('email'))->cc('ajimmenezz@gmail.com')->send(new OrderComplete($order));
+            Mail::to($request->input('email'))->cc('tienda@merkeaminimarket.com')->bcc('ajimmenezz@gmail.com')->send(new OrderComplete($order));
+            // Mail::to($request->input('email'))->cc('ajimmenezz@gmail.com')->send(new OrderComplete($order));
 
             session()->forget('cart');
             DB::commit();

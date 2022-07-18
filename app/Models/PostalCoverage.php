@@ -33,6 +33,18 @@ class PostalCoverage extends Model
             ->get();
     }
 
+    public static function getActives()
+    {
+        return DB::table('postal_coverages')
+            ->join('states', 'states.Id', '=', 'postal_coverages.StateId')
+            ->join('branch_offices', 'branch_offices.Id', '=', 'postal_coverages.BranchId')
+            ->select('postal_coverages.*', 'states.Name as State', 'branch_offices.Name as Branch')
+            ->where('postal_coverages.IsActive', 1)
+            ->orderBy('postal_coverages.PostalCode', 'asc')
+            ->get();
+
+    }
+
     public static function getActivesByBranch($branchId)
     {
         return DB::table('postal_coverages')

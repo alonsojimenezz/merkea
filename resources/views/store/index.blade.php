@@ -37,9 +37,9 @@
 @endsection
 
 @section('whatsapp')
-    {{-- @guest
-    @else --}}
-    <a target="_blank" id="btn-wa" href="https://wa.me/+52{{ preg_replace('/[^0-9]/', '', $branch_info->Phone) }}">
+    <a target="_blank" id="btn-wa"
+    @isset($branch_info->Phone)
+    href="https://wa.me/+52{{ preg_replace('/[^0-9]/', '', ($branch_info->Phone ?? '')) }}"
+    @endisset>
         <img src="{{ asset('store/img/whatsapp.svg') }}" width="35px"></noscript><strong style="color:white;"></strong></a>
-    {{-- @endguest --}}
 @endsection

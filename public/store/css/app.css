@@ -11752,5 +11752,9 @@ ul li a.mobile_menu {
     background-image: -webkit-linear-gradient(90deg, rgba(255, 184, 28, .2) 25%, transparent 25%, transparent 50%, rgba(255, 184, 28, .2) 50%, rgba(255, 184, 28, .2) 75%, transparent 75%, transparent)
 }
 
+.modal-title-mkea {
+    font-size: 1em;
+}
+
 
 /*# sourceMappingURL=style.css.map */

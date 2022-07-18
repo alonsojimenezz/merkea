@@ -394,8 +394,11 @@ class ProductsApi extends Controller
             $arrayReturn = [];
             foreach ($products as $k => $product) {
                 $department = ModelsProductCategories::updateOrCreate(
-                    ['Name' => $product['department']],
-                    ['Slug' => Str::slug($product['department'], '-', 'es'), 'ParentId' => null, 'Description' => $product['department'], 'Active' => 1]
+                    [
+                        'Name' => $product['department'],
+                        'ParentId' => null
+                    ],
+                    ['Slug' => Str::slug($product['department'], '-', 'es'), 'Description' => $product['department'], 'Active' => 1]
                 );
 
                 $category = ModelsProductCategories::updateOrCreate(
@@ -575,7 +578,7 @@ class ProductsApi extends Controller
                         ->orWhere('p.Key', 'like', '%' . $search . '%')
                         ->orWhere('p.Description', 'like', '%' . $search . '%');
                 })
-                ->select('p.*', 's.Quantity', 'pr.BasePrice', 'pr.DiscountFixed', 's.BranchId', DB::raw('(select sum(oi.Quantity) from orders o inner join order_items oi on o.Id = oi.OrderId where o.StatusId = 1 and oi.ProductId = p.Id and o.BranchId = '.$request->input('branch').') as QuantitySold'))
+                ->select('p.*', 's.Quantity', 'pr.BasePrice', 'pr.DiscountFixed', 's.BranchId', DB::raw('(select sum(oi.Quantity) from orders o inner join order_items oi on o.Id = oi.OrderId where o.StatusId = 1 and oi.ProductId = p.Id and o.BranchId = ' . $request->input('branch') . ') as QuantitySold'))
                 ->get();
 
             return $this->jsonResponse(200, __('Saved successfully'), [

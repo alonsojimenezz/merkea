@@ -444,5 +444,11 @@
     "from": "a partir de las",
     "Scheduled Date": "Fecha Programada",
     "Search products": "Buscar productos",
-    "Apartado": "Apartado"
+    "Apartado": "Apartado",
+    "Welcome to Merkea Minimarket Online": "Bienvenido a Merkea Minimarket en Línea",
+    "Please select a branch": "Por favor, selecciona una sucursal",
+    "or select a postal code": "o selecciona un código postal",
+    "Branches...": "Sucursales...",
+    "Postal codes...": "Códigos Postales...",
+    "We are working to improve our coverage. If you can't find your zip code, choose your nearest branch": "Estamos trabajando para mejorar nuestra cobertura. Si no puedes encontrar tu código postal, selecciona la sucursal más cercana"
 }

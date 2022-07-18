@@ -60,8 +60,8 @@
                                     </div>
                                     <div class="header__hotline-info">
                                         <a
-                                            href="https://wa.me/+52{{ preg_replace('/[^0-9]/', '', $branch_info->Phone) }}"><span>Contáctanos</span>
-                                            <h6>{{ $branch_info->Phone }}</h6>
+                                            @isset($branch_info->Phone) href="https://wa.me/+52{{ preg_replace('/[^0-9]/', '', $branch_info->Phone ?? '') }}" @endisset><span>Contáctanos</span>
+                                            <h6>{{ $branch_info->Phone ?? '' }}</h6>
                                         </a>
                                     </div>
                                 </div>
@@ -169,7 +169,7 @@
                                                         @foreach ($branches as $branch)
                                                             <li>
                                                                 <a role="button"
-                                                                    class="header_branch_select {{ $branch->Id == $branch_info->Id ? 'text-warning' : '' }}"
+                                                                    class="header_branch_select {{ isset($branch_info->Id) && $branch->Id == $branch_info->Id ? 'text-warning' : '' }}"
                                                                     data-branch="{{ $branch->Id }}">{{ $branch->Name }}</a>
                                                             </li>
                                                         @endforeach
@@ -186,11 +186,15 @@
                 <div class="col-12 d-block d-md-none mb-3">
                     <div class="form-floating">
                         <select class="form-select nonice" id="select_branch_mmm">
-                            @foreach ($branches as $branch)
-                                <option value="{{ $branch->Id }}"
-                                    {{ $branch_info->Id == $branch->Id ? 'selected' : '' }}>{{ $branch->Name }}
-                                </option>
-                            @endforeach
+                            @isset($branches)
+
+                                @foreach ($branches as $branch)
+                                    <option value="{{ $branch->Id }}"
+                                        {{ isset($branch_info->Id) && $branch_info->Id == $branch->Id ? 'selected' : '' }}>
+                                        {{ $branch->Name }}
+                                    </option>
+                                @endforeach
+                            @endisset
                         </select>
                         <label for="floatingSelect">{{ __('Select a branch') }}</label>
                     </div>

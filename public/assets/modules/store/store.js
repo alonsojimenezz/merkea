@@ -14,6 +14,15 @@ $(function() {
     adjustHeight();
     initRemoveFromCart();
     initEmptyCart();
+    checkIfBranchIsSelected();
+
+
+    function checkIfBranchIsSelected() {
+        const branch = $('#branch_selected').val();
+        if (branch < 1) {
+            $("#modal_no_branch_selected").modal('show');
+        }
+    }
 
     button.initClick("#search_button", function(btn) {
         let search = utils.trim("#search_text");
@@ -48,7 +57,7 @@ $(function() {
         }, null, false);
     });
 
-    selects.change("#select_branch_mmm", function(elem) {
+    selects.change("#select_branch_mmm, #global_postal_code_select, #global_branch_select", function(elem) {
         event.post('/api_v1/store/change_branch', {
             branch: elem.val()
         }, function(r) {

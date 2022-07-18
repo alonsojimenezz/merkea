@@ -7,7 +7,7 @@
                     <div class="footer__widget" style="margin:0px 0px;">
                         <div class="footer__widget-title">
                             <div class="footer__logo">
-                                <a href="index.html"><img src="/store/img/logo/logo.svg" alt=""></a>
+                                <a href="/"><img src="/store/img/logo/logo.svg" alt=""></a>
                             </div>
                         </div>
                     </div>
@@ -20,8 +20,8 @@
                                 <img src="/store/img/whatsapp.svg" style="width: 50px;">
                             </div>
                             <div class="text">
-                                <a href="https://wa.me/+52{{ preg_replace('/[^0-9]/', '', $branch_info->Phone) }}"><span>Contáctanos</span>
-                                    <h2 style="color:#9da3af;">{{ $branch_info->Phone }}</h2>
+                                <a href="https://wa.me/+52{{ preg_replace('/[^0-9]/', '', ($branch_info->Phone ?? '')) }}"><span>Contáctanos</span>
+                                    <h2 style="color:#9da3af;">{{ $branch_info->Phone ?? '' }}</h2>
                                 </a>
                             </div>
                         </div>
@@ -36,7 +36,9 @@
                                         href="mailto:info@merkeaminimarket.com">info@merkeaminimarket.com</a>
                                 </span></li>
                             <li><span style="color:#9da3af;"><strong>Phone:</strong> <a
-                                        href="tel:{{ preg_replace('/[^0-9]/', '', $branch_info->Phone) }}">{{ $branch_info->Phone }}</a></span>
+                                    @isset($branch_info->Phone)
+                                        href="tel:{{ preg_replace('/[^0-9]/', '', ($branch_info->Phone ?? '')) }}"
+                                        @endisset>{{ ($branch_info->Phone ?? '') }}</a></span>
                             </li>
                         </ul>
                     </div>
@@ -52,6 +54,7 @@
             <div class="row">
                 <div class="col-xl-12">
                     <div class="footer__links text-center">
+                        {{-- @dump($categories) --}}
                         <p>
                             @isset($categories)
                                 @foreach ($categories as $category)
