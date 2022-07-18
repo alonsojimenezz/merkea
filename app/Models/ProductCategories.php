@@ -67,28 +67,53 @@ class ProductCategories extends Model
             )->where('Id', $id)->first();
     }
 
-    public static function getActivesTree()
+    public static function getActivesTree($branchId)
     {
         $tree = [];
-        $categories = self::where('Active', 1)->whereNull('ParentId')->orWhere('ParentId', 0)->orderBy('Name')->get();
-        foreach ($categories as $k => $v) {
-            $childs = self::where('Active', 1)->where('ParentId', $v->Id)->orderBy('Name')->get();
-            $tree[$k] = [
-                'id' => $v->Id,
-                'text' => $v->Name,
-                'parent' => $v->ParentId,
-                'slug' => $v->Slug,
-                'children' => []
-            ];
+        $categories = DB::table('products as p')
+            ->join('product_prices as pp', 'p.Id', '=', 'pp.ProductId')
+            ->join('product_categories as pc', 'pc.Id', '=', 'p.CategoryId')
+            ->join('product_categories as pd', 'pd.Id', '=', 'pc.ParentId')
+            ->join('product_stocks as ps', 'ps.ProductId', '=', 'p.Id')
+            ->where('p.Active', 1)
+            ->where('ps.BranchId', $branchId)
+            ->where('pp.BranchId', $branchId)
+            ->where('ps.Quantity', '>', 0)
+            ->select(
+                'pd.Id as DepartmentId',
+                'pd.Name as DepartmentName',
+                'pd.Slug as DepartmentSlug',
+                'pc.Id as CategoryId',
+                'pc.Name as CategoryName',
+                'pc.Slug as CategorySlug',
+            )
+            ->groupBy('pd.Id', 'pc.Id')
+            ->orderBy('DepartmentName')
+            ->orderBy('CategoryName');
 
-            foreach ($childs as $child) {
-                $tree[$k]['children'][] = [
-                    'id' => $child->Id,
-                    'text' => $child->Name,
-                    'parent' => $child->ParentId,
-                    'slug' => $child->Slug,
+        // dd(self::getQueryWithBindings($categories));
+
+        $categories = $categories->get();
+
+        // self::where('Active', 1)->whereNull('ParentId')->orWhere('ParentId', 0)->orderBy('Name')->get();
+        foreach ($categories as $v) {
+            if (!array_key_exists($v->DepartmentName, $tree)) {
+                $tree[$v->DepartmentName] = [
+                    'id' => $v->DepartmentId,
+                    'text' => $v->DepartmentName,
+                    'parent' => null,
+                    'slug' => $v->DepartmentSlug,
+                    'children' => []
                 ];
             }
+
+            $tree[$v->DepartmentName]['children'][] = [
+                'id' => $v->CategoryId,
+                'text' => $v->CategoryName,
+                'parent' => $v->DepartmentId,
+                'slug' => $v->CategorySlug
+            ];
+
         }
 
         return $tree;

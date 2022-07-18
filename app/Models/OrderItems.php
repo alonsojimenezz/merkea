@@ -39,4 +39,20 @@ class OrderItems extends Model
             ->where('oi.Id', $id)
             ->first();
     }
+
+    public static function getValitatingQuantity($branchId, $productId)
+    {
+        $quantity = DB::table('orders as o')
+            ->join('order_items as oi', 'o.Id', '=', 'oi.OrderId')
+            ->where('o.BranchId', $branchId)
+            ->where('oi.ProductId', $productId)
+            ->whereIn('o.StatusId', [1, 5])
+            ->addSelect(DB::raw('SUM(oi.Quantity) as Quantity'))
+            ->groupBy('oi.ProductId')
+            ->first();
+        if ($quantity)
+            return (is_null($quantity->Quantity) || $quantity->Quantity == "") ? 0 : $quantity->Quantity;
+        else
+            return 0;
+    }
 }

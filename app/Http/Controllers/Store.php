@@ -27,7 +27,7 @@ class Store extends Controller
         session()->put('branch', (session()->has('branch')) ? session('branch') : 1);
         return view('store.index', [
             'featured_products' => ModelsProducts::getFeaturedProducts(session('branch')),
-            'categories' => ModelsProductCategories::getActivesTree(),
+            'categories' => ModelsProductCategories::getActivesTree(session('branch')),
             'branches' => ModelsBranchOffices::getActives(),
             'branch' => session('branch'),
             'branch_info' => ModelsBranchOffices::where('Id', session('branch'))->first()
@@ -40,7 +40,7 @@ class Store extends Controller
         $department = ModelsProductCategories::where('Slug', $department)->whereNull('ParentId')->first();
 
         $viewArray = [
-            'categories' => ModelsProductCategories::getActivesTree(),
+            'categories' => ModelsProductCategories::getActivesTree(session('branch')),
             'products' => ModelsProducts::getProductsByDepartment(
                 $department->Slug,
                 $request->input('order', 'name'),
@@ -72,7 +72,7 @@ class Store extends Controller
         $department = ModelsProductCategories::where('Id', $category->ParentId)->first();
 
         $viewArray = [
-            'categories' => ModelsProductCategories::getActivesTree(),
+            'categories' => ModelsProductCategories::getActivesTree(session('branch')),
             'products' => ModelsProducts::getProductsByCategory(
                 $category->Id,
                 $request->input('order', 'name'),
@@ -122,7 +122,7 @@ class Store extends Controller
         }
 
         $viewArray = [
-            'categories' => ModelsProductCategories::getActivesTree(),
+            'categories' => ModelsProductCategories::getActivesTree(session('branch')),
             'products' => ModelsProducts::getProductsBySearch(
                 $request->input('query', ''),
                 $request->input('department', null),
@@ -130,7 +130,7 @@ class Store extends Controller
                 $request->input('direction', 'asc'),
                 $request->input('limit', 12),
                 $request->input('page', 1),
-                $request->input('branchId', 1)
+                session('branch')
             ),
             'branches' => ModelsBranchOffices::getActives(),
             'branch' => session('branch'),
@@ -142,6 +142,7 @@ class Store extends Controller
             ],
             'is_search' => true
         ];
+        // dd($viewArray['products']);
 
         return view('store.department', $viewArray);
     }
@@ -163,7 +164,7 @@ class Store extends Controller
 
         return view('store.product', [
             'product' => $product,
-            'categories' => ModelsProductCategories::getActivesTree(),
+            'categories' => ModelsProductCategories::getActivesTree(session('branch')),
             'branches' => ModelsBranchOffices::getActives(),
             'branch' => session('branch'),
             'branch_info' => ModelsBranchOffices::where('Id', session('branch'))->first(),
@@ -189,7 +190,7 @@ class Store extends Controller
     {
         session()->put('branch', (session()->has('branch')) ? session('branch') : 1);
         $viewArray = [
-            'categories' => ModelsProductCategories::getActivesTree(),
+            'categories' => ModelsProductCategories::getActivesTree(session('branch')),
             'branches' => ModelsBranchOffices::getActives(),
             'branch' => session('branch'),
             'branch_info' => ModelsBranchOffices::where('Id', session('branch'))->first(),
@@ -350,7 +351,7 @@ class Store extends Controller
     {
         session()->put('branch', (session()->has('branch')) ? session('branch') : 1);
         $viewArray = [
-            'categories' => ModelsProductCategories::getActivesTree(),
+            'categories' => ModelsProductCategories::getActivesTree(session('branch')),
             'branches' => ModelsBranchOffices::getActives(),
             'branch' => session('branch'),
             'branch_info' => ModelsBranchOffices::where('Id', session('branch'))->first(),
@@ -414,8 +415,8 @@ class Store extends Controller
             }
 
 
-            Mail::to($request->input('email'))->cc('tienda@merkeaminimarket.com')->bcc('ajimmenezz@gmail.com')->send(new OrderComplete($order));
-            // Mail::to($request->input('email'))->cc('ajimmenezz@gmail.com')->send(new OrderComplete($order));
+            // Mail::to($request->input('email'))->cc('tienda@merkeaminimarket.com')->bcc('ajimmenezz@gmail.com')->send(new OrderComplete($order));
+            Mail::to($request->input('email'))->cc('ajimmenezz@gmail.com')->send(new OrderComplete($order));
 
             session()->forget('cart');
             DB::commit();
@@ -437,7 +438,7 @@ class Store extends Controller
         $order = ModelsOrders::getOrder($order);
 
         $viewArray = [
-            'categories' => ModelsProductCategories::getActivesTree(),
+            'categories' => ModelsProductCategories::getActivesTree(session('branch')),
             'branches' => ModelsBranchOffices::getActives(),
             'branch' => session('branch'),
             'branch_info' => ModelsBranchOffices::where('Id', session('branch'))->first(),

@@ -2697,7 +2697,7 @@ only screen and (min-width: 576px) and (max-width: 767px) {
 }
 
 .product__item:hover .product__add-btn {
-    bottom: 35px;
+    bottom: 85px;
     visibility: visible;
     opacity: 1;
 }

@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
+use App\Models\OrderItems as ModelsOrderItems;
 use stdClass;
 
 class Products extends Model
@@ -184,6 +185,8 @@ class Products extends Model
             ->where('BranchId', $branchId)
             ->first();
         if ($stock) {
+            $validating = ModelsOrderItems::getValitatingQuantity($branchId, $productId);
+            $stock->Quantity = $stock->Quantity - $validating;
             return $stock;
         } else {
             $stock = new stdClass();
@@ -213,13 +216,19 @@ class Products extends Model
                 'pp.DiscountType',
                 'pp.DiscountPercent',
                 'pp.DiscountFixed',
-                'ps.Quantity',
+                // 'ps.Quantity',
                 'p.Granel'
             )
+            ->addSelect(DB::raw("(ps.Quantity - (select if(SUM( oi.Quantity ) is null, 0, SUM( oi.Quantity )) from orders o inner join order_items oi on o.Id = oi.OrderId where o.StatusId in (1,5) and oi.ProductId = p.Id and o.BranchId = $branchId)) as Quantity"))
+            ->addSelect(DB::raw("(select group_concat(Tag) from product_tags where ProductId = p.Id) as Tags"))
             ->where('p.Active', 1)
             ->where('ps.BranchId', $branchId)
             ->where('pp.BranchId', $branchId)
-            ->where('ps.Quantity', '>', 0);
+            ->where('ps.Quantity', '>', 0)
+            ->whereRaw("(ps.Quantity - (select if(SUM( oi.Quantity ) is null, 0, SUM( oi.Quantity )) from orders o inner join order_items oi on o.Id = oi.OrderId where o.StatusId in (1,5) and oi.ProductId = p.Id and o.BranchId = $branchId)) > 0");
+
+        // $sql = self::getQueryWithBindings($query);
+        // dd($sql);
 
         // $sql = $query->toSql();
         // dd([
@@ -301,13 +310,15 @@ class Products extends Model
             $products = $products->where('pd.Id', $department);
         }
 
-        $products = $products->where(function ($query) use ($search) {
-            $s = explode(' ', $search);
+        $s = explode(' ', $search);
+
+        $products = $products->where(function ($query) use ($search, $s) {
             $query->where('p.Name', 'like', '%' . $search . '%')
                 ->orWhere('p.Key', 'like', '%' . $search . '%')
                 ->orWhere('p.Description', 'like', '%' . $search . '%')
                 ->orWhere('pc.Name', 'like', '%' . $search . '%')
-                ->orWhere('pd.Name', 'like', '%' . $search . '%');
+                ->orWhere('pd.Name', 'like', '%' . $search . '%')
+                ->orWhereRaw("POSITION('{$search}' IN (select group_concat(Tag) from product_tags where ProductId = p.Id)) > 0 ");
             foreach ($s as $word) {
                 if (strlen($word) > 2) {
                     $query->orWhere('p.Name', 'like', '%' . $word . '%');
@@ -315,17 +326,31 @@ class Products extends Model
                     $query->orWhere('p.Description', 'like', '%' . $word . '%');
                     $query->orWhere('pc.Name', 'like', '%' . $word . '%');
                     $query->orWhere('pd.Name', 'like', '%' . $word . '%');
+                    $query->orWhereRaw("POSITION('{$word}' IN (select group_concat(Tag) from product_tags where ProductId = p.Id)) > 0 ");
                 }
             }
         });
 
+        $k = 0;
+        $products = $products->addSelect(DB::raw("if(POSITION('{$search}' IN p.Name) > 0, POSITION('{$search}' IN p.Name), 99) as position_{$k}"));
+        $products = ($order == 'p.Name') ? $products->orderBy('position_' . $k, 'asc') : $products;
+
+        foreach ($s as $word) {
+            if (strlen($word) > 2) {
+                $k++;
+                $products = $products->addSelect(DB::raw("if(POSITION('{$word}' IN p.Name) > 0, POSITION('{$word}' IN p.Name), 99) as position_{$k}"));
+                $products = ($order == 'p.Name') ? $products->orderBy('position_' . $k, 'asc') : $products;
+            }
+        }
+
         $totals = $products;
         $totals = $totals->count();
 
-        $products = $products->orderBy($order, $orderDirection)
-            ->offset(($page - 1) * $limit)
-            ->limit($limit)
-            ->get();
+        $products = $products->orderBy($order, $orderDirection)->offset(($page - 1) * $limit)
+            ->limit($limit);
+
+        $sql = self::getQueryWithBindings($products);
+        $products = $products->get();
 
         return [
             'products' => $products,
@@ -337,7 +362,8 @@ class Products extends Model
             'page' => $page,
             'offset' => ($page - 1) * $limit,
             'totals' => $totals,
-            'total_pages' => ceil($totals / $limit)
+            'total_pages' => ceil($totals / $limit),
+            'sql' => $sql
         ];
     }
 

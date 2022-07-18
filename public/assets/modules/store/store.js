@@ -2,12 +2,14 @@ import Events from '../shared/Events.js';
 import Buttons from '../shared/Buttons.js';
 import Utils from '../shared/Utils.js';
 import Alerts from '../shared/Alerts.js';
+import Selects from '../shared/Selects.js';
 
 $(function() {
     const event = new Events();
     const button = new Buttons();
     const utils = new Utils();
     const alerts = new Alerts();
+    const selects = new Selects();
 
     adjustHeight();
     initRemoveFromCart();
@@ -20,15 +22,35 @@ $(function() {
         window.location.href = '/search?query=' + search + '&department=' + department;
     });
 
-    button.initClick("#search_button_m", function(btn) {
-        let search = utils.trim("#search_text_m");
+    button.initClick("#search_button_addon_m", function(btn) {
+        let search = utils.trim("#search_text_mmm");
         event.showLoading();
         window.location.href = '/search?query=' + search;
     });
 
+    button.onEnter("#search_text_mmm", function(elem) {
+        let search = utils.trim("#search_text_mmm");
+        event.showLoading();
+        window.location.href = '/search?query=' + search;
+    });
+
+
     button.initClick(".header_branch_select", function(btn) {
         event.post('/api_v1/store/change_branch', {
             branch: btn.data("branch")
+        }, function(r) {
+            if (r.code == 200) {
+                window.location.reload();
+            } else {
+                alerts.fire(r.message || "Ocurrió un error al procesar la solicitud", "warning", "Continuar", "primary");
+                event.hideLoading();
+            }
+        }, null, false);
+    });
+
+    selects.change("#select_branch_mmm", function(elem) {
+        event.post('/api_v1/store/change_branch', {
+            branch: elem.val()
         }, function(r) {
             if (r.code == 200) {
                 window.location.reload();

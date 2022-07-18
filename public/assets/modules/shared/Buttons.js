@@ -30,6 +30,15 @@ class Buttons {
         btn.disabled = false;
     }
 
+    onEnter(btn, callback = () => {}) {
+        $(btn).on("keypress", function(e) {
+            let _this = $(this);
+            if (e.which == 13) {
+                callback(_this);
+            }
+        });
+    }
+
 }
 
 export default Buttons;
