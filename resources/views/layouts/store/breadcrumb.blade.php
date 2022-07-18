@@ -31,5 +31,11 @@
                 </div>
             </div>
         </div>
+        <div class="row">
+            <div class="col mt-10">
+                <a role="button" class="button_mkea float-end px-4 py-1 text-white"
+                    onclick="window.history.go(-1); return false;">Regresar</a>
+            </div>
+        </div>
     </div>
 </section>

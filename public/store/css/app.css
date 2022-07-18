@@ -5670,6 +5670,16 @@ p {
     text-align: center;
 }
 
+.button_mkea {
+    background-color: #ffb81c;
+    border-color: #ffb81c;
+    font-weight: 500;
+    border-radius: 30px;
+    text-transform: uppercase;
+    border: 2px solid;
+    text-align: center;
+}
+
 .t-y-btn:hover {
     border-color: #ffb81c;
     color: #9da3af;

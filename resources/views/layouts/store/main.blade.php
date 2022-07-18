@@ -16,7 +16,7 @@
 
     @include('layouts.favicon')
 
-    <link href="{{ asset('store/css/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('store/css/app.css?v=1.0') }}" rel="stylesheet">
     @yield('app_css')
 </head>
 
@@ -44,7 +44,7 @@
 
     <script src="{{ asset('js/store.js') }}"></script>
     @yield('modules_js')
-    <script type="module" src="{{ asset('assets/modules/store/store.js?v1.0') }}"></script>
+    <script type="module" src="{{ asset('assets/modules/store/store.js?v=1.0') }}"></script>
 </body>
 @yield('whatsapp')
 
