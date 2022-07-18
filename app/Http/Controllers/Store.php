@@ -457,6 +457,26 @@ class Store extends Controller
         return view('store.order', $viewArray);
     }
 
+    public function branches()
+    {
+        $viewArray = [
+            'categories' => ModelsProductCategories::getActivesTree(session('branch')),
+            'branches' => ModelsBranchOffices::getActives(),
+            'branch' => session('branch'),
+            'branch_info' => ModelsBranchOffices::where('Id', session('branch'))->first(),
+            'breadcrumbs' => [
+                'text' => __('Home'),
+                'url' => route('store.home'),
+                'child' => [
+                    'text' => __('Branch Offices'),
+                    'url' => route('store.branches')
+                ]
+            ]
+        ];
+
+        return view('store.branches', $viewArray);
+    }
+
     public function test_cron()
     {
         Log::debug("New Cron test" . date('Y-m-d H:i:s'));

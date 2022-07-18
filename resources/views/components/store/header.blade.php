@@ -149,7 +149,7 @@
                                             @endisset
                                         </li>
                                         <li>
-                                            <a href="#">{{ __('Branch Offices') }} <i
+                                            <a href="{{ Route::has('store.branches') ? route('store.branches') : '#' }}">{{ __('Branch Offices') }} <i
                                                     class="ms-1 far fa-location"></i></a>
                                         </li>
                                         <li>

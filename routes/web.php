@@ -29,6 +29,7 @@ Route::get('/cart', [Store::class, 'show_cart'])->name('store.cart');
 Route::get('/checkout', [Store::class, 'checkout'])->name('store.checkout');
 Route::get('/order/{order}', [Store::class, 'show_order'])->name('store.order');
 Route::get('/test/cron', [Store::class, 'test_cron'])->name('store.test_cron');
+Route::get('/sucursales', [Store::class, 'branches'])->name('store.branches');
 
 // Route::resource('/product-categories', ProductCategoriesController::class)->middleware(['auth', 'verified']);
 

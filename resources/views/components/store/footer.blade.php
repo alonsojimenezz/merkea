@@ -54,7 +54,6 @@
             <div class="row">
                 <div class="col-xl-12">
                     <div class="footer__links text-center">
-                        {{-- @dump($categories) --}}
                         <p>
                             @isset($categories)
                                 @foreach ($categories as $category)
