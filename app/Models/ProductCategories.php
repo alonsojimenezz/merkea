@@ -87,7 +87,7 @@ class ProductCategories extends Model
                 'pc.Name as CategoryName',
                 'pc.Slug as CategorySlug',
             )
-            ->groupBy('pd.Id', 'pc.Id')
+            ->groupBy('pd.Id', 'pd.Name', 'pd.Slug', 'pc.Id', 'pc.Name', 'pc.Slug')
             ->orderBy('DepartmentName')
             ->orderBy('CategoryName');
 
