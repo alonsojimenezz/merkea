@@ -23,6 +23,7 @@ class Alerts {
 
     fire_toast(title, subtitle = '', message = '') {
         $(".toast-container-main").addClass("position-fixed");
+        $(".toast-container-main").removeClass("d-none");
         $('#main_toast_title').empty().append(title);
         $('#main_toast_subtitle').empty().append(subtitle);
         $('#main_toast_body').empty().append(message);
@@ -30,6 +31,7 @@ class Alerts {
 
         this.toastElement.addEventListener('hidden.bs.toast', function() {
             $(".toast-container-main").removeClass("position-fixed");
+            $(".toast-container-main").addClass("d-none");
         });
     }
 }

@@ -10,6 +10,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
+use App\Models\ProductCategories as ModelsProductCategories;
+use App\Models\BranchOffices as ModelsBranchOffices;
 
 class RegisteredUserController extends Controller
 {
@@ -20,8 +22,22 @@ class RegisteredUserController extends Controller
      */
     public function create()
     {
-        // return view('auth.register');
-        return view('auth.register_blocked');
+        $viewArray = [
+            'categories' => ModelsProductCategories::getActivesTree(session('branch')),
+            'branches' => ModelsBranchOffices::getActives(),
+            'branch' => session('branch'),
+            'branch_info' => ModelsBranchOffices::where('Id', session('branch'))->first(),
+            'breadcrumbs' => [
+                'text' => __('Home'),
+                'url' => route('store.home'),
+                'child' => [
+                    'text' => __('Register'),
+                    'url' => route('register'),
+                ]
+            ]
+        ];
+        return view('auth.register', $viewArray);
+        //return view('auth.register_blocked');
     }
 
     /**
@@ -50,6 +66,6 @@ class RegisteredUserController extends Controller
 
         Auth::login($user);
 
-        return redirect(RouteServiceProvider::HOME);
+        return redirect()->route('verification.notice');
     }
 }

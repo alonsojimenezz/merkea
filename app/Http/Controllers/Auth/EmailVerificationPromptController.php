@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
+use App\Models\ProductCategories as ModelsProductCategories;
+use App\Models\BranchOffices as ModelsBranchOffices;
 use Illuminate\Http\Request;
 
 class EmailVerificationPromptController extends Controller
@@ -16,8 +18,23 @@ class EmailVerificationPromptController extends Controller
      */
     public function __invoke(Request $request)
     {
+        $viewArray = [
+            'categories' => ModelsProductCategories::getActivesTree(session('branch')),
+            'branches' => ModelsBranchOffices::getActives(),
+            'branch' => session('branch'),
+            'branch_info' => ModelsBranchOffices::where('Id', session('branch'))->first(),
+            'breadcrumbs' => [
+                'text' => __('Home'),
+                'url' => route('store.home'),
+                'child' => [
+                    'text' => __('Register'),
+                    'url' => route('register'),
+                ]
+            ]
+        ];
+
         return $request->user()->hasVerifiedEmail()
-                    ? redirect()->intended(RouteServiceProvider::HOME)
-                    : view('auth.verify-email');
+                    ? redirect()->route('store.account')
+                    : view('auth.verify-email', $viewArray);
     }
 }

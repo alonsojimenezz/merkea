@@ -10,6 +10,8 @@ use App\Models\ProductImages as ModelsProductImages;
 use App\Models\PostalCoverage as ModelsPostalCoverage;
 use App\Models\Orders as ModelsOrders;
 use App\Models\OrderItems as ModelsOrderItems;
+use App\Models\User as ModelsUsers;
+use App\Models\PersonalInformation as ModelsPersonalInformation;
 use App\Models\TestCron;
 use App\Mail\OrderComplete;
 use Illuminate\Support\Facades\Mail;
@@ -475,6 +477,65 @@ class Store extends Controller
         ];
 
         return view('store.branches', $viewArray);
+    }
+
+    public function account()
+    {
+        $viewArray = [
+            'categories' => ModelsProductCategories::getActivesTree(session('branch')),
+            'branches' => ModelsBranchOffices::getActives(),
+            'branch' => session('branch'),
+            'branch_info' => ModelsBranchOffices::where('Id', session('branch'))->first(),
+            'breadcrumbs' => [
+                'text' => __('Home'),
+                'url' => route('store.home'),
+                'child' => [
+                    'text' => __('Branch Offices'),
+                    'url' => route('store.branches')
+                ]
+            ],
+            'user' => ModelsUsers::where('Id', auth()->user()->id)->first(),
+            'user_info' => ModelsPersonalInformation::where('UserId', auth()->user()->id)->first(),
+        ];
+
+        return view('store.account', $viewArray);
+    }
+
+    public function updatePersonalInfo(Request $request)
+    {
+        try {
+            DB::beginTransaction();
+            $user = ModelsUsers::where('Id', auth()->user()->id)->first();
+
+            ModelsUsers::where('Id', auth()->user()->id)->update([
+                'Name' => $request->input('name')
+            ]);
+
+            $personal = ModelsPersonalInformation::where('UserId', auth()->user()->id)->first();
+            if ($personal) {
+                ModelsPersonalInformation::where('UserId', auth()->user()->id)->update([
+                    'Phone' => $request->input('phone'),
+                    'Birthday' => $request->input('birthday'),
+                ]);
+            } else {
+                ModelsPersonalInformation::create([
+                    'UserId' => auth()->user()->id,
+                    'Phone' => $request->input('phone'),
+                    'Birthday' => $request->input('birthday'),
+                ]);
+            }
+
+            DB::commit();
+
+            return $this->jsonResponse(200, "success", [
+                'user' => $user
+            ]);
+        } catch (\Throwable $e) {
+            DB::rollback();
+            return $this->jsonResponse(500, __('Internal Server Error'), [
+                'exception' => $e->getMessage(),
+            ]);
+        }
     }
 
     public function test_cron()

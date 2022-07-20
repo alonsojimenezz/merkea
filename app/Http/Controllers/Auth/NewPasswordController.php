@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rules;
+use App\Models\ProductCategories as ModelsProductCategories;
+use App\Models\BranchOffices as ModelsBranchOffices;
 
 class NewPasswordController extends Controller
 {
@@ -20,7 +22,22 @@ class NewPasswordController extends Controller
      */
     public function create(Request $request)
     {
-        return view('auth.reset-password', ['request' => $request]);
+        $viewArray = [
+            'categories' => ModelsProductCategories::getActivesTree(session('branch')),
+            'branches' => ModelsBranchOffices::getActives(),
+            'branch' => session('branch'),
+            'branch_info' => ModelsBranchOffices::where('Id', session('branch'))->first(),
+            'breadcrumbs' => [
+                'text' => __('Home'),
+                'url' => route('store.home'),
+                'child' => [
+                    'text' => __('Reset Password'),
+                    'url' => route('login'),
+                ]
+            ],
+            'request' => $request,
+        ];
+        return view('auth.reset-password', $viewArray);
     }
 
     /**
@@ -58,8 +75,8 @@ class NewPasswordController extends Controller
         // the application's home authenticated view. If there is an error we can
         // redirect them back to where they came from with their error message.
         return $status == Password::PASSWORD_RESET
-                    ? redirect()->route('login')->with('status', __($status))
-                    : back()->withInput($request->only('email'))
-                            ->withErrors(['email' => __($status)]);
+            ? redirect()->route('login')->with('status', __($status))
+            : back()->withInput($request->only('email'))
+            ->withErrors(['email' => __($status)]);
     }
 }

@@ -63,3 +63,8 @@
     -webkit-transition: all 200ms linear;
     transition: all 200ms linear;
 }
+
+.categories_submenu {
+    max-height: 50vh;
+    overflow-y: auto;
+}

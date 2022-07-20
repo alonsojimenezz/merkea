@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Http\Request;
+use App\Models\ProductCategories as ModelsProductCategories;
+use App\Models\BranchOffices as ModelsBranchOffices;
 use Illuminate\Support\Facades\Auth;
 
 class AuthenticatedSessionController extends Controller
@@ -17,7 +19,21 @@ class AuthenticatedSessionController extends Controller
      */
     public function create()
     {
-        return view('auth.login');
+        $viewArray = [
+            'categories' => ModelsProductCategories::getActivesTree(session('branch')),
+            'branches' => ModelsBranchOffices::getActives(),
+            'branch' => session('branch'),
+            'branch_info' => ModelsBranchOffices::where('Id', session('branch'))->first(),
+            'breadcrumbs' => [
+                'text' => __('Home'),
+                'url' => route('store.home'),
+                'child' => [
+                    'text' => __('Login'),
+                    'url' => route('login'),
+                ]
+            ]
+        ];
+        return view('auth.login', $viewArray);
     }
 
     /**
@@ -32,7 +48,7 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
-        return redirect()->intended(RouteServiceProvider::HOME);
+        return redirect()->route('verification.notice');
     }
 
     /**

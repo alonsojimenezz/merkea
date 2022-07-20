@@ -50,12 +50,12 @@
             @include('store.modal_no_branch')
         @endslot
         @slot('no_close')
-    @endcomponent
+        @endcomponent
 
-    <script src="{{ asset('js/store.js') }}"></script>
-    @yield('modules_js')
-    <script type="module" src="{{ asset('assets/modules/store/store.js?v=1.0') }}"></script>
-</body>
-@yield('whatsapp')
+        <script src="{{ asset('js/store.js') }}"></script>
+        @yield('modules_js')
+        <script type="module" src="{{ asset('assets/modules/store/store.js?v=1.0') }}"></script>
+    </body>
+    @yield('whatsapp')
 
-</html>
+    </html>

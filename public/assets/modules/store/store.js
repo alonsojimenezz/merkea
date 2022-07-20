@@ -11,7 +11,7 @@ $(function() {
     const alerts = new Alerts();
     const selects = new Selects();
 
-    adjustHeight();
+    // adjustHeight();
     initRemoveFromCart();
     initEmptyCart();
     checkIfBranchIsSelected();
@@ -70,10 +70,10 @@ $(function() {
         }, null, false);
     });
 
-    function adjustHeight() {
-        let bottom = $('.footer__copyright').offset().top + $('.footer__copyright').height();
-        $(".body-overlay").height(bottom);
-    }
+    // function adjustHeight() {
+    //     let bottom = $('.footer__copyright').offset().top + $('.footer__copyright').height();
+    //     $(".body-overlay").height(bottom);
+    // }
 
     button.initClick(".add_to_cart", function(btn) {
         let data = {
@@ -164,6 +164,12 @@ $(function() {
             }, null, false);
         });
     }
+
+    $(document).on('submit', 'form.load_on_submit', function() {
+        event.showLoading();
+    });
+
+    // button.initClick("#register_button", function(btn) {});
 
 
 });

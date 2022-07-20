@@ -27,6 +27,9 @@
                                         @endif
                                     @endhasanyrole
                                     <li>
+                                    <li><a href="{{ route('store.account') }}">{{ __('My Account') }}</a></li>
+                                    </li>
+                                    <li>
                                         <a href="{{ route('logout') }}"
                                             onclick="event.preventDefault(); document.getElementById('logout-form').submit();">{{ __('Logout') }}</a>
 
@@ -135,7 +138,7 @@
                                                                 <i class="far fa-angle-down"></i>
                                                             </a>
 
-                                                            <ul class="submenu">
+                                                            <ul class="submenu categories_submenu">
                                                                 @foreach ($category['children'] as $child)
                                                                     <li>
                                                                         <a
@@ -149,8 +152,9 @@
                                             @endisset
                                         </li>
                                         <li>
-                                            <a href="{{ Route::has('store.branches') ? route('store.branches') : '#' }}">{{ __('Branch Offices') }} <i
-                                                    class="ms-1 far fa-location"></i></a>
+                                            <a
+                                                href="{{ Route::has('store.branches') ? route('store.branches') : '#' }}">{{ __('Branch Offices') }}
+                                                <i class="ms-1 far fa-location"></i></a>
                                         </li>
                                         <li>
                                             <a href="#"> {{ __('Contact') }}<i

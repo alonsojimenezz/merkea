@@ -55,4 +55,5 @@ Route::prefix('api_v1')->group(function () {
     Route::post('store/empty_cart', [Store::class, 'emptyCart']);
     Route::post('store/update_cart', [Store::class, 'updateCart']);
     Route::post('store/checkout', [Store::class, 'completeOrder']);
+    Route::post('store/update_personal_info', [Store::class, 'updatePersonalInfo']);
 });
