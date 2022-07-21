@@ -24,9 +24,14 @@ use Illuminate\Support\Facades\Log;
 
 class Store extends Controller
 {
+    public function __construct()
+    {
+        parent::__construct();
+        session()->put('branch', (session()->has('branch')) ? session('branch') : 0);
+    }
+
     public function index()
     {
-        session()->put('branch', (session()->has('branch')) ? session('branch') : 0);
         return view('store.index', [
             'featured_products' => ModelsProducts::getFeaturedProducts(session('branch')),
             'categories' => ModelsProductCategories::getActivesTree(session('branch')),
@@ -38,7 +43,6 @@ class Store extends Controller
 
     public function show_department(Request $request, $department)
     {
-        session()->put('branch', (session()->has('branch')) ? session('branch') : 1);
         $department = ModelsProductCategories::where('Slug', $department)->whereNull('ParentId')->first();
 
         $viewArray = [
@@ -69,7 +73,6 @@ class Store extends Controller
 
     public function show_category(Request $request, $category)
     {
-        session()->put('branch', (session()->has('branch')) ? session('branch') : 1);
         $category = ModelsProductCategories::where('Slug', $category)->whereNotNull('ParentId')->first();
         $department = ModelsProductCategories::where('Id', $category->ParentId)->first();
 
@@ -105,7 +108,6 @@ class Store extends Controller
 
     public function show_search(Request $request)
     {
-        session()->put('branch', (session()->has('branch')) ? session('branch') : 1);
         if (!is_null($request->input('department')) && $request->input('department') > 0) {
             $department = ModelsProductCategories::where('Id', $request->input('department'))->whereNull('ParentId')->first();
             $child = [
@@ -151,7 +153,6 @@ class Store extends Controller
 
     public function show_product($slug)
     {
-        session()->put('branch', (session()->has('branch')) ? session('branch') : 1);
         $product = ModelsProducts::productStore($slug, session('branch'));
         $product->price = ModelsProducts::productPrice($product->Id, session('branch'));
         $product->stock = ModelsProducts::productStock($product->Id, session('branch'));
@@ -190,7 +191,6 @@ class Store extends Controller
 
     public function show_cart()
     {
-        session()->put('branch', (session()->has('branch')) ? session('branch') : 1);
         $viewArray = [
             'categories' => ModelsProductCategories::getActivesTree(session('branch')),
             'branches' => ModelsBranchOffices::getActives(),
@@ -351,7 +351,6 @@ class Store extends Controller
 
     public function checkout()
     {
-        session()->put('branch', (session()->has('branch')) ? session('branch') : 1);
         $viewArray = [
             'categories' => ModelsProductCategories::getActivesTree(session('branch')),
             'branches' => ModelsBranchOffices::getActives(),
@@ -436,7 +435,6 @@ class Store extends Controller
 
     public function show_order($order)
     {
-        session()->put('branch', (session()->has('branch')) ? session('branch') : 1);
         $order = ModelsOrders::getOrder($order);
 
         $viewArray = [

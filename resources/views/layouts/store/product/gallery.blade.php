@@ -18,7 +18,7 @@
                 </li>
             @endforeach
         </ul>
-        <div class="product__details-thumb">
+        <div class="product__details-thumb flex-grow-1">
             <div class="tab-content" id="productThumbContent">
                 <div class="tab-pane fade show active" id="thumbOne" role="tabpanel" aria-labelledby="thumbOne-tab">
                     <div class="product__details-nav-thumb">
