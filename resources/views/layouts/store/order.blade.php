@@ -2,6 +2,22 @@
 <section class="checkout-area pb-70 pt-50">
     <div class="container">
         <div class="row">
+            <div class="col text-center text-warning">
+                <svg aria-hidden="true" width="120" focusable="false" data-prefix="fa-regular" data-icon="box-check"
+                    class="svg-inline--fa fa-box-check fa-w-14" role="img" xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 448 512">
+                    <path
+                        d="M183 376.1C187.7 381.7 193.9 384 200 384s12.28-2.344 16.97-7.031l96-96c9.375-9.375 9.375-24.56 0-33.94s-24.56-9.375-33.94 0L200 326.1L168.1 295c-9.375-9.375-24.56-9.375-33.94 0s-9.375 24.56 0 33.94L183 376.1zM439.8 145.4l-45.43-80.76C383 44.47 361.7 32 338.6 32H109.4c-23.12 0-44.45 12.47-55.78 32.62L8.219 145.4C2.83 154.1 0 165.8 0 176.8V416c0 35.35 28.65 64 64 64h320c35.35 0 64-28.65 64-64V176.8C448 165.8 445.2 154.1 439.8 145.4zM247 80h91.55c5.771 0 11.12 3.125 13.95 8.154l39.67 70.52h-145.2V80zM95.48 88.15C98.31 83.13 103.7 80 109.4 80h89.59v78.67H55.82L95.48 88.15zM400 416c0 8.822-7.178 16-16 16H64c-8.822 0-16-7.178-16-16V206.7h352V416z"
+                        fill="currentColor" />
+                </svg>
+                <span>
+                    <h3 class="fs-4 text-success my-4">Tu pedido se registró correctamente</h3>
+                    <h3 class="fs-5 text-success my-4">En breve nos comunicaquermos contigo.</h3>
+                    <h3 class="fs-6 text-success mb-50">Puedes encontrar los detalles a continuación</h3>
+                </span>
+            </div>
+        </div>
+        <div class="row">
             @include('components.store.order_status', ['status' => $order->StatusId])
         </div>
         <div class="row">
