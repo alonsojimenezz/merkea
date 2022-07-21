@@ -94,13 +94,15 @@ $(function() {
     });
 
     function sendOrder(data) {
+        btn.addClass("d-none");
         event.post('/api_v1/store/checkout', data, function(r) {
             if (r.code == 200) {
                 window.location.href = r.body.url;
             } else {
                 alerts.fire(r.message || "Ocurrió un error al procesar la orden", "warning", "Continuar", "primary");
                 event.hideLoading();
+                btn.removeClass("d-none");
             }
-        });
+        }, null, false);
     }
 });
