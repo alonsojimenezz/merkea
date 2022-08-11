@@ -48,6 +48,20 @@ $(function() {
         }
     });
 
+    $("input[type=radio][name=payment_method]").on('change', function() {
+
+        const paymentMethodOption = $(this).val();
+        switch (paymentMethodOption) {
+            case '3':
+            case 3:
+                $("#online_payment_form").removeClass('d-none');
+                break;
+            default:
+                $("#online_payment_form").addClass('d-none');
+                break;
+        }
+    });
+
     select.change("#checkout-postalcode", function(s) {
         if (s.val() == "") {
             $(".coverageByPostal").addClass("d-none");
@@ -74,6 +88,11 @@ $(function() {
             'payment_method': $("input[type=radio][name=payment_method]:checked").val(),
         };
 
+        if (data.payment_method == 3) {
+            validateViComm();
+            return;
+        }
+
         if (data.name == "" || typeof data.name == "undefined") {
             alert.fire("Debes ingresar tu nombre", "warning", "OK", "warning");
         } else if (data.email == "" || typeof data.email == "undefined" || !utils.validateEmail(data.email)) {
@@ -86,23 +105,77 @@ $(function() {
             } else if (data.address == "" || typeof data.address == "undefined") {
                 alert.fire("Debes ingresar la dirección donde recibirás tu pedido", "warning", "OK", "warning");
             } else {
-                sendOrder(data);
+                sendOrder(btn, data);
             }
         } else {
-            sendOrder(data);
+            sendOrder(btn, data);
         }
     });
 
-    function sendOrder(data) {
+    function sendOrder(btn, data) {
         btn.addClass("d-none");
+        event.showLoading();
         event.post('/api_v1/store/checkout', data, function(r) {
             if (r.code == 200) {
                 window.location.href = r.body.url;
             } else {
-                alerts.fire(r.message || "Ocurrió un error al procesar la orden", "warning", "Continuar", "primary");
+                alert.fire(r.message || "Ocurrió un error al procesar la orden", "warning", "Continuar", "primary");
                 event.hideLoading();
                 btn.removeClass("d-none");
             }
         }, null, false);
     }
+
+    function validateViComm() {
+        if ($("#my-card").length) {
+            let myCard = $('#my-card');
+            let cardToSave = myCard.PaymentForm('card');
+            if (cardToSave == null) {
+                alert.fire_toast("Invalid Card Data", "warning", "OK", "warning");
+            } else {
+                alert.fire_toast("Valid Card Data", "success", "OK", "success");
+                Payment.addCard(1, 'ajimmenezz@gmail.com', cardToSave, successHandler, errorHandler);
+            }
+        }
+    }
+
+    Payment.init('stg', 'CLIENT_APP_CODE', 'CLIENT_APP_KEY');
+
+
+    function successHandler(cardResponse) {
+        console.log(cardResponse.card);
+        if (cardResponse.card.status === 'valid') {
+            $('#messages').html('Tarjeta correctamente agregada<br>' +
+                'Estado: ' + cardResponse.card.status + '<br>' +
+                "Token: " + cardResponse.card.token + "<br>" +
+                "Referencia de transacción: " + cardResponse.card.transaction_reference
+            );
+        } else if (cardResponse.card.status === 'review') {
+            $('#messages').html('Tarjeta en revisión<br>' +
+                'Estado: ' + cardResponse.card.status + '<br>' +
+                "Token: " + cardResponse.card.token + "<br>" +
+                "Referencia de transacción: " + cardResponse.card.transaction_reference
+            );
+        } else if (cardResponse.card.status === 'pending') {
+            $('#messages').html('Tarjeta pendiente de aprobar<br>' +
+                'Estado: ' + cardResponse.card.status + '<br>' +
+                "Token: " + cardResponse.card.token + "<br>" +
+                "Referencia de transacción: " + cardResponse.card.transaction_reference
+            );
+        } else {
+            $('#messages').html('Error<br>' +
+                'Estado: ' + cardResponse.card.status + '<br>' +
+                "Mensaje: " + cardResponse.card.message + "<br>"
+            );
+        }
+        submitButton.removeAttr("disabled");
+        submitButton.text(submitInitialText);
+    };
+
+    function errorHandler(err) {
+        console.log(err.error);
+        $('#messages').html(err.error.type);
+        submitButton.removeAttr("disabled");
+        submitButton.text(submitInitialText);
+    };
 });

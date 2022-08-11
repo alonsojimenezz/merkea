@@ -681,6 +681,10 @@ p {
     padding: 19px 0;
 }
 
+.main-menu ul li:hover ul.submenu {
+    display: block;
+}
+
 .main-menu ul li ul.submenu {
     position: absolute;
     top: 120%;
@@ -693,6 +697,7 @@ p {
     opacity: 0;
     transition: all 0.3s ease-out 0s;
     z-index: 11;
+    display: none;
 }
 
 .main-menu ul li ul.submenu li {

@@ -3,24 +3,26 @@
         <a href="{{ route('admin.show_order', $order->Id) }}"
             class="text-gray-800 text-hover-primary fw-bolder">{{ MUtils::fullOrderNumber($order->Id) }}</a>
     </td>
-    {{-- <td>
+    <td>
         <div class="d-flex align-items-center">
             <div class="symbol symbol-circle symbol-35px overflow-hidden me-3">
-                    <div class="symbol-label fs-5 fw-bolder bg-light-primary text-primary">
-                        {{ substr($order->Name, 0, 1) }}</div>
+                <div class="symbol-label fs-5 fw-bolder bg-light-primary text-primary">
+                    {{ substr($order->Name, 0, 1) }}</div>
             </div>
             <div class="ms-3">
                 <a class="text-gray-800 text-hover-primary fs-5 fw-bolder">{{ $order->Name }}</a>
+                <div class="text-muted fs-7">{{ $order->Phone }}</div>
             </div>
         </div>
-    </td> --}}
+    </td>
 
     <td class="text-start pe-0" data-order="{{ $order->DeliveryMethod }}">
-        <div class="badge badge-{{ $order->DeliveryMethod == 1 ? 'info' : 'danger' }}">{{ $order->DeliveryMethod == 1 ? __('Home delivery') : __('Store Pickup') }}</div>
+        <div class="badge badge-{{ $order->DeliveryMethod == 1 ? 'info' : 'danger' }}">
+            {{ $order->DeliveryMethod == 1 ? __('Home delivery') : __('Store Pickup') }}</div>
     </td>
     @php
-        $date_delivery = ($order->DeliveryDate != null && $order->DeliveryDate != '') ? new DateTime($order->DeliveryDate) : '';
-        $date_d = ($date_delivery != '') ? $date_delivery->format('d/m/Y H:i') : __('As soon as possible');
+        $date_delivery = $order->DeliveryDate != null && $order->DeliveryDate != '' ? new DateTime($order->DeliveryDate) : '';
+        $date_d = $date_delivery != '' ? $date_delivery->format('d/m/Y H:i') : __('As soon as possible');
         $date_c = new DateTime($order->created_at);
         $date_u = new DateTime($order->updated_at);
     @endphp

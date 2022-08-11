@@ -21,7 +21,7 @@
                             </div>
                             <div class="text">
                                 <a href="https://wa.me/+52{{ preg_replace('/[^0-9]/', '', ($branch_info->Phone ?? '')) }}"><span>Contáctanos</span>
-                                    <h2 style="color:#9da3af;">{{ $branch_info->Phone ?? '' }}</h2>
+                                    <h2 class="fs-4" style="color:#9da3af;">{{ $branch_info->Phone ?? '' }}</h2>
                                 </a>
                             </div>
                         </div>

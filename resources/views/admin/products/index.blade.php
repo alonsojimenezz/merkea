@@ -157,6 +157,7 @@
                                 <th class="min-w-200px">{{ __('Department') }}</th>
                                 <th class="min-w-200px">{{ __('Category') }}</th>
                                 <th class="min-w-150px">{{ __('Status') }}</th>
+                                <th class="min-w-150px">{{ __('Image') }}</th>
                             </tr>
                         </thead>
                         <tbody class="fs-6">

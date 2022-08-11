@@ -8,8 +8,8 @@
         </div>
         <div class="offcanvas__content">
             <div class="offcanvas__logo mb-40">
-                <a href="index.html">
-                    <img src="store/img/logo/logo.svg" alt="logo" width="130px">
+                <a href="">
+                    <img src="/store/img/logo/logo.svg" alt="logo" width="130px">
                 </a>
             </div>
             <div class="offcanvas__search mb-25">

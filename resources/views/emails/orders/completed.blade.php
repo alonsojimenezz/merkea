@@ -31,6 +31,9 @@ $date = new DateTime($order->DeliveryDate);
 @endphp
 <strong> el día {{$date->format('d/m/Y')}}</strong> a partir de las <strong>{{$date->format('H:i')}} hrs</strong>.
 @endif
+<br>
+<br>
+En caso de tener alguna duda o inconveniente, nos comunicaremos con usted al número <strong>{{$order->Phone ?? ''}}</strong> o al correo <strong>{{$order->Email ?? ''}}</strong> proporcionado
 @endcomponent
 
 @component('mail::button', ['url' => route('store.order',['order' => ($order->Slug ?? '123')])])

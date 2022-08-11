@@ -752,8 +752,13 @@ p {
     padding: 19px 0;
 }
 
+.main-menu ul li:hover ul.submenu {
+    display: block;
+}
+
 .main-menu ul li ul.submenu {
     position: absolute;
+    display: none;
     top: 120%;
     left: 0;
     min-width: 200px;
@@ -2707,7 +2712,7 @@ only screen and (min-width: 576px) and (max-width: 767px) {
 }
 
 .product__item:hover .product__add-btn {
-    bottom: 85px;
+    bottom: 100px;
     visibility: visible;
     opacity: 1;
 }
@@ -7418,6 +7423,11 @@ ul li a.mobile_menu {
 
 .hoverable:hover {
     transition: all .2s ease
+}
+
+.cart_span_symbol_decimals {
+    top: -0.55em;
+    position: relative;
 }
 
 

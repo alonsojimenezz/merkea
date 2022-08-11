@@ -23,7 +23,7 @@
             <div class="row gx-0">
                 <div class="col-xl-12">
                     <div id="scroll" class="back-to-top-btn text-center">
-                        <a href="javascript:void(0);">back to top</a>
+                        <a href="javascript:void(0);">{{ __('Back to top') }}</a>
                     </div>
                 </div>
             </div>

@@ -17,7 +17,7 @@
                                                         <i class="far fa-angle-down"></i>
                                                 </a>
 
-                                                <ul class="submenu">
+                                                <ul class="submenu categories_submenu">
                                                     @foreach ($category['children'] as $child)
                                                         <li>
                                                             <a

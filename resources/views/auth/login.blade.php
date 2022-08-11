@@ -19,6 +19,8 @@
                             action="{{ route('login') }}">
                             @csrf
 
+                            <input type="hidden" name="redirect" value="{{ $redirect ?? '' }}">
+
                             @if (session('status'))
                                 <div class="d-flex fw-bolder fs-6 text-danger justify-content-center mb-20">
                                     <span class="text-center">

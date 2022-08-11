@@ -147,6 +147,7 @@
                     <thead class="fs-7 text-gray-400 text-uppercase">
                         <tr>
                             <th class="min-w-100px">{{ __('Order Id') }}</th>
+                            <th class="min-w-175px">{{ __('Customer') }}</th>
                             <th class="min-w-150px">{{ __('Method of delivery') }}</th>
                             <th class="min-w-125px">{{ __('Scheduled Date') }}</th>
                             <th class="min-w-100px">{{ __('Branch Office') }}</th>

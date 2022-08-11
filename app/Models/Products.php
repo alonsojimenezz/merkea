@@ -242,7 +242,7 @@ class Products extends Model
 
     public static function getProductsForAdmin()
     {
-        return DB::table('products as p')
+        $query = DB::table('products as p')
             ->leftJoin('units as u', 'u.Id', '=', 'p.UnitId')
             ->leftJoin('product_categories as pc', 'pc.Id', '=', 'p.CategoryId')
             ->leftJoin('product_categories as pd', 'pd.Id', '=', 'pc.ParentId')
@@ -258,6 +258,11 @@ class Products extends Model
                 'p.Image',
                 'p.Active'
             )->get();
+        foreach ($query as $product) {
+            $product->HasImage = \App\Http\Controllers\Products::product_image_exists($product->Key);
+        }
+
+        return $query;
     }
 
     public static function getProductsByDepartment($department, $order = 'name', $orderDirection = 'asc', $limit = 12, $page = 1, $branchId = 1)

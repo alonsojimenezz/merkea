@@ -17,7 +17,7 @@ class AuthenticatedSessionController extends Controller
      *
      * @return \Illuminate\View\View
      */
-    public function create()
+    public function create(Request $request)
     {
         $viewArray = [
             'categories' => ModelsProductCategories::getActivesTree(session('branch')),
@@ -31,7 +31,8 @@ class AuthenticatedSessionController extends Controller
                     'text' => __('Login'),
                     'url' => route('login'),
                 ]
-            ]
+            ],
+            'redirect' => $request->has('redirect') ? $request->input('redirect') : '',
         ];
         return view('auth.login', $viewArray);
     }
@@ -45,10 +46,10 @@ class AuthenticatedSessionController extends Controller
     public function store(LoginRequest $request)
     {
         $request->authenticate();
-
+        $cart = session('cart');
         $request->session()->regenerate();
-
-        return redirect()->route('verification.notice');
+        session()->put('cart', $cart);
+        return redirect()->route('verification.notice', ['redirect' => request()->input('redirect') ?? '']);
     }
 
     /**
@@ -61,9 +62,13 @@ class AuthenticatedSessionController extends Controller
     {
         Auth::guard('web')->logout();
 
+        $branch = session('branch');
+
         $request->session()->invalidate();
 
         $request->session()->regenerateToken();
+
+        session()->put('branch', $branch);
 
         return redirect('/');
     }

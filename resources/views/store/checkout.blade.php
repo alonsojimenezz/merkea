@@ -1,7 +1,8 @@
 @extends('layouts.store.main')
 
 @section('header')
-    @component('components.store.header', ['categories' => $categories, 'branches' => $branches, 'branch_info' => $branch_info])
+    @component('components.store.header',
+        ['categories' => $categories, 'branches' => $branches, 'branch_info' => $branch_info])
         @slot('show_search', true)
         @slot('show_menu', true)
     @endcomponent
@@ -14,7 +15,9 @@
 @endsection
 
 @section('modules_js')
-    <script type="module" src="{{ asset('assets/modules/store/checkout.js') }}"></script>
+    <script type="module" src="{{ asset('assets/modules/store/checkout.js?v=20220725') }}"></script>
+    <link href="https://cdn.gpvicomm.com/ccapi/sdk/payment_stable.min.css" rel="stylesheet" type="text/css" />
+    <script src="https://cdn.gpvicomm.com/ccapi/sdk/payment_stable.min.js" charset="UTF-8"></script>
 @endsection
 
 @section('footer')

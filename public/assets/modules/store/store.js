@@ -89,6 +89,8 @@ $(function() {
                     $(".cart__mini-wrapper").empty().append(r.body.view);
                     initCartToggle();
                     btn.parent(".product__add-btn").empty().append(r.body.button);
+                    //console.log(typeof r.body.cart);
+                    $(".cart_total_items_small").empty().append(Object.keys(r.body.cart).length);
                 }
             } else {
                 alerts.fire(r.message || "Ocurrió un error al procesar la solicitud", "warning", "Continuar", "primary");

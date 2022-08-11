@@ -45,4 +45,22 @@ class Products extends Controller
 
         return  asset('img/no_image.png');
     }
+
+    public static function product_image_exists($sku)
+    {
+        // return asset('files/products/initials/' . $sku . '.jpg');
+        if (file_exists(public_path('files/products/initials/' . $sku . '.jpg')))
+            return 1;
+
+        if (file_exists(public_path('files/products/initials/' . $sku . '.jpeg')))
+            return 1;
+
+        if (file_exists(public_path('files/products/initials/' . $sku . '.png')))
+            return 1;
+
+        if (file_exists(public_path('files/products/initials/' . $sku . '.webp')))
+            return 1;
+
+        return  0;
+    }
 }

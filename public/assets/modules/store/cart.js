@@ -29,7 +29,8 @@ $(function() {
         v = (btn.hasClass("inc")) ? v : -v;
         let newval = parseFloat(q.val()) + v;
         newval = (newval > parseFloat(q.data("max"))) ? parseFloat(q.data("max")) : ((newval < base) ? base : newval);
-        q.val(newval.toFixed(2));
+
+        $(".product_quantity_" + q.data('pid')).val(newval.toFixed(q.data('granel') == 1 ? 2 : 0));
 
         let subtotal = parseFloat(q.val()) * parseFloat(q.data('unitprice'));
         $(".product-subtotal-" + q.data('pid')).empty().append(utils.formatMoney(subtotal));
@@ -61,7 +62,7 @@ $(function() {
     function updateCartTotals() {
         let subtotal = 0;
         let needUpdate = false;
-        $(".product_quantity").each(function() {
+        $(".product_quantity").not(".product_quantity_small_screen").each(function() {
             let q = $(this);
             subtotal += parseFloat(q.val()) * parseFloat(q.data('unitprice'));
             if (q.data('original') != q.val()) {
@@ -84,7 +85,7 @@ $(function() {
         let data = {
             'items': []
         };
-        $(".product_quantity").each(function() {
+        $(".product_quantity").not(".product_quantity_small_screen").each(function() {
             let q = $(this);
             data.items.push({
                 'pid': q.data('pid'),

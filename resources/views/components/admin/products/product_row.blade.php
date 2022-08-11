@@ -26,4 +26,7 @@
         <span
             class="badge badge-light-{{ $product->Active == 1 ? 'info' : 'danger' }} fw-bolder me-auto px-4 py-3">{{ $product->Active == 1 ? __('Active') : __('Inactive') }}</span>
     </td>
+    <td>
+        {{ $product->HasImage ?? 'NOSE' }}
+    </td>
 </tr>

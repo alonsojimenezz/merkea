@@ -29,7 +29,7 @@
 
     @include('layouts.favicon')
 
-    <link href="{{ asset('store/css/app.css?v=1.1') }}" rel="stylesheet">
+    <link href="{{ asset('store/css/app.css?v=1.2') }}" rel="stylesheet">
     @yield('app_css')
 </head>
 
@@ -65,9 +65,9 @@
         @slot('no_close')
         @endcomponent
 
-        <script src="{{ asset('js/store.js?v=1.0') }}"></script>
+        <script src="{{ asset('js/store.js?v=20220811') }}"></script>
         @yield('modules_js')
-        <script type="module" src="{{ asset('assets/modules/store/store.js?v=1.1') }}"></script>
+        <script type="module" src="{{ asset('assets/modules/store/store.js?v=20220811') }}"></script>
     </body>
     @yield('whatsapp')
 
