@@ -38,10 +38,10 @@
     <td class="text-start pe-0" data-order="{{ $order->Total }}">
         <span class="fw-bolder">${{ number_format($order->Total, 2) }}</span>
     </td>
-    <td class="text-start" data-order="{{ $date_c->format('d/m/Y H:i') }}">
+    <td class="text-start" data-order="{{ $date_c->format('YmdHis') }}">
         <span class="fw-bolder">{{ $date_c->format('d/m/Y H:i') }}</span>
     </td>
-    <td class="text-start" data-order="{{ $date_u->format('d/m/Y H:i') }}">
+    <td class="text-start" data-order="{{ $date_u->format('YmdHis') }}">
         <span class="fw-bolder">{{ $date_u->format('d/m/Y H:i') }}</span>
     </td>
 </tr>
