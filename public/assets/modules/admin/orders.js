@@ -11,7 +11,7 @@ $(function() {
         table.initTableCR("#orders_table", {
             scrollX: true,
             order: [
-                [1, 'asc']
+                [7, 'desc']
             ],
         }, () => {
 
